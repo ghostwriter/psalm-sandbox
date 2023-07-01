@@ -3,9 +3,9 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\wip\Console;
+namespace Ghostwriter\PsalmPluginTester\Console;
 
-use Ghostwriter\wip\Foo;
+use Ghostwriter\PsalmPluginTester\Foo;
 use function dirname;
 use function sprintf;
 

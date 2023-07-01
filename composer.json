@@ -1,11 +1,11 @@
 {
-    "name": "ghostwriter/wip",
-    "description": "Here be dragons",
+    "name": "ghostwriter/psalm-plugin-tester",
+    "description": "Provides a framework for testing Psalm plugins",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "wip"
+        "psalm-plugin-tester"
     ],
     "authors": [
         {
@@ -15,13 +15,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/wip",
+    "homepage": "https://github.com/ghostwriter/psalm-plugin-tester",
     "support": {
-        "issues": "https://github.com/ghostwriter/wip/issues",
-        "forum": "https://github.com/ghostwriter/wip/discussions",
-        "source": "https://github.com/ghostwriter/wip",
-        "docs": "https://github.com/ghostwriter/wip",
-        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+        "issues": "https://github.com/ghostwriter/psalm-plugin-tester/issues",
+        "forum": "https://github.com/ghostwriter/psalm-plugin-tester/discussions",
+        "source": "https://github.com/ghostwriter/psalm-plugin-tester",
+        "docs": "https://github.com/ghostwriter/psalm-plugin-tester",
+        "rss": "https://github.com/ghostwriter/psalm-plugin-tester/releases.atom"
     },
     "funding": [
         {
@@ -47,7 +47,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\wip\\": "src/"
+            "Ghostwriter\\PsalmPluginTester\\": "src/"
         },
         "files": [
             "src/constants.php",
@@ -56,7 +56,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\wip\\Tests\\": "tests/"
+            "Ghostwriter\\PsalmPluginTester\\Tests\\": "tests/"
         }
     },
     "bin": [

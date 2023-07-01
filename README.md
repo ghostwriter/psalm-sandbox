@@ -1,12 +1,12 @@
-# wip
+# psalm-plugin-tester
 
-[![Compliance](https://github.com/ghostwriter/wip/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/wip/actions/workflows/compliance.yml)
-[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/wip?color=8892bf)](https://www.php.net/supported-versions)
-[![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/wip/main)
-[![Code Coverage](https://codecov.io/gh/ghostwriter/wip/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/wip)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/wip/coverage.svg)](https://shepherd.dev/github/ghostwriter/wip)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/wip)](https://packagist.org/packages/ghostwriter/wip)
-[![Downloads](https://badgen.net/packagist/dt/ghostwriter/wip?color=blue)](https://packagist.org/packages/ghostwriter/wip)
+[![Compliance](https://github.com/ghostwriter/psalm-plugin-tester/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/psalm-plugin-tester/actions/workflows/compliance.yml)
+[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-plugin-tester?color=8892bf)](https://www.php.net/supported-versions)
+[![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/psalm-plugin-tester/main)
+[![Code Coverage](https://codecov.io/gh/ghostwriter/psalm-plugin-tester/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/psalm-plugin-tester)
+[![Type Coverage](https://shepherd.dev/github/ghostwriter/psalm-plugin-tester/coverage.svg)](https://shepherd.dev/github/ghostwriter/psalm-plugin-tester)
+[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/psalm-plugin-tester)](https://packagist.org/packages/ghostwriter/psalm-plugin-tester)
+[![Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-plugin-tester?color=blue)](https://packagist.org/packages/ghostwriter/psalm-plugin-tester)
 
 work in progress
 
@@ -20,7 +20,7 @@ work in progress
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/wip
+composer require ghostwriter/psalm-plugin-tester
 ```
 
 ## Usage
@@ -50,7 +50,7 @@ If you discover any security related issues, please email `nathanael.esayeas@pro
 ## Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/wip/contributors)
+- [All Contributors](https://github.com/ghostwriter/psalm-plugin-tester/contributors)
 
 ## License
 
