@@ -110,7 +110,7 @@ namespace Ghostwriter\ExamplePsalmPlugin\Tests
             $this->pluginTester->test(ExamplePlugin::class, $path);
         }
     }
-};
+}
 ```
 - run phpunit
 
