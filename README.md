@@ -104,7 +104,7 @@ namespace Ghostwriter\ExamplePsalmPlugin\Tests
     }
 };
 ```
-- 
+- run phpunit
 
 ## Testing
 
