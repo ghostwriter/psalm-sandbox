@@ -41,16 +41,11 @@ composer require ghostwriter/psalm-plugin-tester
 >    {
 >        "errors": [
 >            "MissingConstructor" : [
->                "path/to/file.php" : {
->                    "line": 12,
->                    "column": 34
->                }
+>                "path/to/file.php"
+>                "path/to/file2.php"
 >            ],
 >            "PossiblyNullReference" : [
->                "path/to/file.php" : {
->                    "line": 12,
->                    "column": 34
->                }
+>                "path/to/file.php"
 >            ]
 >        ]
 >    }
