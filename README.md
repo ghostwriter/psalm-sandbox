@@ -40,12 +40,17 @@ composer require ghostwriter/psalm-plugin-tester
 >    ```json
 >    {
 >        "errors": [
->            "MissingConstructor" : [
->                "path/to/file.php"
->                "path/to/file2.php"
+>            "path/to/file.php": [
+>                {
+>                    "type": "MixedInferredReturnType"
+>                    "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided"
+>                }
 >            ],
->            "PossiblyNullReference" : [
->                "path/to/file.php"
+>            "path/to/file2.php": [
+>                {
+>                    "type": "PossiblyUnusedMethod"
+>                    "message": "Cannot find any calls to method NS\\Car::drive"
+>                }
 >            ]
 >        ]
 >    }
