@@ -27,18 +27,32 @@ composer require ghostwriter/psalm-plugin-tester
 
 - create a `tests/fixtures/` directory.
 - create a test fixture `fixture-without-psalm-config-file` directory in `tests/fixtures/`.
-- create an `expectation.json` in the `fixture-without-psalm-config-file` directory.
+- create an `expectation.json` in the `psalm-runs-without-any-errors` directory.
+- add a few `.php` files that you want the plugin to test, in the `psalm-runs-without-any-errors` directory.
 - add your expectation in JSON format.
-    
+
 >    // No errors `expectation.json`
 >    ```json
 >    {}
 >    ```
->    
+
 >    // Has Errors `expectation.json`
 >    ```json
 >    {
->        "errors": []
+>        "errors": [
+>            "MissingConstructor" : [
+>                'path/to/file.php' : {
+>                    "line": 12,
+>                    "column": 34
+>                }
+>            ],
+>            "PossiblyNullReference" : [
+>                'path/to/file.php' : {
+>                    "line": 12,
+>                    "column": 34
+>                }
+>            ]
+>        ]
 >    }
 >    ```
     
@@ -80,7 +94,6 @@ namespace Ghostwriter\ExamplePsalmPlugin\Tests
     use Generator;
     use Ghostwriter\ExamplePsalmPlugin\ExamplePlugin;
     use Ghostwriter\PsalmPluginTester\PluginTester;
-    use Ghostwriter\PsalmPluginTester\PsalmPluginTester;
     use PHPUnit\Framework\TestCase;
     
     final class ExamplePluginTest extends TestCase
