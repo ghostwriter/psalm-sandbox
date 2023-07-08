@@ -14,7 +14,6 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->paths([
         __DIR__ . '/bin',
         __DIR__ . '/ecs.php',
-        __DIR__ . '/README.md',
         __DIR__ . '/rector.php',
         __DIR__ . '/src',
         __DIR__ . '/tests',
