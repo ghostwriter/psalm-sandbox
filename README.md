@@ -25,9 +25,86 @@ composer require ghostwriter/psalm-plugin-tester
 
 ## Usage
 
+- create a `tests/fixtures/` directory.
+- create a test fixture `fixture-without-psalm-config-file` directory in `tests/fixtures/`.
+- create an `expectation.json` in the `fixture-without-psalm-config-file` directory.
+- add your expectation in JSON format.
+    
+>    // No errors `expectation.json`
+>    ```json
+>    {}
+>    ```
+>    
+>    // Has Errors `expectation.json`
+>    ```json
+>    {
+>        "errors": []
+>    }
+>    ```
+    
+
 ```php
-// work in progress
+<?php
+
+declare(strict_types=1);
+
+namespace Ghostwriter\ExamplePsalmPlugin
+{
+    use Psalm\Plugin\EventHandler\AfterAnalysisInterface;
+    use Psalm\Plugin\EventHandler\Event\AfterAnalysisEvent;
+    use Psalm\Plugin\PluginEntryPointInterface;
+    use Psalm\Plugin\RegistrationInterface;
+    use SimpleXMLElement;
+    
+    final class ExampleHooks implements AfterAnalysisInterface
+    {
+        public static function afterAnalysis(AfterAnalysisEvent $event): void
+        {
+            var_dump($event->getIssues());
+            die;
+        }
+    }
+    
+    final class ExamplePlugin implements PluginEntryPointInterface
+    {
+        public function __invoke(RegistrationInterface $registration, SimpleXMLElement|null $config = null): void
+        {
+            class_exists(ExampleHooks::class);
+            $registration->registerHooksFromClass(ExampleHooks::class);
+        }
+    }
+}
+
+namespace Ghostwriter\ExamplePsalmPlugin\Tests
+{
+    use Generator;
+    use Ghostwriter\ExamplePsalmPlugin\ExamplePlugin;
+    use Ghostwriter\PsalmPluginTester\PluginTester;
+    use Ghostwriter\PsalmPluginTester\PsalmPluginTester;
+    use PHPUnit\Framework\TestCase;
+    
+    final class ExamplePluginTest extends TestCase
+    {
+        private PluginTester $pluginTester;
+        protected function setUp(): void
+        {
+            $this->pluginTester = new PluginTester(ExamplePlugin::class);
+        }
+
+        public static function fixtureDataProvider(): Generator
+        {
+            yield from $this->psalmPluginTester->fixtures(__DIR__ . '/../tests/fixtures/');
+        }
+
+        /** @dataProvider fixtureDataProvider
+        public function testPlugin(string $path): void
+        {
+            $this->pluginTester->test(ExamplePlugin::class, $path);
+        }
+    }
+};
 ```
+- 
 
 ## Testing
 
