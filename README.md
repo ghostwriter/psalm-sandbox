@@ -110,9 +110,9 @@ namespace Ghostwriter\ExamplePsalmPlugin\Tests
         }
 
         /** @dataProvider fixtureDataProvider
-        public function testPlugin(string $path): void
+        public function testPlugin(string $fixture): void
         {
-            $this->pluginTester->test(ExamplePlugin::class, $path);
+            $this->pluginTester->test($fixture);
         }
     }
 }
