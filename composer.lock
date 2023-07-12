@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15c63b44c1becb98bf04f9c6b25d258b",
+    "content-hash": "9eaea18d76d552e490204ca6edd4b02e",
     "packages": [
         {
             "name": "ghostwriter/collection",
@@ -68,20 +68,20 @@
         },
         {
             "name": "ghostwriter/config",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/config.git",
-                "reference": "f6bb599310f0dea5e2a0812787a1be6b9ac07433"
+                "reference": "bcbe21a32abd8e2788c58e74a9bb82b676b4be5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/config/zipball/f6bb599310f0dea5e2a0812787a1be6b9ac07433",
-                "reference": "f6bb599310f0dea5e2a0812787a1be6b9ac07433",
+                "url": "https://api.github.com/repos/ghostwriter/config/zipball/bcbe21a32abd8e2788c58e74a9bb82b676b4be5f",
+                "reference": "bcbe21a32abd8e2788c58e74a9bb82b676b4be5f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1 <8.3"
+                "php": ">=8.1 <8.4"
             },
             "require-dev": {
                 "ghostwriter/coding-standard": "dev-main"
@@ -123,7 +123,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-29T14:32:26+00:00"
+            "time": "2023-07-11T10:18:30+00:00"
         },
         {
             "name": "ghostwriter/container",
