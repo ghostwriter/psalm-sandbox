@@ -162,14 +162,14 @@ final class PluginTester
     /**
      * @return Generator<string,Fixture>
      */
-    public static function yieldFixtures(string $path): Generator
+    public static function yieldFixtures(string $pluginClass, string $path): Generator
     {
         /** @var SplFileInfo $fixtureDirectory */
         foreach (new CallbackFilterIterator(
             new DirectoryIterator($path),
             static fn (SplFileInfo $current): bool => $current->isDir() && ! $current->isDot()
         ) as $fixtureDirectory) {
-            $fixture = new Fixture($fixtureDirectory->getPathname());
+            $fixture = new Fixture($pluginClass, $fixtureDirectory->getPathname());
 
             yield $fixture->getName() => [$fixture];
         }
