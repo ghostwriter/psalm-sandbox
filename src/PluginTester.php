@@ -51,7 +51,10 @@ final class PluginTester
 
     public function getPsalmPath(): string
     {
-        $psalm = (new ExecutableFinder())->find('psalm', 'vendor/bin/psalm');
+        $psalm = (new ExecutableFinder())->find(
+            'psalm',
+            './../../../vendor/bin/psalm'
+        );
 
         if ($psalm === null) {
             throw new RuntimeException('Psalm is not installed.');
@@ -129,6 +132,8 @@ final class PluginTester
                 $this->getPsalmPath(),
                 [
                     '--output-format=json',
+                    '--no-cache',
+                    '--no-diff',
                     ...$this->suppressProgress ? ['--no-progress'] : [],
                     '--plugin=' . $this->plugin,
                 ],
