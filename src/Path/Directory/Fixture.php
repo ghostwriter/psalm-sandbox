@@ -14,6 +14,7 @@ use RuntimeException;
 final class Fixture
 {
     public function __construct(
+        private readonly string $pluginClass,
         private readonly string $path,
     ) {
     }
