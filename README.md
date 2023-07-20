@@ -14,7 +14,6 @@ work in progress
 >
 > This project is not finished yet, work in progress.
 
-
 ## Installation
 
 You can install the package via composer:
@@ -25,29 +24,127 @@ composer require ghostwriter/psalm-plugin-tester
 
 ## Usage
 
-- create a `tests/fixtures/` directory.
-- create a test fixture `psalm-runs-without-any-errors` directory in `tests/fixtures/`.
-- create an `expectation.json` in the `psalm-runs-without-any-errors` directory.
-- add a few `.php` files that you want the plugin to test, in the `psalm-runs-without-any-errors` directory.
-- add your expectation in JSON format.
+- Create a `tests/Fixtures/` directory.
 
->    // No errors `expectation.json`
+- Create a test fixture `psalm-runs-without-any-errors` directory in `tests/Fixtures/`.
+
+- Add 1 or more test fixture php files to be checked in `tests/Fixtures/psalm-runs-without-any-errors` directory.
+
+- Create a PHPUnit test using the example below.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Ghostwriter\ExamplePsalmPlugin\Tests;
+
+use Generator;
+use Ghostwriter\ExamplePsalmPlugin\ExamplePlugin;
+use Ghostwriter\PsalmPluginTester\PluginTester;
+use PHPUnit\Framework\TestCase;
+
+final class ExamplePluginTest extends TestCase
+{
+    private PluginTester $pluginTester;
+
+    protected function setUp(): void
+    {
+        // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
+        $this->pluginTester = new PluginTester(ExamplePlugin::class);
+    }
+
+    public static function fixtureDataProvider(): Generator
+    {
+        yield from PluginTester::yieldFixtures(
+            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
+            ExamplePlugin::class,
+
+            // Replace "test/Fixture" path.
+            dirname(__FILE__, 2) . '/Fixture'
+        );
+    }
+
+    /** @dataProvider fixtureDataProvider */
+    public function testPlugin(Fixture $fixture): void
+    {
+        $result = $this->pluginTester->test($fixture);
+
+        $result->assertExitCode(0)
+
+        self::assertSame($fixture, $result->getFixture());
+    }
+
+    public static function fixtureWarningDataProvider(): Generator
+    {
+        yield from PluginTester::yieldFixtures(
+            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
+            ExamplePlugin::class,
+
+            // Replace "test/Fixture/Warnings" path.
+            dirname(__FILE__, 2) . '/Fixture/Warning'
+        );
+    }
+
+    /** @dataProvider fixtureWarningDataProvider */
+    public function testPluginWarning(Fixture $fixture): void
+    {
+        $result = $this->pluginTester->test($fixture);
+
+        $result->assertExitCode(1)
+        
+        self::assertSame($fixture, $result->getFixture());
+    }
+
+    public static function fixtureErrorDataProvider(): Generator
+    {
+        yield from PluginTester::yieldFixtures(
+            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
+            ExamplePlugin::class,
+
+            // Replace "test/Fixture/Errors" path.
+            dirname(__FILE__, 2) . '/Fixture/Errors'
+        );
+    }
+
+    /** @dataProvider fixtureErrorDataProvider */
+    public function testPluginErrors(Fixture $fixture): void
+    {
+        $result = $this->pluginTester->test($fixture);
+
+        $result->assertExitCode(2)
+        
+        self::assertSame($fixture, $result->getFixture());
+    }
+}
+```
+
+- You can manually create an `expectation.json` file in the `psalm-runs-without-any-errors` directory or **run phpunit to automatcally generate `expectation.json`, `psalm.xml`, and an `autoload.php` for you.**
+
+> Manually
+
+- add your expectation in JSON format, 3 fields (file, type, message).
+
+> // No errors `expectation.json`
+>
 >    ```json
->    {}
+>    {
+>        "errors": []
+>    }
 >    ```
 
->    // Has Errors `expectation.json`
+> // Has Errors `expectation.json`
+>
 >    ```json
 >    {
 >        "errors": [
->            "path/to/file.php": [
 >                {
+>                    "file": "code.php"
 >                    "type": "MixedInferredReturnType"
 >                    "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided"
->                }
->            ],
->            "path/to/file2.php": [
+>                },
 >                {
+>                    "file": "car.php"
 >                    "type": "PossiblyUnusedMethod"
 >                    "message": "Cannot find any calls to method NS\\Car::drive"
 >                }
@@ -55,69 +152,7 @@ composer require ghostwriter/psalm-plugin-tester
 >        ]
 >    }
 >    ```
-    
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace Ghostwriter\ExamplePsalmPlugin
-{
-    use Psalm\Plugin\EventHandler\AfterAnalysisInterface;
-    use Psalm\Plugin\EventHandler\Event\AfterAnalysisEvent;
-    use Psalm\Plugin\PluginEntryPointInterface;
-    use Psalm\Plugin\RegistrationInterface;
-    use SimpleXMLElement;
-    
-    final class ExampleHooks implements AfterAnalysisInterface
-    {
-        public static function afterAnalysis(AfterAnalysisEvent $event): void
-        {
-            var_dump($event->getIssues());
-            die;
-        }
-    }
-    
-    final class ExamplePlugin implements PluginEntryPointInterface
-    {
-        public function __invoke(RegistrationInterface $registration, SimpleXMLElement|null $config = null): void
-        {
-            class_exists(ExampleHooks::class);
-            $registration->registerHooksFromClass(ExampleHooks::class);
-        }
-    }
-}
-
-namespace Ghostwriter\ExamplePsalmPlugin\Tests
-{
-    use Generator;
-    use Ghostwriter\ExamplePsalmPlugin\ExamplePlugin;
-    use Ghostwriter\PsalmPluginTester\PluginTester;
-    use PHPUnit\Framework\TestCase;
-    
-    final class ExamplePluginTest extends TestCase
-    {
-        private PluginTester $pluginTester;
-        protected function setUp(): void
-        {
-            $this->pluginTester = new PluginTester(ExamplePlugin::class);
-        }
-
-        public static function fixtureDataProvider(): Generator
-        {
-            yield from $this->psalmPluginTester->fixtures(__DIR__ . '/../tests/fixtures/');
-        }
-
-        /** @dataProvider fixtureDataProvider
-        public function testPlugin(string $fixture): void
-        {
-            $this->pluginTester->test($fixture);
-        }
-    }
-}
-```
-- run phpunit
+>
 
 ## Testing
 
