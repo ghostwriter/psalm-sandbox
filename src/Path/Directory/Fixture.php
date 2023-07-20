@@ -10,7 +10,6 @@ use Ghostwriter\Option\Some;
 use Ghostwriter\PsalmPluginTester\Path\File\ComposerJsonFile;
 use Ghostwriter\PsalmPluginTester\Path\File\ComposerLockFile;
 use RuntimeException;
-use Throwable;
 
 final class Fixture
 {
