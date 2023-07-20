@@ -6,7 +6,9 @@ namespace Ghostwriter\PsalmPluginTester\Path\File;
 
 use Ghostwriter\Json\Json;
 use Ghostwriter\PsalmPluginTester\Value\Expectation;
+use PHPUnit\Framework\Assert;
 use RuntimeException;
+use Throwable;
 
 final class ExpectationsJsonFile implements FileInterface
 {
@@ -49,6 +51,10 @@ final class ExpectationsJsonFile implements FileInterface
             throw new RuntimeException(sprintf('Could not read expectation file: "%s"', $this->path));
         }
 
-        return Json::decode($contents);
+        try {
+            return Json::decode($contents);
+        } catch (Throwable $exception) {
+            Assert::fail(sprintf('Could not decode expectation file: "%s"', $this->path), 0, $exception);
+        }
     }
 }
