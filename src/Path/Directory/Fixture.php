@@ -46,6 +46,7 @@ final class Fixture
     {
         return $this->path;
     }
+
     public function getPhpVersion(): string
     {
         return $this->getPsalmConfig()
