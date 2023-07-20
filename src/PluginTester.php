@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Ghostwriter\PsalmPluginTester;
 
+use CallbackFilterIterator;
 use Composer\InstalledVersions;
 use Composer\Semver\Comparator;
 use Composer\Semver\Semver;
 use Composer\Semver\VersionParser;
-use FilesystemIterator;
+use DirectoryIterator;
 use Generator;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
-use RecursiveCallbackFilterIterator;
-use RecursiveDirectoryIterator;
 use ReflectionClass;
 use RuntimeException;
 use SplFileInfo;
@@ -45,6 +44,7 @@ final class PluginTester
 
         $this->plugin = $plugin;
     }
+
     public function getPluginClass(): string
     {
         return $this->pluginClass;
@@ -155,19 +155,19 @@ final class PluginTester
             )
         ))->assertExpectations();
     }
+
     //    test plugin with psalm config
     //    test plugin with psalm config and psalm version
     //    test plugin with psalm config and php version [7.2 - 8.3]
     /**
-     * @param string $path
      * @return Generator<string,Fixture>
      */
     public static function yieldFixtures(string $path): Generator
     {
         /** @var SplFileInfo $fixtureDirectory */
-        foreach (new RecursiveCallbackFilterIterator(
-            new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
-            static fn (SplFileInfo $current): bool => $current->isDir()
+        foreach (new CallbackFilterIterator(
+            new DirectoryIterator($path),
+            static fn (SplFileInfo $current): bool => $current->isDir() && ! $current->isDot()
         ) as $fixtureDirectory) {
             $fixture = new Fixture($fixtureDirectory->getPathname());
 
