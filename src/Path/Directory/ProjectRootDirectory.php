@@ -187,4 +187,24 @@ XML . PHP_EOL;
                 ))
             );
     }
+
+    private function getRelativePath(string $from, string $to): string
+    {
+        $fromParts = explode(DIRECTORY_SEPARATOR, rtrim($from, DIRECTORY_SEPARATOR));
+        $toParts = explode(DIRECTORY_SEPARATOR, rtrim($to, DIRECTORY_SEPARATOR));
+
+        while (count($fromParts) > 0 && count($toParts) > 0 && $fromParts[0] === $toParts[0]) {
+            array_shift($fromParts);
+            array_shift($toParts);
+        }
+
+        $numDirsUp = count($fromParts);
+
+        $relativePath = str_repeat(match ($numDirsUp) {
+            1 => '.' . DIRECTORY_SEPARATOR,
+            default => '..' . DIRECTORY_SEPARATOR
+        }, $numDirsUp) . implode(DIRECTORY_SEPARATOR, $toParts);
+
+        return is_dir($to) ? rtrim($relativePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : $relativePath;
+    }
 }
