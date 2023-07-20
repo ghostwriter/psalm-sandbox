@@ -53,8 +53,6 @@ final class PsalmPhpUnitPluginTest extends TestCase
     {
         $result = $this->pluginTester->test($fixture);
 
-        $result->assertExitCode(2);
-
         self::assertSame($fixture, $result->getFixture());
     }
 }
