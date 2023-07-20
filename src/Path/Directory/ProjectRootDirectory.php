@@ -24,9 +24,9 @@ final class ProjectRootDirectory implements DirectoryInterface
 <?xml version="1.0"?>
 <psalm errorLevel="1">
     <projectFiles>
-        <directory name="." />
+        <directory name="%s" />
         <ignoreFiles>
-            <directory name="./../" />
+            <directory name="%s" />
         </ignoreFiles>
     </projectFiles>
     <plugins>
@@ -35,12 +35,12 @@ final class ProjectRootDirectory implements DirectoryInterface
 </psalm>
 XML;
 
+    private readonly string $path;
+
     public function __construct(
-        private readonly string $path,
+        private readonly Fixture $fixture,
     ) {
-        if (! is_dir($this->path)) {
-            throw new RuntimeException(sprintf('Directory "%s" does not exist', $this->path));
-        }
+        $this->path = $this->fixture->getPath();
     }
 
     /**
@@ -120,13 +120,17 @@ XML;
 
         $psalmConfig = tempnam(sys_get_temp_dir(), basename($this->path));
 
-        $vendorDirectory = realpath(dirname(__FILE__, 4) . '/vendor');
-        if($vendorDirectory === false) {
-            Assert::fail(sprintf('Could not find vendor directory: "%s"', $vendorDirectory));
+        $vendorDirectory = getcwd() . DIRECTORY_SEPARATOR . 'vendor';
+
+        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
+            $vendorDirectory = dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'vendor';
         }
 
+        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
+            Assert::fail(sprintf('Vendor directory "%s" does not exist', $vendorDirectory));
+        }
 
-        $result = file_put_contents($psalmConfig, sprintf(self::DEFAULT_PSALM_CONFIG, $vendorDirectory));
+        $result = file_put_contents($psalmConfig, sprintf(self::DEFAULT_PSALM_CONFIG, realpath($this->path), realpath($vendorDirectory)));
         if ($result === false) {
             Assert::fail(sprintf('Could not write psalm config file: "%s"', $psalmConfig));
         }
