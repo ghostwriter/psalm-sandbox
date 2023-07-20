@@ -41,9 +41,16 @@
         "ghostwriter/result": "^1.3"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main"
+        "ghostwriter/coding-standard": "dev-main",
+        "ghostwriter/example-psalm-plugin": "dev-main"
     },
     "replace": {},
+    "repositories": {
+        "ghostwriter/example-psalm-plugin": {
+            "type": "path",
+            "url": "./tests/Fixture/example-psalm-plugin"
+        }
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
