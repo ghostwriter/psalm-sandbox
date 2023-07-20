@@ -11,6 +11,7 @@ use PHPUnit\Framework\Assert;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
+use Throwable;
 
 final class PluginTestResult
 {
@@ -41,7 +42,11 @@ final class PluginTestResult
 
     public function assertExpectations(): self
     {
-        $output = $this->shellResult->getOutput() . $this->shellResult->getErrorOutput();
+        $output = $this->decode(
+            $this->shellResult->getOutput() . $this->shellResult->getErrorOutput()
+        );
+
+        /** @var list<Expectation> $errors */
         $errors = array_map(
             static fn (
                 array $expectation
@@ -50,15 +55,33 @@ final class PluginTestResult
                 $expectation['type'],
                 $expectation['message']
             ),
-            Json::decode($output)
+            $output
         );
 
         Assert::assertSame(
-            Json::encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
-            Json::encode($errors)
+            $this->encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
+            $this->encode($errors)
         );
 
         return $this;
+    }
+
+    private function encode(array $data): string
+    {
+        try {
+            return Json::encode($data);
+        } catch (Throwable $e) {
+            Assert::fail($e->getMessage());
+        }
+    }
+
+    private function decode(string $data): array
+    {
+        try {
+            return Json::decode($data);
+        } catch (Throwable $e) {
+            Assert::fail($e->getMessage());
+        }
     }
 
     public function getFixture(): Fixture
