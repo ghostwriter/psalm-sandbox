@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Ghostwriter\PsalmPluginTester\Value;
 
+use JsonSerializable;
 use Stringable;
 
-final class Expectation implements Stringable
+final class Expectation implements Stringable, JsonSerializable
 {
     public function __construct(
         private readonly string $file,
@@ -23,6 +24,15 @@ final class Expectation implements Stringable
             $this->type,
             $this->message,
         );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'file' => $this->file,
+            'type' => $this->type,
+            'message' => $this->message,
+        ];
     }
 
     public function getFile(): string
