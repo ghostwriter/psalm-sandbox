@@ -42,6 +42,10 @@ final class Fixture
         return basename($this->path);
     }
 
+    public function getPath(): string
+    {
+        return $this->path;
+    }
     public function getPhpVersion(): string
     {
         return $this->getPsalmConfig()
@@ -54,7 +58,7 @@ final class Fixture
 
     public function getProjectRootDirectory(): ProjectRootDirectory
     {
-        return new ProjectRootDirectory($this->path);
+        return new ProjectRootDirectory($this);
     }
 
     public function getPsalmConfig(): OptionInterface
@@ -97,5 +101,10 @@ final class Fixture
         }
 
         return Some::create(new VendorDirectory($this->path . '/vendor'));
+    }
+
+    public function pluginClass(): string
+    {
+        return $this->pluginClass;
     }
 }
