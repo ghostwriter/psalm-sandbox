@@ -12,11 +12,11 @@ use Composer\Semver\VersionParser;
 use DirectoryIterator;
 use Generator;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
+use PHPUnit\Framework\Assert;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
 use ReflectionClass;
-use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Process\ExecutableFinder;
 
@@ -25,6 +25,10 @@ final class PluginTester
     private readonly string $plugin;
 
     private bool $suppressProgress;
+
+    private bool $useBaseline = false;
+
+    private readonly string $vendorDirectory;
 
     /**
      * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
@@ -39,10 +43,22 @@ final class PluginTester
         $plugin = (new ReflectionClass($this->pluginClass))->getFileName();
 
         if ($plugin === false) {
-            throw new RuntimeException(sprintf('Plugin class "%s" does not exist', $this->pluginClass));
+            Assert::fail(sprintf('Plugin class "%s" does not exist', $this->pluginClass));
         }
 
         $this->plugin = $plugin;
+
+        $vendorDirectory = getcwd() . DIRECTORY_SEPARATOR . 'vendor';
+
+        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
+            $vendorDirectory = dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'vendor';
+        }
+
+        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
+            Assert::fail(sprintf('Vendor directory "%s" does not exist', $vendorDirectory));
+        }
+
+        $this->vendorDirectory = realpath($vendorDirectory);
     }
 
     public function getPluginClass(): string
@@ -54,11 +70,11 @@ final class PluginTester
     {
         $psalm = (new ExecutableFinder())->find(
             'psalm',
-            './../../../vendor/bin/psalm'
+            $this->vendorDirectory . '/bin/psalm'
         );
 
         if ($psalm === null) {
-            throw new RuntimeException('Psalm is not installed.');
+            Assert::fail('Psalm is not installed.');
         }
 
         return $psalm;
@@ -94,20 +110,22 @@ final class PluginTester
         $result = match (true) {
             $operator === '>' => $this->isPackageNewerThan($package, $version),
             $operator === '<' => $this->isPackageOlderThan($package, $version),
-            default => throw new RuntimeException(sprintf('Unknown operator: %s', $operator))
+            default => Assert::fail(sprintf('Unknown operator: %s', $operator))
         };
         if (! $result) {
-            throw new RuntimeException(sprintf('This scenario requires %s %s %s because of %s', $package, $operator, $version, $reason));
+            Assert::fail(sprintf('This scenario requires %s %s %s because of %s', $package, $operator, $version, $reason));
         }
     }
 
     public function packageSatisfiesVersionConstraint(string $package, string $constraint)
     {
         if (! InstalledVersions::isInstalled($package)) {
+            // Assert::fail(sprintf("Package %s is not installed", $package));
             return false;
         }
 
         if (! InstalledVersions::satisfies($this->versionParser, $package, $constraint)) {
+            // Assert::fail(sprintf("Package '%s' (%s) is not installed", $package, $constraint));
             return false;
         }
 
@@ -124,35 +142,29 @@ final class PluginTester
         return $result;
     }
 
-    public function test(Fixture $fixture): PluginTestResult
+    public function test(Fixture $fixture, string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION): PluginTestResult
     {
+        $fixtureRootDirectory =$fixture->getProjectRootDirectory()->getDirectory();
+
         return (new PluginTestResult(
             $this->pluginClass,
             $fixture,
             $this->shell->execute(
                 $this->getPsalmPath(),
                 [
+                    ...$this->suppressProgress ? ['--no-progress'] : [],
                     '--output-format=json',
                     '--no-cache',
+                    '--no-progress',
                     '--no-diff',
-                    ...$this->suppressProgress ? ['--no-progress'] : [],
+                    '--no-suggestions',
+                    '--root=' . $fixtureRootDirectory,
+                    '--php-version=' . $phpVersion,
+                    ...$this->useBaseline ? [sprintf('--use-baseline=%s/baseline.xml', $fixtureRootDirectory)] : [],
                     // '--plugin=' . $this->plugin,
                     '--config=' . $fixture->getPsalmConfig()->unwrap(),
-
-                    // $arguments[] = '--config=' . $config->getFile();
-                    // $arguments[] = '--php-version=' . $config->getPhpVersion();
-                    // $arguments[] = '--plugin=' . $plugin->getFile();
-                    // $arguments[] = '--debug';
-                    // $arguments[] = '--show-info=true';
-
-                    // $arguments[] = '--show-info=true';
-                    // $arguments[] = '--no-diff';
-                    // $arguments[] = '--no-cache';
-                    // $arguments[] = '--no-progress';
-                    // $arguments[] = '--no-suggestions';
-                    // $arguments[] = '--output-format=json';
                 ],
-                $fixture->getProjectRootDirectory()->getDirectory()
+                $fixtureRootDirectory
             )
         ))->assertExpectations();
     }
