@@ -10,6 +10,7 @@ use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use Ghostwriter\PsalmPluginTester\Path\Directory\ProjectRootDirectory;
 use Ghostwriter\PsalmPluginTester\Path\File\ExpectationsJsonFile;
 use Ghostwriter\PsalmPluginTester\Path\File\FileTrait;
+use Ghostwriter\PsalmPluginTester\Path\File\PsalmXmlFile;
 use Ghostwriter\PsalmPluginTester\Path\PathTrait;
 use Ghostwriter\PsalmPluginTester\PluginTester;
 use Ghostwriter\PsalmPluginTester\PluginTestResult;
@@ -23,6 +24,7 @@ use Psalm\PhpUnitPlugin\Plugin;
 #[CoversClass(PluginTester::class)]
 #[CoversClass(Fixture::class)]
 #[CoversClass(ExpectationsJsonFile::class)]
+#[CoversClass(PsalmXmlFile::class)]
 #[CoversClass(ProjectRootDirectory::class)]
 #[CoversClass(PluginTester::class)]
 #[CoversClass(PluginTestResult::class)]
@@ -45,7 +47,7 @@ final class PsalmPhpUnitPluginTest extends TestCase
     {
         yield from PluginTester::yieldFixtures(
             Plugin::class,
-            dirname(__FILE__, 2) . '/Fixture'
+            dirname(__FILE__, 2) . '/Fixture/PhpUnitPlugin'
         );
     }
 
