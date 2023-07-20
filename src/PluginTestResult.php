@@ -7,7 +7,6 @@ namespace Ghostwriter\PsalmPluginTester;
 use Ghostwriter\Json\Json;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use Ghostwriter\PsalmPluginTester\Value\Expectation;
-use PHPUnit\Event\Runtime\PHP;
 use PHPUnit\Framework\Assert;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
@@ -43,9 +42,11 @@ final class PluginTestResult
 
     public function assertExpectations(): self
     {
-        $output = $this->decode(
-            $this->shellResult->getOutput() . $this->shellResult->getErrorOutput()
-        );
+        $errorOutput = $this->shellResult->getErrorOutput();
+
+        if ($errorOutput !== '') {
+            Assert::fail($errorOutput);
+        }
 
         /** @var list<Expectation> $errors */
         $errors = array_map(
@@ -56,16 +57,29 @@ final class PluginTestResult
                 $expectation['type'],
                 $expectation['message']
             ),
-            $output
+            $this->decode($this->shellResult->getOutput())
         );
 
+        $root = $this->fixture->getPath();
+
+        $encode = $this->encode([
+            'error' => $errors,
+        ]);
+
         Assert::assertSame(
-            $this->encode(
-                $this->fixture->getProjectRootDirectory()
-                    ->getExpectationsJsonFile()
-                    ->mapOr(static fn ($file) => $file->getExpectations(), [])
-            ),
-            $this->encode($errors)
+            $this->fixture->getProjectRootDirectory()
+                ->getExpectationsJsonFile()
+                ->mapOrElse(
+                    fn ($file) => $this->encode([
+                        'error' => $file->getExpectations(),
+                    ]),
+                    static function () use ($root, $encode): string {
+                        file_put_contents($root . '/expectations.json', $encode . PHP_EOL);
+
+                        return $encode;
+                    }
+                ),
+            $encode
         );
 
         return $this;
@@ -91,16 +105,16 @@ final class PluginTestResult
         try {
             return Json::decode($data);
         } catch (Throwable $e) {
-            Assert::fail($e->getMessage() .PHP_EOL . $data);
+            Assert::fail($e->getMessage() . PHP_EOL . var_export($data));
         }
     }
 
     private function encode(array $data): string
     {
         try {
-            return Json::encode($data);
+            return Json::encode($data, Json::PRETTY);
         } catch (Throwable $e) {
-            Assert::fail($e->getMessage());
+            Assert::fail($e->getMessage() . PHP_EOL . var_export($data));
         }
     }
 }
