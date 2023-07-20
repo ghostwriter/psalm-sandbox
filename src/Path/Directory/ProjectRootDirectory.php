@@ -20,9 +20,23 @@ final class ProjectRootDirectory implements DirectoryInterface
 {
     use DirectoryTrait;
 
-    private const DEFAULT_PSALM_CONFIG = <<<XML
+    private const DEFAULT_PSALM_AUTOLOADER = <<<'AUTOLOADER'
+<?php
+
+use Composer\Autoload\ClassLoader;
+
+/** @var ClassLoader $autoloader */
+$autoloader = require '%sautoload.php';
+if (!$autoloader instanceof ClassLoader) {
+    throw new RuntimeException('Autoloader not found');
+}
+
+$autoloader->add('', __DIR__);
+AUTOLOADER . PHP_EOL;
+
+    private const DEFAULT_PSALM_CONFIG = <<<'XML'
 <?xml version="1.0"?>
-<psalm errorLevel="1">
+<psalm errorLevel="1" autoloader="autoload.php">
     <projectFiles>
         <directory name="%s" />
         <ignoreFiles>
@@ -30,10 +44,10 @@ final class ProjectRootDirectory implements DirectoryInterface
         </ignoreFiles>
     </projectFiles>
     <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+        <pluginClass class="%s" />
     </plugins>
 </psalm>
-XML;
+XML . PHP_EOL;
 
     private readonly string $path;
 
@@ -118,8 +132,6 @@ XML;
             );
         }
 
-        $psalmConfig = tempnam(sys_get_temp_dir(), basename($this->path));
-
         $vendorDirectory = getcwd() . DIRECTORY_SEPARATOR . 'vendor';
 
         if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
@@ -130,9 +142,28 @@ XML;
             Assert::fail(sprintf('Vendor directory "%s" does not exist', $vendorDirectory));
         }
 
-        $result = file_put_contents($psalmConfig, sprintf(self::DEFAULT_PSALM_CONFIG, realpath($this->path), realpath($vendorDirectory)));
+        $getRelativePath = $this->getRelativePath($psalmConfig, realpath($this->path));
+
+        $getRelativeVendorDirectory = $this->getRelativePath(realpath($this->path), realpath($vendorDirectory));
+
+        $result = file_put_contents($psalmConfig, sprintf(
+            self::DEFAULT_PSALM_CONFIG,
+            $getRelativePath,
+            $getRelativeVendorDirectory,
+            $this->fixture->pluginClass()
+        ));
+
         if ($result === false) {
             Assert::fail(sprintf('Could not write psalm config file: "%s"', $psalmConfig));
+        }
+
+        $autoloadFile = $this->path . '/autoload.php';
+        $result = file_put_contents($autoloadFile, sprintf(
+            self::DEFAULT_PSALM_AUTOLOADER,
+            $getRelativeVendorDirectory
+        ));
+        if ($result === false) {
+            Assert::fail(sprintf('Could not write autoload file: "%s"', $autoloadFile));
         }
 
         return $option->orElse(
