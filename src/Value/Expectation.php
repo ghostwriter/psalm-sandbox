@@ -7,7 +7,7 @@ namespace Ghostwriter\PsalmPluginTester\Value;
 use JsonSerializable;
 use Stringable;
 
-final class Expectation implements Stringable, JsonSerializable
+final class Expectation implements JsonSerializable, Stringable
 {
     public function __construct(
         private readonly string $file,
@@ -26,15 +26,6 @@ final class Expectation implements Stringable, JsonSerializable
         );
     }
 
-    public function jsonSerialize(): array
-    {
-        return [
-            'file' => $this->file,
-            'type' => $this->type,
-            'message' => $this->message,
-        ];
-    }
-
     public function getFile(): string
     {
         return $this->file;
@@ -48,5 +39,14 @@ final class Expectation implements Stringable, JsonSerializable
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'file' => $this->file,
+            'type' => $this->type,
+            'message' => $this->message,
+        ];
     }
 }
