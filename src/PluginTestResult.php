@@ -7,6 +7,7 @@ namespace Ghostwriter\PsalmPluginTester;
 use Ghostwriter\Json\Json;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use Ghostwriter\PsalmPluginTester\Value\Expectation;
+use PHPUnit\Event\Runtime\PHP;
 use PHPUnit\Framework\Assert;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
@@ -90,7 +91,7 @@ final class PluginTestResult
         try {
             return Json::decode($data);
         } catch (Throwable $e) {
-            Assert::fail($e->getMessage());
+            Assert::fail($e->getMessage() .PHP_EOL . $data);
         }
     }
 
