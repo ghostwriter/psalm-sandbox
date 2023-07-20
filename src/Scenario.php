@@ -32,4 +32,9 @@ final class Scenario
         //        private readonly string $psalmVersion,
     ) {
     }
+
+    public function getCurrentPhpVersion(): string
+    {
+        return self::PHP_CURRENT_VERSION;
+    }
 }
