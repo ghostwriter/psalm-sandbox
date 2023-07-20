@@ -85,17 +85,18 @@
         "check": [
             "@composer validate",
             "@normalizer",
-            "@cs-check",
-            "@cs-fix",
+            "@ecs",
             "@test",
             "@psalm:security",
             "@rector:dry-run",
             "@psalm:dry-run"
         ],
-        "cs-check": "vendor/bin/ecs check --clear-cache || true",
-        "cs-fix": [
-            "vendor/bin/ecs check --fix --clear-cache"
+        "ecs": [
+            "@ecs:fix",
+            "@ecs:check"
         ],
+        "ecs:check": "vendor/bin/ecs check --clear-cache || true",
+        "ecs:fix": "vendor/bin/ecs check --fix --clear-cache",
         "infection": [
             "@xdebug",
             "vendor/bin/infection --verbose"
