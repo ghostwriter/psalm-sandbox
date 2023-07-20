@@ -41,6 +41,7 @@ final class PluginTestResult
 
     public function assertExpectations(): self
     {
+        $output = $this->shellResult->getOutput() . $this->shellResult->getErrorOutput();
         $errors = array_map(
             static fn (
                 array $expectation
@@ -49,28 +50,26 @@ final class PluginTestResult
                 $expectation['type'],
                 $expectation['message']
             ),
-            Json::decode($this->shellResult->getOutput())
+            Json::decode($output)
         );
 
         Assert::assertSame(
             Json::encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
             Json::encode($errors)
         );
+
         return $this;
     }
-
 
     public function getFixture(): Fixture
     {
         return $this->fixture;
     }
 
-
     public function getPluginClass(): string
     {
         return $this->pluginClass;
     }
-
 
     public function getShellResult(): ShellResult
     {
