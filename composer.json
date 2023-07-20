@@ -37,7 +37,8 @@
         "ghostwriter/event-dispatcher": "^1.4.1",
         "ghostwriter/json": "^1.1",
         "ghostwriter/option": "^1.5",
-        "ghostwriter/result": "^1.2"
+        "ghostwriter/result": "^1.2",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main"
@@ -50,13 +51,11 @@
             "Ghostwriter\\PsalmPluginTester\\": "src/"
         },
         "files": [
-            "src/constants.php",
-            "src/functions.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\PsalmPluginTester\\Tests\\": "tests/"
+            "Ghostwriter\\PsalmPluginTester\\Tests\\Unit\\": "tests/Unit"
         }
     },
     "bin": [
