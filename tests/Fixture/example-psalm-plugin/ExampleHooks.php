@@ -39,11 +39,7 @@ final class ExampleHooks implements AfterStatementAnalysisInterface
                 }
 
                 foreach ($expressionType->getAtomicTypes() as $type) {
-                    if(! $type instanceof TString) {
-                        continue;
-                    }
-
-                    if($type instanceof TLiteralString) {
+                    if (! $type instanceof TString && $type instanceof TLiteralString) {
                         continue;
                     }
 
