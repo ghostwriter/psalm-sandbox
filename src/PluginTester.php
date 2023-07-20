@@ -23,8 +23,9 @@ use Symfony\Component\Process\ExecutableFinder;
 
 final class PluginTester
 {
-    private bool $suppressProgress;
     private readonly string $plugin;
+
+    private bool $suppressProgress;
 
     /**
      * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
@@ -43,7 +44,7 @@ final class PluginTester
         }
 
         $this->plugin = $plugin;
-      }
+    }
     public function getPluginClass(): string
     {
         return $this->pluginClass;
@@ -136,11 +137,27 @@ final class PluginTester
                     '--no-diff',
                     ...$this->suppressProgress ? ['--no-progress'] : [],
                     '--plugin=' . $this->plugin,
+
+                    // $arguments[] = '--config=' . $config->getFile();
+                    // $arguments[] = '--php-version=' . $config->getPhpVersion();
+                    // $arguments[] = '--plugin=' . $plugin->getFile();
+                    // $arguments[] = '--debug';
+                    // $arguments[] = '--show-info=true';
+
+                    // $arguments[] = '--show-info=true';
+                    // $arguments[] = '--no-diff';
+                    // $arguments[] = '--no-cache';
+                    // $arguments[] = '--no-progress';
+                    // $arguments[] = '--no-suggestions';
+                    // $arguments[] = '--output-format=json';
                 ],
                 $fixture->getProjectRootDirectory()->getDirectory()
             )
         ))->assertExpectations();
     }
+    //    test plugin with psalm config
+    //    test plugin with psalm config and psalm version
+    //    test plugin with psalm config and php version [7.2 - 8.3]
     /**
      * @param string $path
      * @return Generator<string,Fixture>
