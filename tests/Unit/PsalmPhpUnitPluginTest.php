@@ -44,6 +44,7 @@ final class PsalmPhpUnitPluginTest extends TestCase
     public static function fixtureDataProvider(): Generator
     {
         yield from PluginTester::yieldFixtures(
+            Plugin::class,
             dirname(__FILE__, 2) . '/Fixture'
         );
     }
