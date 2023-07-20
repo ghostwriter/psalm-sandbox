@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a72e48eb022ebf2bfc28c5c5dd62c1bc",
+    "content-hash": "b1e4264f39ffd0b436b8b87268af4976",
     "packages": [
         {
             "name": "ghostwriter/collection",
@@ -1607,6 +1607,36 @@
                 }
             ],
             "time": "2023-07-18T02:01:26+00:00"
+        },
+        {
+            "name": "ghostwriter/example-psalm-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./tests/Fixture/example-psalm-plugin",
+                "reference": "4a406f3f5491bd453911ce248558396e651a0593"
+            },
+            "require": {
+                "composer/semver": "^1.4 || ^2.0 || ^3.0",
+                "ext-simplexml": "*",
+                "php": ">=8.1,<8.4",
+                "vimeo/psalm": ">=4.0,<6.0"
+            },
+            "type": "psalm-plugin",
+            "extra": {
+                "psalm": {
+                    "pluginClass": "Ghostwriter\\ExamplePsalmPlugin\\ExamplePlugin"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\ExamplePsalmPlugin\\": "/"
+                }
+            },
+            "description": "An Example plugin for Psalm",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "infection/abstract-testframework-adapter",
@@ -6592,7 +6622,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ghostwriter/coding-standard": 20
+        "ghostwriter/coding-standard": 20,
+        "ghostwriter/example-psalm-plugin": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
