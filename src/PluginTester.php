@@ -136,7 +136,8 @@ final class PluginTester
                     '--no-cache',
                     '--no-diff',
                     ...$this->suppressProgress ? ['--no-progress'] : [],
-                    '--plugin=' . $this->plugin,
+                    // '--plugin=' . $this->plugin,
+                    '--config=' . $fixture->getPsalmConfig()->unwrap(),
 
                     // $arguments[] = '--config=' . $config->getFile();
                     // $arguments[] = '--php-version=' . $config->getPhpVersion();
