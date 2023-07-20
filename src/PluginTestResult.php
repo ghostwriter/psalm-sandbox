@@ -59,29 +59,15 @@ final class PluginTestResult
         );
 
         Assert::assertSame(
-            $this->encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
+            $this->encode(
+                $this->fixture->getProjectRootDirectory()
+                    ->getExpectationsJsonFile()
+                    ->mapOr(static fn ($file) => $file->getExpectations(), [])
+            ),
             $this->encode($errors)
         );
 
         return $this;
-    }
-
-    private function encode(array $data): string
-    {
-        try {
-            return Json::encode($data);
-        } catch (Throwable $e) {
-            Assert::fail($e->getMessage());
-        }
-    }
-
-    private function decode(string $data): array
-    {
-        try {
-            return Json::decode($data);
-        } catch (Throwable $e) {
-            Assert::fail($e->getMessage());
-        }
     }
 
     public function getFixture(): Fixture
@@ -97,5 +83,23 @@ final class PluginTestResult
     public function getShellResult(): ShellResult
     {
         return $this->shellResult;
+    }
+
+    private function decode(string $data): array
+    {
+        try {
+            return Json::decode($data);
+        } catch (Throwable $e) {
+            Assert::fail($e->getMessage());
+        }
+    }
+
+    private function encode(array $data): string
+    {
+        try {
+            return Json::encode($data);
+        } catch (Throwable $e) {
+            Assert::fail($e->getMessage());
+        }
     }
 }
