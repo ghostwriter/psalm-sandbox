@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ghostwriter\PsalmPluginTester;
 
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
-use Ghostwriter\PsalmPluginTester\Path\Directory\ProjectRootDirectory;
 
 final class Scenario
 {
