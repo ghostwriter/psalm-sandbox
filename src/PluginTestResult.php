@@ -24,31 +24,6 @@ final class PluginTestResult
     ) {
     }
 
-    /**
-     * @return ShellResult
-     */
-    public function getShellResult(): ShellResult
-    {
-        return $this->shellResult;
-    }
-
-    /**
-     * @return Fixture
-     */
-    public function getFixture(): Fixture
-    {
-        return $this->fixture;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPluginClass(): string
-    {
-        return $this->pluginClass;
-    }
-
-
     public function assertExitCode(int $expectedExitCode): void
     {
         $actualExitCode = $this->shellResult->getExitCode();
@@ -63,23 +38,42 @@ final class PluginTestResult
             )
         );
     }
+
     public function assertExpectations(): self
     {
         $errors = array_map(
-        static fn (
-            array $expectation
-        ): Expectation => new Expectation(
-            $expectation['file_name'],
-            $expectation['type'],
-            $expectation['message']
-        ),
+            static fn (
+                array $expectation
+            ): Expectation => new Expectation(
+                $expectation['file_name'],
+                $expectation['type'],
+                $expectation['message']
+            ),
             Json::decode($this->shellResult->getOutput())
-    );
+        );
 
         Assert::assertSame(
-        Json::encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
-        Json::encode($errors)
+            Json::encode($this->fixture->getProjectRootDirectory()->getExpectationsJsonFile()->unwrap()->getExpectations()),
+            Json::encode($errors)
         );
         return $this;
+    }
+
+
+    public function getFixture(): Fixture
+    {
+        return $this->fixture;
+    }
+
+
+    public function getPluginClass(): string
+    {
+        return $this->pluginClass;
+    }
+
+
+    public function getShellResult(): ShellResult
+    {
+        return $this->shellResult;
     }
 }
