@@ -1,2 +1,339 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863"/>
+<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+  <file src="src/Path/Directory/Fixture.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[None::create()
+            ->or($this->getComposerLock()->getPsalmVersion())
+            ->or($this->getComposerJson()->getPsalmVersion())
+            ->unwrapOrElse(
+                fn () => throw new RuntimeException(sprintf('No "psalm" version found in "%s"', $this->path))
+            )]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>string</code>
+    </InvalidReturnType>
+    <MixedInferredReturnType>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>or</code>
+      <code>unwrapOrElse</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->getPsalmConfig()
+            ->getPhpVersion()
+            ->or($this->getComposerLock() ->getPhpVersion() ->or($this->getComposerJson() ->getPhpVersion()))
+            ->unwrapOrElse(
+                fn () => throw new RuntimeException(sprintf('No "php" version found in "%s"', $this->path))
+            )]]></code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getPhpVersion</code>
+      <code>getPsalmVersion</code>
+      <code>getPsalmVersionFromComposerJson</code>
+      <code>getPsalmVersionFromComposerLock</code>
+      <code>getPsalmVersionFromPsalmConfig</code>
+      <code>getVendorDirectory</code>
+    </PossiblyUnusedMethod>
+    <UndefinedInterfaceMethod>
+      <code>getPhpVersion</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Path/Directory/ProjectRootDirectory.php">
+    <InvalidArgument>
+      <code><![CDATA[static fn (): ComposerJsonFile => new ComposerJsonFile($composerJson)]]></code>
+      <code><![CDATA[static fn (): ComposerLockFile => new ComposerLockFile($composerLock)]]></code>
+      <code><![CDATA[static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)]]></code>
+      <code><![CDATA[static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)]]></code>
+      <code><![CDATA[static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)]]></code>
+    </InvalidArgument>
+    <MixedInferredReturnType>
+      <code><![CDATA[OptionInterface<PsalmExpectation>]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnTypeCoercion>
+      <code><![CDATA[$option->orElse(
+                static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
+            )]]></code>
+      <code><![CDATA[$option->orElse(
+                static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
+            )]]></code>
+      <code><![CDATA[$option->orElse(
+            static fn (): ComposerLockFile => new ComposerLockFile($composerLock)
+        )]]></code>
+      <code><![CDATA[$option->orElse(
+            static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
+        )]]></code>
+      <code><![CDATA[$option->orElse(static fn (): ComposerJsonFile => new ComposerJsonFile($composerJson))]]></code>
+      <code><![CDATA[OptionInterface<ComposerJsonFile>]]></code>
+      <code><![CDATA[OptionInterface<ComposerLockFile>]]></code>
+      <code><![CDATA[OptionInterface<PsalmXmlFile>]]></code>
+    </MixedReturnTypeCoercion>
+    <PossiblyFalseArgument>
+      <code><![CDATA[realpath($this->path)]]></code>
+      <code><![CDATA[realpath($this->path)]]></code>
+      <code>realpath($vendorDirectory)</code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code>getcwd()</code>
+    </PossiblyFalseOperand>
+    <PossiblyUnusedMethod>
+      <code>getPsalmVersion</code>
+    </PossiblyUnusedMethod>
+    <UndefinedDocblockClass>
+      <code><![CDATA[OptionInterface<PsalmExpectation>]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Path/File/ComposerJsonFile.php">
+    <InvalidDocblock>
+      <code>private function read(): array</code>
+    </InvalidDocblock>
+    <MixedArrayAccess>
+      <code><![CDATA[$platform['php']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$phpVersion</code>
+      <code>$platform</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code><![CDATA[array{
+     *     'errors': array{'file': string, 'line': int, 'type': string, 'message': string},
+     *     'platform': array{'php': string},
+     *     'require': array{'php': string, 'vimeo/psalm': string},
+     *     'require-dev': array{'vimeo/psalm': string},
+     *     'autoload': array{'psr-0'|'psr-4':array{'Vendor\\Namespace\\':string}|'file':array{'path':string}}
+     * }]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>Json::decode($contents)</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Path/File/ComposerLockFile.php">
+    <MixedArrayAccess>
+      <code><![CDATA[$composerLockData['platform']]]></code>
+      <code><![CDATA[$platform['php']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$composerLockData</code>
+      <code>$phpVersion</code>
+      <code>$platform</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Path/File/ExpectationsJsonFile.php">
+    <InvalidArrayOffset>
+      <code><![CDATA[$expectations['error']]]></code>
+      <code><![CDATA[$expectations['warning']]]></code>
+    </InvalidArrayOffset>
+    <MixedArgument>
+      <code><![CDATA[$expectation['file']]]></code>
+      <code><![CDATA[$expectation['message']]]></code>
+      <code><![CDATA[$expectation['type']]]></code>
+      <code><![CDATA[$expectations['error'] ?? []]]></code>
+      <code><![CDATA[$expectations['warning'] ?? []]]></code>
+    </MixedArgument>
+    <MixedInferredReturnType>
+      <code><![CDATA[array{'errors': array{'file': string, 'type': string, 'message': string}}]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>Json::decode($contents)</code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+      <code>getExpectations</code>
+    </PossiblyUnusedMethod>
+    <TooManyArguments>
+      <code><![CDATA[Assert::fail(sprintf('Could not decode expectation file: "%s"', $this->path), 0, $exception)]]></code>
+      <code><![CDATA[static fn (
+                array $expectation
+            ): Expectation => new Expectation(
+                $expectation['file'],
+                $expectation['type'],
+                $expectation['message']
+            )]]></code>
+    </TooManyArguments>
+  </file>
+  <file src="src/Path/File/FileInterface.php">
+    <PossiblyUnusedMethod>
+      <code>getFile</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Path/File/FileTrait.php">
+    <MixedArgument>
+      <code><![CDATA[$this->file]]></code>
+    </MixedArgument>
+    <UndefinedClass>
+      <code>RuntimeException</code>
+    </UndefinedClass>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->file]]></code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="src/Path/File/PsalmXmlFile.php">
+    <MixedArgument>
+      <code><![CDATA[$this->file]]></code>
+      <code><![CDATA[$this->file]]></code>
+      <code><![CDATA[$this->file]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$phpVersion</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->file]]></code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getPhpVersion</code>
+    </PossiblyUnusedMethod>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->file]]></code>
+      <code><![CDATA[$this->file]]></code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="src/PluginTestResult.php">
+    <InvalidOperand>
+      <code>var_export($data)</code>
+      <code>var_export($data)</code>
+    </InvalidOperand>
+    <MixedArgument>
+      <code><![CDATA[$expectation['file_name']]]></code>
+      <code><![CDATA[$expectation['message']]]></code>
+      <code><![CDATA[$expectation['type']]]></code>
+    </MixedArgument>
+    <MixedInferredReturnType>
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>Json::decode($data)</code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>assertExitCode</code>
+      <code>getPlugin</code>
+      <code>getPluginClass</code>
+      <code>getShellResult</code>
+    </PossiblyUnusedMethod>
+    <UndefinedDocblockClass>
+      <code>$file</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/PluginTester.php">
+    <ArgumentTypeCoercion>
+      <code>$operator</code>
+    </ArgumentTypeCoercion>
+    <InvalidOperand>
+      <code>PHP_MAJOR_VERSION</code>
+      <code>PHP_MINOR_VERSION</code>
+    </InvalidOperand>
+    <InvalidReturnType>
+      <code><![CDATA[Generator<string,Fixture>]]></code>
+    </InvalidReturnType>
+    <MissingReturnType>
+      <code>havePackageVersion</code>
+      <code>isPackageNewerThan</code>
+      <code>isPackageOlderThan</code>
+      <code>isPackageVersion</code>
+      <code>packageSatisfiesVersionConstraint</code>
+    </MissingReturnType>
+    <MixedAssignment>
+      <code>$result</code>
+      <code><![CDATA[$this->suppressProgress]]></code>
+    </MixedAssignment>
+    <MixedOperand>
+      <code><![CDATA[$fixture->getPsalmConfig()->unwrap()]]></code>
+    </MixedOperand>
+    <PossiblyFalseOperand>
+      <code>getcwd()</code>
+    </PossiblyFalseOperand>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code>realpath($vendorDirectory)</code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyNullArgument>
+      <code>InstalledVersions::getPrettyVersion($package)</code>
+      <code>InstalledVersions::getPrettyVersion($package)</code>
+    </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>getPluginClass</code>
+      <code>isPackageVersion</code>
+    </PossiblyUnusedMethod>
+    <UndefinedMethod>
+      <code>isDot</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Scenario.php">
+    <InvalidOperand>
+      <code>PHP_MAJOR_VERSION</code>
+      <code>PHP_MINOR_VERSION</code>
+    </InvalidOperand>
+    <UnusedClass>
+      <code>Scenario</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Shell.php">
+    <PossiblyFalseArgument>
+      <code>$workingDirectory ?? getcwd()</code>
+    </PossiblyFalseArgument>
+  </file>
+  <file src="src/ShellResult.php">
+    <InvalidNullableReturnType>
+      <code>int</code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement>
+      <code><![CDATA[$this->process->getExitCode()]]></code>
+    </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getProcess</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Value/Expectation.php">
+    <PossiblyUnusedMethod>
+      <code>getFile</code>
+      <code>getMessage</code>
+      <code>getType</code>
+      <code>jsonSerialize</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Version/PhpVersion.php">
+    <InvalidReturnType>
+      <code>OptionInterface</code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/Version/PhpVersionInterface.php">
+    <PossiblyUnusedMethod>
+      <code>getPhpVersion</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Version/PsalmVersionInterface.php">
+    <PossiblyUnusedMethod>
+      <code>getPsalmVersion</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/VersionFactory.php">
+    <TooManyArguments>
+      <code><![CDATA[new PsalmVersion($version, $this->versionParser)]]></code>
+    </TooManyArguments>
+    <UnusedClass>
+      <code>VersionFactory</code>
+    </UnusedClass>
+  </file>
+  <file src="src/VersionFactoryInterface.php">
+    <PossiblyUnusedMethod>
+      <code>createPhpVersion</code>
+      <code>createPsalmVersion</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src/VersionInterface.php">
+    <PossiblyUnusedMethod>
+      <code>satisfies</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/Unit/ExamplePluginTest.php">
+    <MixedInferredReturnType>
+      <code>Generator</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="tests/Unit/PsalmPhpUnitPluginTest.php">
+    <MixedInferredReturnType>
+      <code>Generator</code>
+    </MixedInferredReturnType>
+  </file>
+</files>
