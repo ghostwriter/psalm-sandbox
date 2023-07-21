@@ -180,15 +180,15 @@ XML . PHP_EOL;
     {
         return None::create();
 
-            // ->or($this->getComposerLock()->getPsalmVersion())
-            // ->or($this->getComposerJson()->getPsalmVersion())
-            // ->orElse(static fn () => InstalledVersions::getVersion('vimeo/psalm'))
-            // ->unwrapOrElse(
-            //     fn () => throw new RuntimeException(sprintf(
-            //         'Could not determine psalm version from composer.json or composer.lock in "%s"',
-            //         $this->path
-            //     ))
-            // );
+        // ->or($this->getComposerLock()->getPsalmVersion())
+        // ->or($this->getComposerJson()->getPsalmVersion())
+        // ->orElse(static fn () => InstalledVersions::getVersion('vimeo/psalm'))
+        // ->unwrapOrElse(
+        //     fn () => throw new RuntimeException(sprintf(
+        //         'Could not determine psalm version from composer.json or composer.lock in "%s"',
+        //         $this->path
+        //     ))
+        // );
     }
 
     private function getRelativePath(string $from, string $to): string
