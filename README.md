@@ -19,7 +19,7 @@ work in progress
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/psalm-plugin-tester
+composer require ghostwriter/psalm-plugin-tester:dev-main
 ```
 
 ## Usage
@@ -171,6 +171,16 @@ If you discover any security related issues, please email `nathanael.esayeas@pro
 ## Support
 
 [[`Become a GitHub Sponsor`](https://github.com/sponsors/ghostwriter)]
+
+## Thank you
+
+To acknowledge the efforts of those who create and maintain valuable projects for the community.
+
+Thank you to [Bruce Weirdan](https://github.com/weirdan) for the original [`psalm/codeception-psalm-module`](https://github.com/psalm/codeception-psalm-module) that served as the starting point for my work.
+
+Thank you to [Matt Brown](https://github.com/muglug), the creator of [`vimeo/psalm`](https://github.com/vimeo/psalm), a fantastic tool for static analysis in PHP.
+
+Special thanks to [@orklah](https://github.com/orklah) for maintaining [`vimeo/psalm`](https://github.com/vimeo/psalm), ensuring its continuous improvement and functionality.
 
 ## Credits
 
