@@ -57,6 +57,11 @@ final class Fixture
             );
     }
 
+    public function getPluginClass(): string
+    {
+        return $this->pluginClass;
+    }
+
     public function getProjectRootDirectory(): ProjectRootDirectory
     {
         return new ProjectRootDirectory($this);
@@ -102,10 +107,5 @@ final class Fixture
         }
 
         return Some::create(new VendorDirectory($this->path . '/vendor'));
-    }
-
-    public function pluginClass(): string
-    {
-        return $this->pluginClass;
     }
 }
