@@ -40,7 +40,7 @@ final class PluginTester
     ) {
         $this->suppressProgress = $this->packageSatisfiesVersionConstraint('vimeo/psalm', '>=3.4.0');
 
-        $plugin = (new ReflectionClass($this->pluginClass))->getFileName();
+        $plugin = realpath((new ReflectionClass($this->pluginClass))->getFileName());
 
         if ($plugin === false) {
             Assert::fail(sprintf('Plugin class "%s" does not exist', $this->pluginClass));
@@ -148,6 +148,7 @@ final class PluginTester
 
         return (new PluginTestResult(
             $this->pluginClass,
+            $this->plugin,
             $fixture,
             $this->shell->execute(
                 $this->getPsalmPath(),
