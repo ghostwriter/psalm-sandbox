@@ -45,6 +45,7 @@ AUTOLOADER . PHP_EOL;
     </projectFiles>
     <plugins>
         <pluginClass class="%s" />
+        <plugin filename="%s"/>
     </plugins>
 </psalm>
 XML . PHP_EOL;
@@ -150,7 +151,8 @@ XML . PHP_EOL;
             self::DEFAULT_PSALM_CONFIG,
             $getRelativePath,
             $getRelativeVendorDirectory,
-            $this->fixture->pluginClass()
+            $this->fixture->getPluginClass(),
+            $this->fixture->getPath()
         ));
 
         if ($result === false) {
@@ -176,16 +178,17 @@ XML . PHP_EOL;
      */
     public function getPsalmVersion(): OptionInterface
     {
-        return None::create()
-            ->or($this->getComposerLock()->getPsalmVersion())
-            ->or($this->getComposerJson()->getPsalmVersion())
-            ->orElse(static fn () => InstalledVersions::getVersion('vimeo/psalm'))
-            ->unwrapOrElse(
-                fn () => throw new RuntimeException(sprintf(
-                    'Could not determine psalm version from composer.json or composer.lock in "%s"',
-                    $this->path
-                ))
-            );
+        return None::create();
+
+            // ->or($this->getComposerLock()->getPsalmVersion())
+            // ->or($this->getComposerJson()->getPsalmVersion())
+            // ->orElse(static fn () => InstalledVersions::getVersion('vimeo/psalm'))
+            // ->unwrapOrElse(
+            //     fn () => throw new RuntimeException(sprintf(
+            //         'Could not determine psalm version from composer.json or composer.lock in "%s"',
+            //         $this->path
+            //     ))
+            // );
     }
 
     private function getRelativePath(string $from, string $to): string
