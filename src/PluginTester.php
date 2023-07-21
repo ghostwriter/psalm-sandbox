@@ -47,18 +47,7 @@ final class PluginTester
         }
 
         $this->plugin = $plugin;
-
-        $vendorDirectory = getcwd() . DIRECTORY_SEPARATOR . 'vendor';
-
-        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
-            $vendorDirectory = dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'vendor';
-        }
-
-        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
-            Assert::fail(sprintf('Vendor directory "%s" does not exist', $vendorDirectory));
-        }
-
-        $this->vendorDirectory = realpath($vendorDirectory);
+        $this->vendorDirectory = dirname($this->getPsalmPath());
     }
 
     public function getPluginClass(): string
@@ -69,8 +58,12 @@ final class PluginTester
     public function getPsalmPath(): string
     {
         $psalm = (new ExecutableFinder())->find(
-            'psalm',
-            $this->vendorDirectory . '/bin/psalm'
+            'vendor/bin/psalm',
+            null,
+            [
+                dirname(__DIR__, 1) . DIRECTORY_SEPARATOR,
+                dirname(__DIR__, 3) . DIRECTORY_SEPARATOR,
+            ]
         );
 
         if ($psalm === null) {
@@ -144,7 +137,7 @@ final class PluginTester
 
     public function test(Fixture $fixture, string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION): PluginTestResult
     {
-        $fixtureRootDirectory =$fixture->getProjectRootDirectory()->getDirectory();
+        $fixtureRootDirectory = $fixture->getProjectRootDirectory()->getDirectory();
 
         return (new PluginTestResult(
             $this->pluginClass,
