@@ -20,6 +20,7 @@ final class PluginTestResult
      */
     public function __construct(
         private readonly string $pluginClass,
+        private readonly string $plugin,
         private readonly Fixture $fixture,
         private readonly ShellResult $shellResult,
     ) {
@@ -88,6 +89,11 @@ final class PluginTestResult
     public function getFixture(): Fixture
     {
         return $this->fixture;
+    }
+
+    public function getPlugin(): string
+    {
+        return $this->plugin;
     }
 
     public function getPluginClass(): string
