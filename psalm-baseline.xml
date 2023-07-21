@@ -241,12 +241,6 @@
     <MixedOperand>
       <code><![CDATA[$fixture->getPsalmConfig()->unwrap()]]></code>
     </MixedOperand>
-    <PossiblyFalseOperand>
-      <code>getcwd()</code>
-    </PossiblyFalseOperand>
-    <PossiblyFalsePropertyAssignmentValue>
-      <code>realpath($vendorDirectory)</code>
-    </PossiblyFalsePropertyAssignmentValue>
     <PossiblyNullArgument>
       <code>InstalledVersions::getPrettyVersion($package)</code>
       <code>InstalledVersions::getPrettyVersion($package)</code>
@@ -258,6 +252,9 @@
     <UndefinedMethod>
       <code>isDot</code>
     </UndefinedMethod>
+    <UnusedProperty>
+      <code>$vendorDirectory</code>
+    </UnusedProperty>
   </file>
   <file src="src/Scenario.php">
     <InvalidOperand>
