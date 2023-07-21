@@ -44,7 +44,6 @@
         "ghostwriter/coding-standard": "dev-main",
         "ghostwriter/example-psalm-plugin": "dev-main"
     },
-    "replace": {},
     "repositories": {
         "ghostwriter/example-psalm-plugin": {
             "type": "path",
@@ -61,13 +60,10 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Ghostwriter\\ExamplePsalmPlugin\\": "tests/Fixture/example-psalm-plugin/src",
             "Ghostwriter\\PsalmPluginTester\\Tests\\Unit\\": "tests/Unit"
         }
     },
-    "bin": [
-        "bin/console",
-        "bin/console.php"
-    ],
     "config": {
         "allow-plugins": {
             "infection/extension-installer": true,
