@@ -1614,7 +1614,7 @@
             "dist": {
                 "type": "path",
                 "url": "./tests/Fixture/example-psalm-plugin",
-                "reference": "4a406f3f5491bd453911ce248558396e651a0593"
+                "reference": "e26ff4209c322cc75899db28d52dc1f7af96bb77"
             },
             "require": {
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
@@ -1630,7 +1630,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Ghostwriter\\ExamplePsalmPlugin\\": "/"
+                    "Ghostwriter\\ExamplePsalmPlugin\\": "src/"
                 }
             },
             "description": "An Example plugin for Psalm",
