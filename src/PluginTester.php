@@ -61,8 +61,8 @@ final class PluginTester
             'vendor/bin/psalm',
             null,
             [
-                dirname(__DIR__, 1) . DIRECTORY_SEPARATOR,
-                dirname(__DIR__, 3) . DIRECTORY_SEPARATOR,
+                dirname(__DIR__) . DIRECTORY_SEPARATOR, // installed as a project
+                dirname(__DIR__, 4) . DIRECTORY_SEPARATOR, // installed as a dependency
             ]
         );
 
