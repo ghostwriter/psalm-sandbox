@@ -19,16 +19,15 @@ work in progress
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/psalm-plugin-tester:dev-main
+composer require ghostwriter/psalm-plugin-tester --dev
 ```
 
 ## Usage
 
-- Create a `tests/Fixtures/` directory.
+Fork or Clone [`ghostwriter/example-psalm-plugin`](https://github.com/ghostwriter/example-psalm-plugin) template repository.
 
-- Create a test fixture `psalm-runs-without-any-errors` directory in `tests/Fixtures/`.
 
-- Add 1 or more test fixture php files to be checked in `tests/Fixtures/psalm-runs-without-any-errors` directory.
+- Create a `tests/Fixture/` directory.
 
 - Create a PHPUnit test using the example below.
 
@@ -139,13 +138,13 @@ final class ExamplePluginTest extends TestCase
 >    {
 >        "errors": [
 >                {
->                    "file": "code.php"
->                    "type": "MixedInferredReturnType"
+>                    "file": "code.php",
+>                    "type": "MixedInferredReturnType",
 >                    "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided"
 >                },
 >                {
->                    "file": "car.php"
->                    "type": "PossiblyUnusedMethod"
+>                    "file": "car.php",
+>                    "type": "PossiblyUnusedMethod",
 >                    "message": "Cannot find any calls to method NS\\Car::drive"
 >                }
 >            ]
