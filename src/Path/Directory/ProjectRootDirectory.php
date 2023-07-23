@@ -45,7 +45,6 @@ AUTOLOADER . PHP_EOL;
     </projectFiles>
     <plugins>
         <pluginClass class="%s" />
-        <plugin filename="%s"/>
     </plugins>
 </psalm>
 XML . PHP_EOL;
@@ -151,8 +150,7 @@ XML . PHP_EOL;
             self::DEFAULT_PSALM_CONFIG,
             $getRelativePath,
             $getRelativeVendorDirectory,
-            $this->fixture->getPluginClass(),
-            $this->fixture->getPath()
+            $this->fixture->getPluginClass()
         ));
 
         if ($result === false) {
