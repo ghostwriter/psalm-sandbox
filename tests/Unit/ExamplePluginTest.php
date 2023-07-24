@@ -21,19 +21,18 @@ use Ghostwriter\PsalmPluginTester\Value\Expectation;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(PluginTester::class)]
-#[CoversClass(Fixture::class)]
+#[CoversClass(DirectoryTrait::class)]
+#[CoversClass(Expectation::class)]
 #[CoversClass(ExpectationsJsonFile::class)]
-#[CoversClass(PsalmXmlFile::class)]
-#[CoversClass(ProjectRootDirectory::class)]
-#[CoversClass(PluginTester::class)]
+#[CoversClass(FileTrait::class)]
+#[CoversClass(Fixture::class)]
+#[CoversClass(PathTrait::class)]
 #[CoversClass(PluginTestResult::class)]
+#[CoversClass(PluginTester::class)]
+#[CoversClass(ProjectRootDirectory::class)]
+#[CoversClass(PsalmXmlFile::class)]
 #[CoversClass(Shell::class)]
 #[CoversClass(ShellResult::class)]
-#[CoversClass(Expectation::class)]
-#[CoversClass(FileTrait::class)]
-#[CoversClass(PathTrait::class)]
-#[CoversClass(DirectoryTrait::class)]
 final class ExamplePluginTest extends TestCase
 {
     private PluginTester $pluginTester;

@@ -32,5 +32,6 @@
     </projectFiles>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+        <pluginClass class="Ghostwriter\ExamplePsalmPlugin\ExamplePlugin"/>
     </plugins>
 </psalm>
