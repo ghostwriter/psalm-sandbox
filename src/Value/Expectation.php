@@ -11,8 +11,9 @@ final class Expectation implements JsonSerializable, Stringable
 {
     public function __construct(
         private readonly string $file,
-        private readonly string $type,
         private readonly string $message,
+        private readonly string $severity,
+        private readonly string $type,
     ) {
     }
 
@@ -36,6 +37,11 @@ final class Expectation implements JsonSerializable, Stringable
         return $this->message;
     }
 
+    public function getSeverity(): string
+    {
+        return $this->severity;
+    }
+
     public function getType(): string
     {
         return $this->type;
@@ -45,8 +51,9 @@ final class Expectation implements JsonSerializable, Stringable
     {
         return [
             'file' => $this->file,
-            'type' => $this->type,
             'message' => $this->message,
+            'severity' => $this->severity,
+            'type' => $this->type,
         ];
     }
 }
