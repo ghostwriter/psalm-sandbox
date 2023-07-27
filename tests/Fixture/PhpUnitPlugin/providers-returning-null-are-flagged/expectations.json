@@ -1,9 +1,10 @@
 {
-    "error": [
+    "errors": [
         {
             "file": "code.php",
-            "type": "InvalidReturnType",
-            "message": "Providers must return iterable<array-key, array<array-key, mixed>>, null provided"
+            "message": "Providers must return iterable<array-key, array<array-key, mixed>>, null provided",
+            "severity": "error",
+            "type": "InvalidReturnType"
         }
     ]
 }

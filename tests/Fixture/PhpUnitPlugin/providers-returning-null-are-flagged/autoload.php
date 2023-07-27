@@ -3,7 +3,7 @@
 use Composer\Autoload\ClassLoader;
 
 /** @var ClassLoader $autoloader */
-$autoloader = require '../../../../vendor/autoload.php';
+$autoloader = require __DIR__.'/../../../../vendor/autoload.php';
 if (!$autoloader instanceof ClassLoader) {
     throw new RuntimeException('Autoloader not found');
 }
