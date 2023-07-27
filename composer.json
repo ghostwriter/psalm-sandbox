@@ -36,7 +36,7 @@
         "composer/semver": "^3.3",
         "ghostwriter/collection": "^1.3.2",
         "ghostwriter/config": "^0.4.1",
-        "ghostwriter/container": "^1.5",
+        "ghostwriter/container": "^1.6",
         "ghostwriter/event-dispatcher": "^1.4.2",
         "ghostwriter/json": "^1.1",
         "ghostwriter/option": "^1.5.1",
