@@ -137,17 +137,18 @@ final class ExamplePluginTest extends TestCase
 >    ```json
 >    {
 >        "errors": [
->                {
->                    "file": "code.php",
->                    "type": "MixedInferredReturnType",
->                    "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided"
->                },
->                {
->                    "file": "car.php",
->                    "type": "PossiblyUnusedMethod",
->                    "message": "Cannot find any calls to method NS\\Car::drive"
->                }
->            ]
+>            {
+>                "file": "code.php",
+>                "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided",
+>                "severity": "error",
+>                "type": "MixedInferredReturnType"
+>            },
+>            {
+>                "file": "car.php",
+>                "message": "Cannot find any calls to method NS\\Car::drive",
+>                "severity": "error",
+>                "type": "PossiblyUnusedMethod"
+>            }
 >        ]
 >    }
 >    ```
