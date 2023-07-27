@@ -26,7 +26,7 @@ final class PsalmXmlFile implements FileInterface
 
     public function getFile(): string
     {
-        return $this->file;
+        return $this->path;
     }
 
     /**
@@ -34,16 +34,16 @@ final class PsalmXmlFile implements FileInterface
      */
     public function getPhpVersion(): OptionInterface
     {
-        $psalmConfigContents = file_get_contents($this->file);
+        $psalmConfigContents = file_get_contents($this->path);
         if ($psalmConfigContents === false) {
-            throw new RuntimeException(sprintf('Could not read psalm config file: "%s"', $this->file));
+            throw new RuntimeException(sprintf('Could not read psalm config file: "%s"', $this->path));
         }
 
         try {
             $psalmConfigXML = new SimpleXMLElement($psalmConfigContents);
         } catch (Throwable $e) {
             throw new RuntimeException(
-                sprintf('Could not parse the XML data in psalm config file: "%s"', $this->file),
+                sprintf('Could not parse the XML data in psalm config file: "%s"', $this->path),
                 0,
                 $e
             );
