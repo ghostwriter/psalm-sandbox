@@ -13,12 +13,21 @@ use DirectoryIterator;
 use Generator;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use PHPUnit\Framework\Assert;
+use Psalm\Config;
+use Psalm\Internal\Analyzer\ProjectAnalyzer;
+use Psalm\Internal\IncludeCollector;
+use Psalm\Internal\Provider\FileProvider;
+use Psalm\Internal\Provider\Providers;
+use Psalm\Internal\RuntimeCaches;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
+use Psalm\Report;
+use Psalm\Report\ReportOptions;
 use ReflectionClass;
 use SplFileInfo;
 use Symfony\Component\Process\ExecutableFinder;
+use Throwable;
 
 final class PluginTester
 {
@@ -137,29 +146,47 @@ final class PluginTester
 
     public function test(Fixture $fixture, string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION): PluginTestResult
     {
-        $fixtureRootDirectory = $fixture->getProjectRootDirectory()->getDirectory();
+        RuntimeCaches::clearAll();
+
+        defined('PSALM_VERSION') || define('PSALM_VERSION', InstalledVersions::getPrettyVersion('vimeo/psalm'));
+        defined('PHP_PARSER_VERSION') || define('PHP_PARSER_VERSION', InstalledVersions::getPrettyVersion('nikic/php-parser'));
+
+        //        $fixtureRootDirectory = $fixture->getPath();
+
+        try {
+            $configuration = Config::loadFromXMLFile(
+                $fixture->getPsalmConfig()->unwrap()->getFile(),
+                $fixture->getPath()
+            );
+        } catch (Throwable $exception) {
+            echo $exception->getMessage();
+            exit(99);
+        }
+
+        $configuration->throw_exception = false;
+        $configuration->use_docblock_types = true;
+        $configuration->level = 1;
+        $configuration->cache_directory = null;
+        $configuration->setIncludeCollector(new IncludeCollector());
+
+        $reportOptions = new ReportOptions();
+        $reportOptions->use_color = false;
+        $reportOptions->show_info = false;
+        $reportOptions->format = Report::TYPE_JSON;
+        $reportOptions->pretty = true;
+        $reportOptions->output_path = './actual.json';
+
+        $projectAnalyzer = new ProjectAnalyzer(
+            $configuration,
+            new Providers(new FileProvider()),
+            $reportOptions,
+        );
 
         return (new PluginTestResult(
             $this->pluginClass,
             $this->plugin,
             $fixture,
-            $this->shell->execute(
-                $this->getPsalmPath(),
-                [
-                    ...$this->suppressProgress ? ['--no-progress'] : [],
-                    '--output-format=json',
-                    '--no-cache',
-                    '--no-progress',
-                    '--no-diff',
-                    '--no-suggestions',
-                    '--root=' . $fixtureRootDirectory,
-                    '--php-version=' . $phpVersion,
-                    ...$this->useBaseline ? [sprintf('--use-baseline=%s/baseline.xml', $fixtureRootDirectory)] : [],
-                    // '--plugin=' . $this->plugin,
-                    '--config=' . $fixture->getPsalmConfig()->unwrap(),
-                ],
-                $fixtureRootDirectory
-            )
+            $projectAnalyzer,
         ))->assertExpectations();
     }
 
