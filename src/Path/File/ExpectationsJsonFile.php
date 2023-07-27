@@ -32,11 +32,11 @@ final class ExpectationsJsonFile implements FileInterface
                 array $expectation
             ): Expectation => new Expectation(
                 $expectation['file'],
-                $expectation['type'],
-                $expectation['message']
+                $expectation['message'],
+                $expectation['severity'],
+                $expectation['type']
             ),
-            $expectations['error'] ?? [],
-            $expectations['warning'] ?? []
+            $expectations['errors'] ?? []
         );
     }
 
