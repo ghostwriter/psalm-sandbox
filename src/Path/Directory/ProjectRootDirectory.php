@@ -26,7 +26,7 @@ final class ProjectRootDirectory implements DirectoryInterface
 use Composer\Autoload\ClassLoader;
 
 /** @var ClassLoader $autoloader */
-$autoloader = require '%sautoload.php';
+$autoloader = require __DIR__.'/%sautoload.php';
 if (!$autoloader instanceof ClassLoader) {
     throw new RuntimeException('Autoloader not found');
 }
