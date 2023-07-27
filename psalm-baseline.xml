@@ -147,6 +147,7 @@
       <code>Json::decode($contents)</code>
     </MixedReturnStatement>
     <PossiblyUnusedMethod>
+      <code>__construct</code>
       <code>getExpectations</code>
     </PossiblyUnusedMethod>
     <TooManyArguments>
