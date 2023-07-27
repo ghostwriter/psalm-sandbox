@@ -208,20 +208,20 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "6ff9f6c32277c050a5c80e5e1161e80caff814a5"
+                "reference": "22e64b70e3163eeda2506c06144cad2bef86e36c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/6ff9f6c32277c050a5c80e5e1161e80caff814a5",
-                "reference": "6ff9f6c32277c050a5c80e5e1161e80caff814a5",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/22e64b70e3163eeda2506c06144cad2bef86e36c",
+                "reference": "22e64b70e3163eeda2506c06144cad2bef86e36c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1,<8.3"
+                "php": ">=8.1,<8.4"
             },
             "require-dev": {
                 "ghostwriter/coding-standard": "dev-main"
@@ -244,16 +244,15 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Provides an extensible PSR-11, Dependency Injection Service Container for Automated Object Composition, Interception, and Lifetime Management.",
+            "description": "Provides an extensible Dependency Injection Service Container.",
             "homepage": "https://github.com/ghostwriter/container",
             "keywords": [
-                "PSR-11",
                 "container",
                 "ghostwriter"
             ],
             "support": {
                 "issues": "https://github.com/ghostwriter/container/issues",
-                "source": "https://github.com/ghostwriter/container/tree/1.5.0"
+                "source": "https://github.com/ghostwriter/container/tree/1.6.0"
             },
             "funding": [
                 {
@@ -261,7 +260,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-08T16:53:59+00:00"
+            "time": "2023-07-26T13:24:57+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
