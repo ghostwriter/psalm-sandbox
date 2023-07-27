@@ -1,14 +1,16 @@
 {
-    "error": [
+    "errors": [
         {
             "file": "code.php",
-            "type": "ArgumentTypeCoercion",
-            "message": "Echo requires an unescaped string, string provided"
+            "message": "Echo requires an unescaped string, string provided",
+            "severity": "error",
+            "type": "ArgumentTypeCoercion"
         },
         {
             "file": "file.php",
-            "type": "ArgumentTypeCoercion",
-            "message": "Echo requires an unescaped string, string provided"
+            "message": "Echo requires an unescaped string, string provided",
+            "severity": "error",
+            "type": "ArgumentTypeCoercion"
         }
     ]
 }

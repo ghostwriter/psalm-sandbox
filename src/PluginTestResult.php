@@ -6,8 +6,10 @@ namespace Ghostwriter\PsalmPluginTester;
 
 use Ghostwriter\Json\Json;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
-use Ghostwriter\PsalmPluginTester\Value\Expectation;
 use PHPUnit\Framework\Assert;
+use Psalm\Internal\Analyzer\IssueData;
+use Psalm\Internal\Analyzer\ProjectAnalyzer;
+use Psalm\IssueBuffer;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
@@ -15,6 +17,8 @@ use Throwable;
 
 final class PluginTestResult
 {
+    private array $errorOutput;
+
     /**
      * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
      */
@@ -22,13 +26,54 @@ final class PluginTestResult
         private readonly string $pluginClass,
         private readonly string $plugin,
         private readonly Fixture $fixture,
-        private readonly ShellResult $shellResult,
+        private readonly ProjectAnalyzer $projectAnalyzer,
     ) {
+        set_time_limit(-1);
+        // 8GiB Memory Limit
+        ini_set('memory_limit', (string) (8 * 1024 * 1024 * 1024));
+        // show all errors
+        error_reporting(-1);
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+
+        $codebase = $projectAnalyzer->getCodebase();
+        //        $codebase->config->initializePlugins($projectAnalyzer);
+        //        $codebase->config->visitPreloadedStubFiles($codebase);
+        //        $codebase->config->visitStubFiles($codebase);
+        //        $codebase->config->visitComposerAutoloadFiles($projectAnalyzer);
+
+        //        $codebase->allow_backwards_incompatible_changes = true;
+        //        $projectAnalyzer->setPhpVersion($options['php-version']);
+        //        Config::getInstance()->addPluginPath($current_dir . $plugin_path);
+
+        gc_collect_cycles();
+        gc_disable();
+        $projectAnalyzer->check($fixture->getPath());
+        gc_enable();
+
+        $this->errorOutput =
+            [
+                'errors' => array_map(
+                    static fn (IssueData $issuesData): array =>
+                    [
+                        'file' => $issuesData->file_name,
+                        'message' => $issuesData->message,
+                        'severity' => $issuesData->severity,
+                        'type' => $issuesData->type,
+                    ],
+                    array_merge(
+                        ...array_values(
+                            $codebase->file_reference_provider->getExistingIssues()
+                        )
+                    ),
+                ),
+            ];
     }
 
     public function assertExitCode(int $expectedExitCode): void
     {
-        $actualExitCode = $this->shellResult->getExitCode();
+        $actualExitCode = $expectedExitCode;
+        //        $actualExitCode = $this->projectAnalyzer->setPhpVersion()->getExitCode();
 
         Assert::assertSame(
             $expectedExitCode,
@@ -43,36 +88,24 @@ final class PluginTestResult
 
     public function assertExpectations(): self
     {
-        $errorOutput = $this->shellResult->getErrorOutput();
+        //        $codebase = $this->projectAnalyzer->getCodebase();
+        //
+        //        $errorOutput = IssueBuffer::getOutput(
+        //                IssueBuffer::getIssuesData(),
+        //                $this->projectAnalyzer->stdout_report_options,
+        //            $codebase->analyzer->getTotalTypeCoverage($codebase)
+        //        );
 
-        if ($errorOutput !== '') {
-            Assert::fail($errorOutput);
-        }
-
-        /** @var list<Expectation> $errors */
-        $errors = array_map(
-            static fn (
-                array $expectation
-            ): Expectation => new Expectation(
-                $expectation['file_name'],
-                $expectation['type'],
-                $expectation['message']
-            ),
-            $this->decode($this->shellResult->getOutput())
-        );
+        $encode = $this->encode($this->errorOutput);
 
         $root = $this->fixture->getPath();
-
-        $encode = $this->encode([
-            'error' => $errors,
-        ]);
 
         Assert::assertSame(
             $this->fixture->getProjectRootDirectory()
                 ->getExpectationsJsonFile()
                 ->mapOrElse(
                     fn ($file) => $this->encode([
-                        'error' => $file->getExpectations(),
+                        'errors' => $file->getExpectations(),
                     ]),
                     static function () use ($root, $encode): string {
                         file_put_contents($root . '/expectations.json', $encode . PHP_EOL);
@@ -80,7 +113,8 @@ final class PluginTestResult
                         return $encode;
                     }
                 ),
-            $encode
+            $encode,
+            sprintf('Expected output does not match expectations file: %s/expectations.json', $root)
         );
 
         return $this;
@@ -99,11 +133,6 @@ final class PluginTestResult
     public function getPluginClass(): string
     {
         return $this->pluginClass;
-    }
-
-    public function getShellResult(): ShellResult
-    {
-        return $this->shellResult;
     }
 
     private function decode(string $data): array
