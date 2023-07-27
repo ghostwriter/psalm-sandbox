@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+  <file src="src/Path/Directory/DirectoryInterface.php">
+    <PossiblyUnusedMethod>
+      <code>getDirectory</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/Path/Directory/Fixture.php">
     <InvalidReturnStatement>
       <code><![CDATA[None::create()
@@ -119,16 +124,21 @@
     </MixedAssignment>
   </file>
   <file src="src/Path/File/ExpectationsJsonFile.php">
-    <InvalidArrayOffset>
-      <code><![CDATA[$expectations['error']]]></code>
-      <code><![CDATA[$expectations['warning']]]></code>
-    </InvalidArrayOffset>
+    <InvalidArgument>
+      <code><![CDATA[static fn (
+                array $expectation
+            ): Expectation => new Expectation(
+                $expectation['file'],
+                $expectation['message'],
+                $expectation['severity'],
+                $expectation['type']
+            )]]></code>
+    </InvalidArgument>
     <MixedArgument>
       <code><![CDATA[$expectation['file']]]></code>
       <code><![CDATA[$expectation['message']]]></code>
+      <code><![CDATA[$expectation['severity']]]></code>
       <code><![CDATA[$expectation['type']]]></code>
-      <code><![CDATA[$expectations['error'] ?? []]]></code>
-      <code><![CDATA[$expectations['warning'] ?? []]]></code>
     </MixedArgument>
     <MixedInferredReturnType>
       <code><![CDATA[array{'errors': array{'file': string, 'type': string, 'message': string}}]]></code>
@@ -137,18 +147,10 @@
       <code>Json::decode($contents)</code>
     </MixedReturnStatement>
     <PossiblyUnusedMethod>
-      <code>__construct</code>
       <code>getExpectations</code>
     </PossiblyUnusedMethod>
     <TooManyArguments>
       <code><![CDATA[Assert::fail(sprintf('Could not decode expectation file: "%s"', $this->path), 0, $exception)]]></code>
-      <code><![CDATA[static fn (
-                array $expectation
-            ): Expectation => new Expectation(
-                $expectation['file'],
-                $expectation['type'],
-                $expectation['message']
-            )]]></code>
     </TooManyArguments>
   </file>
   <file src="src/Path/File/FileInterface.php">
@@ -168,38 +170,29 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="src/Path/File/PsalmXmlFile.php">
-    <MixedArgument>
-      <code><![CDATA[$this->file]]></code>
-      <code><![CDATA[$this->file]]></code>
-      <code><![CDATA[$this->file]]></code>
-    </MixedArgument>
     <MixedAssignment>
       <code>$phpVersion</code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->file]]></code>
-    </MixedReturnStatement>
     <PossiblyUnusedMethod>
       <code>getPhpVersion</code>
     </PossiblyUnusedMethod>
-    <UndefinedThisPropertyFetch>
-      <code><![CDATA[$this->file]]></code>
-      <code><![CDATA[$this->file]]></code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="src/PluginTestResult.php">
+    <InternalMethod>
+      <code>check</code>
+      <code>getCodebase</code>
+      <code>getExistingIssues</code>
+    </InternalMethod>
+    <InternalProperty>
+      <code><![CDATA[$issuesData->file_name]]></code>
+      <code><![CDATA[$issuesData->message]]></code>
+      <code><![CDATA[$issuesData->severity]]></code>
+      <code><![CDATA[$issuesData->type]]></code>
+    </InternalProperty>
     <InvalidOperand>
       <code>var_export($data)</code>
       <code>var_export($data)</code>
     </InvalidOperand>
-    <MixedArgument>
-      <code><![CDATA[$expectation['file_name']]]></code>
-      <code><![CDATA[$expectation['message']]]></code>
-      <code><![CDATA[$expectation['type']]]></code>
-    </MixedArgument>
     <MixedInferredReturnType>
       <code>array</code>
     </MixedInferredReturnType>
@@ -210,16 +203,45 @@
       <code>assertExitCode</code>
       <code>getPlugin</code>
       <code>getPluginClass</code>
-      <code>getShellResult</code>
     </PossiblyUnusedMethod>
     <UndefinedDocblockClass>
       <code>$file</code>
     </UndefinedDocblockClass>
+    <UnusedMethod>
+      <code>decode</code>
+    </UnusedMethod>
+    <UnusedProperty>
+      <code>$projectAnalyzer</code>
+    </UnusedProperty>
   </file>
   <file src="src/PluginTester.php">
     <ArgumentTypeCoercion>
+      <code><![CDATA[$exception->getMessage()]]></code>
       <code>$operator</code>
     </ArgumentTypeCoercion>
+    <InternalClass>
+      <code>RuntimeCaches::clearAll()</code>
+      <code>new FileProvider()</code>
+      <code>new IncludeCollector()</code>
+      <code>new ProjectAnalyzer(
+            $configuration,
+            new Providers(new FileProvider()),
+            $reportOptions,
+        )</code>
+      <code>new Providers(new FileProvider())</code>
+    </InternalClass>
+    <InternalMethod>
+      <code>RuntimeCaches::clearAll()</code>
+      <code>new ProjectAnalyzer(
+            $configuration,
+            new Providers(new FileProvider()),
+            $reportOptions,
+        )</code>
+      <code>new Providers(new FileProvider())</code>
+    </InternalMethod>
+    <InternalProperty>
+      <code><![CDATA[$configuration->cache_directory]]></code>
+    </InternalProperty>
     <InvalidOperand>
       <code>PHP_MAJOR_VERSION</code>
       <code>PHP_MINOR_VERSION</code>
@@ -234,13 +256,16 @@
       <code>isPackageVersion</code>
       <code>packageSatisfiesVersionConstraint</code>
     </MissingReturnType>
+    <MixedArgument>
+      <code><![CDATA[$fixture->getPsalmConfig()->unwrap()->getFile()]]></code>
+    </MixedArgument>
     <MixedAssignment>
       <code>$result</code>
       <code><![CDATA[$this->suppressProgress]]></code>
     </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$fixture->getPsalmConfig()->unwrap()]]></code>
-    </MixedOperand>
+    <MixedMethodCall>
+      <code>getFile</code>
+    </MixedMethodCall>
     <PossiblyNullArgument>
       <code>InstalledVersions::getPrettyVersion($package)</code>
       <code>InstalledVersions::getPrettyVersion($package)</code>
@@ -252,7 +277,13 @@
     <UndefinedMethod>
       <code>isDot</code>
     </UndefinedMethod>
+    <UnusedParam>
+      <code>$phpVersion</code>
+    </UnusedParam>
     <UnusedProperty>
+      <code>$shell</code>
+      <code>$suppressProgress</code>
+      <code>$useBaseline</code>
       <code>$vendorDirectory</code>
     </UnusedProperty>
   </file>
@@ -269,6 +300,9 @@
     <PossiblyFalseArgument>
       <code>$workingDirectory ?? getcwd()</code>
     </PossiblyFalseArgument>
+    <PossiblyUnusedMethod>
+      <code>execute</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/ShellResult.php">
     <InvalidNullableReturnType>
@@ -278,6 +312,9 @@
       <code><![CDATA[$this->process->getExitCode()]]></code>
     </NullableReturnStatement>
     <PossiblyUnusedMethod>
+      <code>getErrorOutput</code>
+      <code>getExitCode</code>
+      <code>getOutput</code>
       <code>getProcess</code>
     </PossiblyUnusedMethod>
   </file>
@@ -285,6 +322,7 @@
     <PossiblyUnusedMethod>
       <code>getFile</code>
       <code>getMessage</code>
+      <code>getSeverity</code>
       <code>getType</code>
       <code>jsonSerialize</code>
     </PossiblyUnusedMethod>
