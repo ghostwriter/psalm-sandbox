@@ -6,6 +6,11 @@ namespace Ghostwriter\PsalmPluginTester\Path;
 
 trait PathTrait
 {
+    public function __construct(
+        private readonly string $path,
+    ) {
+    }
+
     public function __toString(): string
     {
         return $this->path;
