@@ -36,7 +36,7 @@ final class PluginTestResult
         ini_set('display_errors', '1');
         ini_set('display_startup_errors', '1');
 
-        $codebase = $projectAnalyzer->getCodebase();
+        // $codebase = $projectAnalyzer->getCodebase();
         //        $codebase->config->initializePlugins($projectAnalyzer);
         //        $codebase->config->visitPreloadedStubFiles($codebase);
         //        $codebase->config->visitStubFiles($codebase);
@@ -50,6 +50,7 @@ final class PluginTestResult
         gc_disable();
         $projectAnalyzer->check($fixture->getPath());
         gc_enable();
+        gc_collect_cycles();
 
         $this->errorOutput =
             [
@@ -63,39 +64,15 @@ final class PluginTestResult
                     ],
                     array_merge(
                         ...array_values(
-                            $codebase->file_reference_provider->getExistingIssues()
+                            $projectAnalyzer->getCodebase()->file_reference_provider->getExistingIssues()
                         )
                     ),
                 ),
             ];
     }
 
-    public function assertExitCode(int $expectedExitCode): void
-    {
-        $actualExitCode = $expectedExitCode;
-        //        $actualExitCode = $this->projectAnalyzer->setPhpVersion()->getExitCode();
-
-        Assert::assertSame(
-            $expectedExitCode,
-            $actualExitCode,
-            sprintf(
-                'Expected exit code %d, got %d',
-                $expectedExitCode,
-                $actualExitCode
-            )
-        );
-    }
-
     public function assertExpectations(): self
     {
-        //        $codebase = $this->projectAnalyzer->getCodebase();
-        //
-        //        $errorOutput = IssueBuffer::getOutput(
-        //                IssueBuffer::getIssuesData(),
-        //                $this->projectAnalyzer->stdout_report_options,
-        //            $codebase->analyzer->getTotalTypeCoverage($codebase)
-        //        );
-
         $encode = $this->encode($this->errorOutput);
 
         $root = $this->fixture->getPath();
