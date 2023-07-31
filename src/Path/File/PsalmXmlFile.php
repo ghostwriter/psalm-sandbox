@@ -16,14 +16,6 @@ final class PsalmXmlFile implements FileInterface
 {
     use FileTrait;
 
-    private const DEFAULT_PSALM_CONFIG = "<?xml version=\"1.0\"?>\n"
-    . "<psalm errorLevel=\"1\" %s>\n"
-    . "  <projectFiles>\n"
-    . "    <directory name=\".\"/>\n"
-    . "  </projectFiles>\n"
-    . "</psalm>\n";
-    //    use PathTrait;
-
     public function getFile(): string
     {
         return $this->path;
