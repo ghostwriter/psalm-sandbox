@@ -9,27 +9,17 @@ use Ghostwriter\Json\Json;
 use Ghostwriter\Option\None;
 use Ghostwriter\Option\OptionInterface;
 use Ghostwriter\Option\Some;
-use Ghostwriter\PsalmPluginTester\PhpVersionInterface;
 use Ghostwriter\PsalmPluginTester\Version\PhpVersion;
 use Ghostwriter\PsalmPluginTester\Version\PsalmVersion;
 use RuntimeException;
 
 final class ComposerLockFile implements FileInterface
-    //    , PhpVersionInterface, PsalmVersionInterface
 {
     use FileTrait;
 
-    public function __construct(
-        private readonly string $file,
-    ) {
-        if (! is_file($this->file)) {
-            throw new RuntimeException(sprintf('File "%s" does not exist', $this->file));
-        }
-    }
-
     public function getFile(): string
     {
-        return $this->file;
+        return $this->path;
     }
 
     /**
@@ -37,10 +27,14 @@ final class ComposerLockFile implements FileInterface
      */
     public function getPhpVersion(): OptionInterface
     {
-        $composerLockContents = file_get_contents($this->file);
+        if (! is_file($this->path)) {
+            throw new RuntimeException(sprintf('File "%s" does not exist', $this->path));
+        }
+
+        $composerLockContents = file_get_contents($this->path);
 
         if ($composerLockContents === false) {
-            throw new RuntimeException(sprintf('Could not read composer lock file: "%s"', $this->file));
+            throw new RuntimeException(sprintf('Could not read composer lock file: "%s"', $this->path));
         }
 
         $composerLockData = Json::decode($composerLockContents);
@@ -61,8 +55,9 @@ final class ComposerLockFile implements FileInterface
      */
     public function getPsalmVersion(): OptionInterface
     {
+        $none = None::create();
         if (! InstalledVersions::isInstalled('vimeo/psalm')) {
-            return None::create();
+            return $none;
         }
 
         $psalmVersion = InstalledVersions::getVersion('vimeo/psalm');
@@ -71,6 +66,6 @@ final class ComposerLockFile implements FileInterface
             return Some::create(new PsalmVersion($psalmVersion));
         }
 
-        return None::create();
+        return $none;
     }
 }
