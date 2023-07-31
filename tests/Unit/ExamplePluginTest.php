@@ -15,8 +15,6 @@ use Ghostwriter\PsalmPluginTester\Path\File\PsalmXmlFile;
 use Ghostwriter\PsalmPluginTester\Path\PathTrait;
 use Ghostwriter\PsalmPluginTester\PluginTester;
 use Ghostwriter\PsalmPluginTester\PluginTestResult;
-use Ghostwriter\PsalmPluginTester\Shell;
-use Ghostwriter\PsalmPluginTester\ShellResult;
 use Ghostwriter\PsalmPluginTester\Value\Expectation;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -31,8 +29,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(PluginTester::class)]
 #[CoversClass(ProjectRootDirectory::class)]
 #[CoversClass(PsalmXmlFile::class)]
-#[CoversClass(Shell::class)]
-#[CoversClass(ShellResult::class)]
 final class ExamplePluginTest extends TestCase
 {
     private PluginTester $pluginTester;
