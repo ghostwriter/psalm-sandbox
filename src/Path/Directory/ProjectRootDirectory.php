@@ -11,7 +11,6 @@ use Ghostwriter\PsalmPluginTester\Path\File\ComposerJsonFile;
 use Ghostwriter\PsalmPluginTester\Path\File\ComposerLockFile;
 use Ghostwriter\PsalmPluginTester\Path\File\ExpectationsJsonFile;
 use Ghostwriter\PsalmPluginTester\Path\File\PsalmXmlFile;
-use Ghostwriter\PsalmPluginTester\PsalmExpectation;
 use Ghostwriter\PsalmPluginTester\Version\PsalmVersion;
 use PHPUnit\Framework\Assert;
 use RuntimeException;
@@ -95,7 +94,7 @@ XML . PHP_EOL;
     }
 
     /**
-     * @return OptionInterface<PsalmExpectation>
+     * @return OptionInterface<ExpectationsJsonFile>
      */
     public function getExpectationsJsonFile(): OptionInterface
     {
@@ -118,25 +117,20 @@ XML . PHP_EOL;
     {
         $option = None::create();
 
-        $psalmConfig = $this->path . '/psalm.xml.dist';
-        if (file_exists($psalmConfig)) {
-            return $option->orElse(
-                static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
-            );
-        }
-
         $psalmConfig = $this->path . '/psalm.xml';
+
+        if (! file_exists($psalmConfig)) {
+            $psalmConfig = $this->path . '/psalm.xml.dist';
+        }
+
         if (file_exists($psalmConfig)) {
             return $option->orElse(
                 static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
             );
         }
 
-        $vendorDirectory = getcwd() . DIRECTORY_SEPARATOR . 'vendor';
 
-        if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
-            $vendorDirectory = dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'vendor';
-        }
+        $vendorDirectory = dirname($GLOBALS['_composer_bin_dir']);
 
         if (! file_exists($vendorDirectory . DIRECTORY_SEPARATOR . 'autoload.php')) {
             Assert::fail(sprintf('Vendor directory "%s" does not exist', $vendorDirectory));
