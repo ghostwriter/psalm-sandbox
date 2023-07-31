@@ -14,17 +14,8 @@ final class ExpectationsJsonFile implements FileInterface
 {
     use FileTrait;
 
-    public function __construct(
-        private readonly string $path,
-    ) {
-    }
-
     public function getExpectations(): array
     {
-        if (! $this->exists()) {
-            return ['null'];
-        }
-
         $expectations = $this->read();
 
         return array_map(
@@ -41,7 +32,7 @@ final class ExpectationsJsonFile implements FileInterface
     }
 
     /**
-     * @return array{'errors': array{'file': string, 'type': string, 'message': string}}
+     * @return array{'errors':array{'file':string,'message':string,'severity':string,'type':string}}
      */
     private function read(): array
     {
@@ -54,7 +45,13 @@ final class ExpectationsJsonFile implements FileInterface
         try {
             return Json::decode($contents);
         } catch (Throwable $exception) {
-            Assert::fail(sprintf('Could not decode expectation file: "%s"', $this->path), 0, $exception);
+            Assert::fail(
+                sprintf(
+                    'Could not decode expectation file: "%s"; %s',
+                    $this->path,
+                    $exception->getMessage()
+                )
+            );
         }
     }
 }
