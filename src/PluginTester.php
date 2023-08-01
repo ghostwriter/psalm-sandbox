@@ -207,7 +207,7 @@ PSALM_CONFIG,
 
         // $projectAnalyzer->consolidateAnalyzedData();
 
-        $fixture->addFilesToAnalyze($codebase);
+        // $fixture->addFilesToAnalyze($codebase);
 
         // try {
         //     $codebase->scanFiles();
