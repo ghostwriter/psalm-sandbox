@@ -152,13 +152,17 @@ PSALM_CONFIG,
             )
         );
 
-        $configuration->collectPredefinedConstants();
-        $configuration->collectPredefinedFunctions();
+        // $configuration->collectPredefinedConstants();
+        // $configuration->collectPredefinedFunctions();
 
         // $configuration->allow_includes = false;
         $configuration->base_dir = $fixture->getPath();
         $configuration->cache_directory = null;
         $configuration->check_for_throws_docblock = true;
+        $configuration->find_unused_baseline_entry = true;
+        $configuration->find_unused_code = true;
+        $configuration->find_unused_variables = true;
+        $configuration->find_unused_psalm_suppress = true;
         $configuration->ensure_array_int_offsets_exist = true;
         $configuration->ensure_array_string_offsets_exist = true;
         $configuration->ignore_internal_falsable_issues = true;
@@ -178,29 +182,68 @@ PSALM_CONFIG,
         }
 
         $reportOptions = new ReportOptions();
+        $reportOptions->in_ci = false;
         $reportOptions->use_color = false;
-        $reportOptions->show_info = false;
+        $reportOptions->show_info = !false;
         $reportOptions->format = Report::TYPE_JSON;
         $reportOptions->pretty = true;
-        $reportOptions->output_path = './actual.json';
+        // $reportOptions->output_path = './actual.json';
 
-        $projectAnalyzer = new ProjectAnalyzer(
-            $configuration,
-            new Providers(
-                $fixture
-            ),
-            $reportOptions,
-        );
+        $context = new \Psalm\Context();
 
+        $projectAnalyzer = new ProjectAnalyzer($configuration, new Providers($fixture), $reportOptions);
         $projectAnalyzer->setPhpVersion($phpVersion, 'cli');
 
         $codebase = $projectAnalyzer->getCodebase();
-        $codebase->config->initializePlugins($projectAnalyzer);
-        $codebase->collect_references = true;
 
-        $configuration->visitPreloadedStubFiles($codebase);
+
+        $codebase->reportUnusedVariables();
+        $codebase->reportUnusedCode();
 
         $codebase->store_node_types = true;
+        $codebase->collect_references = true;
+        // $codebase->config->initializePlugins($projectAnalyzer);
+        // $configuration->initializePlugins($projectAnalyzer);
+
+        // $projectAnalyzer->consolidateAnalyzedData();
+
+        $fixture->addFilesToAnalyze($codebase);
+
+        // try {
+        //     $codebase->scanFiles();
+        // } catch (\PhpParser\Error $e) {
+        //     Assert::fail(
+        //         sprintf(
+        //             'PHP Parser Error: %s',
+        //             $e->getRawMessage()
+        //         )
+        //     );
+        // }
+
+        // $configuration->visitPreloadedStubFiles($codebase);
+
+        set_time_limit(-1);
+        // 8GiB Memory Limit
+        ini_set('memory_limit', (string) (8 * 1024 * 1024 * 1024));
+        // show all errors
+        error_reporting(-1);
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+
+        // $codebase = $projectAnalyzer->getCodebase();
+        //        $codebase->config->initializePlugins($projectAnalyzer);
+        //        $codebase->config->visitPreloadedStubFiles($codebase);
+        //        $codebase->config->visitStubFiles($codebase);
+        //        $codebase->config->visitComposerAutoloadFiles($projectAnalyzer);
+
+        //        $codebase->allow_backwards_incompatible_changes = true;
+        //        $projectAnalyzer->setPhpVersion($options['php-version']);
+        //        Config::getInstance()->addPluginPath($current_dir . $plugin_path);
+        gc_collect_cycles();
+        gc_disable();
+        $projectAnalyzer->check($fixture->getPath());
+        gc_enable();
+        gc_collect_cycles();
 
         return new PluginTestResult(
             $pluginClass,
