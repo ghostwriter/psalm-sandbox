@@ -39,27 +39,23 @@ declare(strict_types=1);
 namespace Ghostwriter\ExamplePsalmPlugin\Tests;
 
 use Generator;
-use Ghostwriter\ExamplePsalmPlugin\ExamplePlugin;
+use Ghostwriter\PHPUnitPsalmPlugin\Plugin;
 use Ghostwriter\PsalmPluginTester\PluginTester;
 use PHPUnit\Framework\TestCase;
 
-final class ExamplePluginTest extends TestCase
+final class PhpUnitPsalmPluginTest extends TestCase
 {
     private PluginTester $pluginTester;
 
     protected function setUp(): void
     {
-        // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
-        $this->pluginTester = new PluginTester(ExamplePlugin::class);
+        $this->pluginTester = new PluginTester();
     }
 
     public static function fixtureDataProvider(): Generator
     {
         yield from PluginTester::yieldFixtures(
-            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
-            ExamplePlugin::class,
-
-            // Replace "test/Fixture" path.
+            // Replace path to "test/Fixture" directory.
             dirname(__FILE__, 2) . '/Fixture'
         );
     }
@@ -67,19 +63,15 @@ final class ExamplePluginTest extends TestCase
     /** @dataProvider fixtureDataProvider */
     public function testPlugin(Fixture $fixture): void
     {
-        $result = $this->pluginTester->test($fixture);
-
-        $result->assertExitCode(0)
-
-        self::assertSame($fixture, $result->getFixture());
+        foreach ([Version::PHP_80, Version::PHP_81, Version::PHP_82] as $phpVersion) {
+            // Replace "Plugin::class" with the class name of the Plugin you want to test.
+            $this->pluginTester->testPlugin(Plugin::class, $fixture, $phpVersion);
+        }
     }
 
     public static function fixtureWarningDataProvider(): Generator
     {
         yield from PluginTester::yieldFixtures(
-            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
-            ExamplePlugin::class,
-
             // Replace "test/Fixture/Warnings" path.
             dirname(__FILE__, 2) . '/Fixture/Warning'
         );
@@ -88,19 +80,12 @@ final class ExamplePluginTest extends TestCase
     /** @dataProvider fixtureWarningDataProvider */
     public function testPluginWarning(Fixture $fixture): void
     {
-        $result = $this->pluginTester->test($fixture);
-
-        $result->assertExitCode(1)
-        
-        self::assertSame($fixture, $result->getFixture());
+        $this->pluginTester->testPlugin(Plugin::class, $fixture);
     }
 
     public static function fixtureErrorDataProvider(): Generator
     {
         yield from PluginTester::yieldFixtures(
-            // Replace "ExamplePlugin::class" with the class name of the Plugin you want to test.
-            ExamplePlugin::class,
-
             // Replace "test/Fixture/Errors" path.
             dirname(__FILE__, 2) . '/Fixture/Errors'
         );
@@ -109,11 +94,7 @@ final class ExamplePluginTest extends TestCase
     /** @dataProvider fixtureErrorDataProvider */
     public function testPluginErrors(Fixture $fixture): void
     {
-        $result = $this->pluginTester->test($fixture);
-
-        $result->assertExitCode(2)
-        
-        self::assertSame($fixture, $result->getFixture());
+        $this->pluginTester->testPlugin(Plugin::class, $fixture);
     }
 }
 ```
