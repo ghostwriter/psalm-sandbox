@@ -45,19 +45,17 @@
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/example-psalm-plugin": "dev-main"
+        "ghostwriter/phpunit-psalm-plugin": "dev-main"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Ghostwriter\\PsalmPluginTester\\": "src/"
-        },
-        "files": []
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\ExamplePsalmPlugin\\": "tests/Fixture/example-psalm-plugin/src",
             "Ghostwriter\\PsalmPluginTester\\Tests\\Unit\\": "tests/Unit"
         }
     },
@@ -70,7 +68,7 @@
         "discard-changes": true,
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.1.99"
+            "php": "8.1.999"
         },
         "preferred-install": "dist",
         "prepend-autoloader": true,
