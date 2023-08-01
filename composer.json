@@ -56,6 +56,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Ghostwriter\\PsalmPluginTester\\Tests\\Feature\\": "tests/Feature",
             "Ghostwriter\\PsalmPluginTester\\Tests\\Unit\\": "tests/Unit"
         }
     },
