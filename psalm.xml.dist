@@ -30,8 +30,13 @@
             <file name="rector.php"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <InternalClass errorLevel="suppress"/>
+        <InternalMethod errorLevel="suppress"/>
+        <InternalProperty errorLevel="suppress"/>
+    </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-        <pluginClass class="Ghostwriter\ExamplePsalmPlugin\ExamplePlugin"/>
+        <pluginClass class="Ghostwriter\PHPUnitPsalmPlugin\Plugin"/>
     </plugins>
 </psalm>
