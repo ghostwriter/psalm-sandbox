@@ -9,7 +9,6 @@ use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use PHPUnit\Framework\Assert;
 use Psalm\Internal\Analyzer\IssueData;
 use Psalm\Internal\Analyzer\ProjectAnalyzer;
-use Psalm\IssueBuffer;
 use Psalm\Plugin\PluginEntryPointInterface;
 use Psalm\Plugin\PluginFileExtensionsInterface;
 use Psalm\Plugin\PluginInterface;
@@ -69,10 +68,7 @@ final class PluginTestResult
                     ),
                 ),
             ];
-    }
 
-    public function assertExpectations(): self
-    {
         $encode = $this->encode($this->errorOutput);
 
         $root = $this->fixture->getPath();
@@ -93,8 +89,6 @@ final class PluginTestResult
             $encode,
             sprintf('Expected output does not match expectations file: %s/expectations.json', $root)
         );
-
-        return $this;
     }
 
     public function getFixture(): Fixture
