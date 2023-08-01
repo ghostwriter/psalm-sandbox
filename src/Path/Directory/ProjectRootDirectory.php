@@ -37,7 +37,7 @@ AUTOLOADER . PHP_EOL;
 <?xml version="1.0"?>
 <psalm errorLevel="1" autoloader="autoload.php">
     <projectFiles>
-        <directory name="%s" />
+        <directory name="./" />
         <ignoreFiles>
             <directory name="%s" />
         </ignoreFiles>
@@ -117,10 +117,9 @@ XML . PHP_EOL;
     {
         $option = None::create();
 
-        $psalmConfig = $this->path . '/psalm.xml';
-
+        $psalmConfig = $this->path . '/psalm.xml.dist';
         if (! file_exists($psalmConfig)) {
-            $psalmConfig = $this->path . '/psalm.xml.dist';
+            $psalmConfig = $this->path . '/psalm.xml';
         }
 
         if (file_exists($psalmConfig)) {
@@ -128,7 +127,6 @@ XML . PHP_EOL;
                 static fn (): PsalmXmlFile => new PsalmXmlFile($psalmConfig)
             );
         }
-
 
         $vendorDirectory = dirname($GLOBALS['_composer_bin_dir']);
 
@@ -138,11 +136,10 @@ XML . PHP_EOL;
 
         $getRelativePath = $this->getRelativePath($psalmConfig, realpath($this->path));
 
-        $getRelativeVendorDirectory = $this->getRelativePath(realpath($this->path), realpath($vendorDirectory));
+        $getRelativeVendorDirectory = $this->getRelativePath($this->path, $vendorDirectory);
 
         $result = file_put_contents($psalmConfig, sprintf(
             self::DEFAULT_PSALM_CONFIG,
-            $getRelativePath,
             $getRelativeVendorDirectory,
             $this->fixture->getPluginClass()
         ));
