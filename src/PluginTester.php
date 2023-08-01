@@ -10,6 +10,7 @@ use Composer\Semver\Comparator;
 use Composer\Semver\Semver;
 use Composer\Semver\VersionParser;
 use DirectoryIterator;
+use Fiber;
 use Generator;
 use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use PHPUnit\Framework\Assert;
@@ -44,7 +45,6 @@ final class PluginTester
      */
     public function __construct(
         private readonly string $pluginClass,
-        private readonly Shell $shell = new Shell(),
         private readonly VersionParser $versionParser = new VersionParser()
     ) {
         $this->suppressProgress = $this->packageSatisfiesVersionConstraint('vimeo/psalm', '>=3.4.0');
@@ -56,7 +56,22 @@ final class PluginTester
         }
 
         $this->plugin = $plugin;
-        $this->vendorDirectory = dirname($this->getPsalmPath());
+
+        $composerBinDirectory = $GLOBALS['_composer_bin_dir'] ?? null;
+
+        if ($composerBinDirectory === null) {
+            Assert::fail('Could not find composer bin directory from $_composer_bin_dir');
+        }
+
+        $vendorDirectory = realpath(
+            dirname($composerBinDirectory)
+        );
+
+        if ($vendorDirectory === false) {
+            Assert::fail('Could not find vendor directory');
+        }
+
+        $this->vendorDirectory = $vendorDirectory;
     }
 
     public function getPluginClass(): string
@@ -67,12 +82,9 @@ final class PluginTester
     public function getPsalmPath(): string
     {
         $psalm = (new ExecutableFinder())->find(
-            'vendor/bin/psalm',
+            'psalm',
             null,
-            [
-                dirname(__DIR__) . DIRECTORY_SEPARATOR, // installed as a project
-                dirname(__DIR__, 4) . DIRECTORY_SEPARATOR, // installed as a dependency
-            ]
+            [$GLOBALS['_composer_bin_dir']]
         );
 
         if ($psalm === null) {
@@ -131,7 +143,7 @@ final class PluginTester
             return false;
         }
 
-        $currentVersion =  $this->versionParser->normalize(
+        $currentVersion = $this->versionParser->normalize(
             InstalledVersions::getPrettyVersion($package)
         );
 
@@ -182,30 +194,50 @@ final class PluginTester
             $reportOptions,
         );
 
-        return (new PluginTestResult(
+        return new PluginTestResult(
             $this->pluginClass,
             $this->plugin,
             $fixture,
             $projectAnalyzer,
-        ))->assertExpectations();
+        );
     }
 
-    //    test plugin with psalm config
-    //    test plugin with psalm config and psalm version
-    //    test plugin with psalm config and php version [7.2 - 8.3]
     /**
      * @return Generator<string,Fixture>
      */
-    public static function yieldFixtures(string $pluginClass, string $path): Generator
+    public static function yieldFixtures(string $pluginClass, string $path): iterable
     {
-        /** @var SplFileInfo $fixtureDirectory */
-        foreach (new CallbackFilterIterator(
-            new DirectoryIterator($path),
-            static fn (SplFileInfo $current): bool => $current->isDir() && ! $current->isDot()
-        ) as $fixtureDirectory) {
-            $fixture = new Fixture($pluginClass, $fixtureDirectory->getPathname());
+        $fiber = new Fiber(
+            static function (string $pluginClass, string $path) {
+                /** @var SplFileInfo $fixtureDirectory */
+                foreach (
+                    new CallbackFilterIterator(
+                        new DirectoryIterator($path),
+                        static fn (
+                            SplFileInfo $current
+                        ): bool => $current->isDir() && ! $current->isDot()
+                    ) as $fixtureDirectory) {
+                    Fiber::suspend(
+                        new Fixture($pluginClass, $fixtureDirectory->getRealPath())
+                    );
+                }
+            }
+        );
 
-            yield $fixture->getName() => [$fixture];
-        }
+        $running = false;
+
+        do {
+            $running = $running || $fiber->isStarted();
+
+            $fixture = $running ? $fiber->resume($path) : $fiber->start($pluginClass, $path);
+
+            if (! $fixture instanceof Fixture) {
+                continue;
+            }
+
+            yield from [
+                $fixture->getName() => [$fixture],
+            ];
+        } while ($fiber->isSuspended());
     }
 }
