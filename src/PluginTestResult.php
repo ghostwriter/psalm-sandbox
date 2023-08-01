@@ -26,30 +26,6 @@ final class PluginTestResult
         private readonly Fixture $fixture,
         private readonly ProjectAnalyzer $projectAnalyzer,
     ) {
-        set_time_limit(-1);
-        // 8GiB Memory Limit
-        ini_set('memory_limit', (string) (8 * 1024 * 1024 * 1024));
-        // show all errors
-        error_reporting(-1);
-        ini_set('display_errors', '1');
-        ini_set('display_startup_errors', '1');
-
-        // $codebase = $projectAnalyzer->getCodebase();
-        //        $codebase->config->initializePlugins($projectAnalyzer);
-        //        $codebase->config->visitPreloadedStubFiles($codebase);
-        //        $codebase->config->visitStubFiles($codebase);
-        //        $codebase->config->visitComposerAutoloadFiles($projectAnalyzer);
-
-        //        $codebase->allow_backwards_incompatible_changes = true;
-        //        $projectAnalyzer->setPhpVersion($options['php-version']);
-        //        Config::getInstance()->addPluginPath($current_dir . $plugin_path);
-
-        gc_collect_cycles();
-        gc_disable();
-        $projectAnalyzer->check($fixture->getPath());
-        gc_enable();
-        gc_collect_cycles();
-
         $this->errorOutput =
             [
                 'errors' => array_map(
