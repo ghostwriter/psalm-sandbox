@@ -32,36 +32,31 @@ use Throwable;
 
 final class PluginTester
 {
-    private readonly string $plugin;
 
     private bool $suppressProgress;
 
     private bool $useBaseline = false;
 
     private readonly string $vendorDirectory;
+    private readonly string $composerBinDirectory;
 
     /**
      * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
      */
     public function __construct(
-        private readonly string $pluginClass,
         private readonly VersionParser $versionParser = new VersionParser()
     ) {
+        defined('PSALM_VERSION') || define('PSALM_VERSION', InstalledVersions::getPrettyVersion('vimeo/psalm'));
+        defined('PHP_PARSER_VERSION') || define('PHP_PARSER_VERSION', InstalledVersions::getPrettyVersion('nikic/php-parser'));
+
         $this->suppressProgress = $this->packageSatisfiesVersionConstraint('vimeo/psalm', '>=3.4.0');
-
-        $plugin = realpath((new ReflectionClass($this->pluginClass))->getFileName());
-
-        if ($plugin === false) {
-            Assert::fail(sprintf('Plugin class "%s" does not exist', $this->pluginClass));
-        }
-
-        $this->plugin = $plugin;
 
         $composerBinDirectory = $GLOBALS['_composer_bin_dir'] ?? null;
 
         if ($composerBinDirectory === null) {
             Assert::fail('Could not find composer bin directory from $_composer_bin_dir');
         }
+        $this->composerBinDirectory = $composerBinDirectory;
 
         $vendorDirectory = realpath(
             dirname($composerBinDirectory)
@@ -84,7 +79,7 @@ final class PluginTester
         $psalm = (new ExecutableFinder())->find(
             'psalm',
             null,
-            [$GLOBALS['_composer_bin_dir']]
+            [$this->composerBinDirectory]
         );
 
         if ($psalm === null) {
@@ -156,14 +151,18 @@ final class PluginTester
         return $result;
     }
 
-    public function test(Fixture $fixture, string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION): PluginTestResult
+    public function testPlugin(
+        string $pluginClass,
+        Fixture $fixture,
+        string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION
+    ): PluginTestResult
     {
+        $plugin = realpath((new ReflectionClass($pluginClass))->getFileName());
+        if ($plugin === false) {
+            Assert::fail(sprintf('Plugin class "%s" does not exist', $pluginClass));
+        }
+
         RuntimeCaches::clearAll();
-
-        defined('PSALM_VERSION') || define('PSALM_VERSION', InstalledVersions::getPrettyVersion('vimeo/psalm'));
-        defined('PHP_PARSER_VERSION') || define('PHP_PARSER_VERSION', InstalledVersions::getPrettyVersion('nikic/php-parser'));
-
-        //        $fixtureRootDirectory = $fixture->getPath();
 
         try {
             $configuration = Config::loadFromXMLFile(
@@ -195,8 +194,8 @@ final class PluginTester
         );
 
         return new PluginTestResult(
-            $this->pluginClass,
-            $this->plugin,
+            $pluginClass,
+            $plugin,
             $fixture,
             $projectAnalyzer,
         );
