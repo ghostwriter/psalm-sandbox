@@ -10,83 +10,53 @@ use Composer\Semver\Comparator;
 use Composer\Semver\Semver;
 use Composer\Semver\VersionParser;
 use DirectoryIterator;
-use Fiber;
 use Generator;
-use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
+use Ghostwriter\Container\Container;
 use PHPUnit\Framework\Assert;
 use Psalm\Config;
 use Psalm\Internal\Analyzer\ProjectAnalyzer;
 use Psalm\Internal\IncludeCollector;
-use Psalm\Internal\Provider\FileProvider;
 use Psalm\Internal\Provider\Providers;
 use Psalm\Internal\RuntimeCaches;
-use Psalm\Plugin\PluginEntryPointInterface;
-use Psalm\Plugin\PluginFileExtensionsInterface;
-use Psalm\Plugin\PluginInterface;
 use Psalm\Report;
 use Psalm\Report\ReportOptions;
 use ReflectionClass;
 use SplFileInfo;
-use Symfony\Component\Process\ExecutableFinder;
-use Throwable;
 
 final class PluginTester
 {
+    private readonly Container $container;
 
     private bool $suppressProgress;
 
-    private bool $useBaseline = false;
-
-    private readonly string $vendorDirectory;
-    private readonly string $composerBinDirectory;
-
-    /**
-     * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
-     */
     public function __construct(
-        private readonly VersionParser $versionParser = new VersionParser()
+        private readonly VersionParser $versionParser = new VersionParser(),
     ) {
         defined('PSALM_VERSION') || define('PSALM_VERSION', InstalledVersions::getPrettyVersion('vimeo/psalm'));
+
         defined('PHP_PARSER_VERSION') || define('PHP_PARSER_VERSION', InstalledVersions::getPrettyVersion('nikic/php-parser'));
+
+        $this->container = Container::getInstance();
 
         $this->suppressProgress = $this->packageSatisfiesVersionConstraint('vimeo/psalm', '>=3.4.0');
 
-        $composerBinDirectory = $GLOBALS['_composer_bin_dir'] ?? null;
-
-        if ($composerBinDirectory === null) {
-            Assert::fail('Could not find composer bin directory from $_composer_bin_dir');
-        }
-        $this->composerBinDirectory = $composerBinDirectory;
-
-        $vendorDirectory = realpath(
-            dirname($composerBinDirectory)
-        );
-
-        if ($vendorDirectory === false) {
-            Assert::fail('Could not find vendor directory');
-        }
-
-        $this->vendorDirectory = $vendorDirectory;
-    }
-
-    public function getPluginClass(): string
-    {
-        return $this->pluginClass;
-    }
-
-    public function getPsalmPath(): string
-    {
-        $psalm = (new ExecutableFinder())->find(
-            'psalm',
-            null,
-            [$this->composerBinDirectory]
-        );
-
-        if ($psalm === null) {
-            Assert::fail('Psalm is not installed.');
-        }
-
-        return $psalm;
+        //        var_dump($GLOBALS, $_composer_bin_dir);
+        //        $composerBinDirectory = $GLOBALS['_composer_bin_dir'] ?? getenv('COMPOSER_BIN_DIR') ?: __DIR__;
+        //
+        //        if ($composerBinDirectory === null) {
+        //            Assert::fail('Could not find composer bin directory from $_composer_bin_dir');
+        //        }
+        //        $this->composerBinDirectory = $composerBinDirectory;
+        //
+        //        $vendorDirectory = realpath(
+        //            dirname($composerBinDirectory)
+        //        );
+        //
+        //        if ($vendorDirectory === false) {
+        //            Assert::fail('Could not find vendor directory');
+        //        }
+        //
+        //        $this->vendorDirectory = $vendorDirectory;
     }
 
     public function havePackageVersion(string $package, string $version, string $operator)
@@ -154,9 +124,8 @@ final class PluginTester
     public function testPlugin(
         string $pluginClass,
         Fixture $fixture,
-        string $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION
-    ): PluginTestResult
-    {
+        string $phpVersion = Version::PHP_CURRENT_VERSION
+    ): PluginTestResult {
         $plugin = realpath((new ReflectionClass($pluginClass))->getFileName());
         if ($plugin === false) {
             Assert::fail(sprintf('Plugin class "%s" does not exist', $pluginClass));
@@ -164,21 +133,49 @@ final class PluginTester
 
         RuntimeCaches::clearAll();
 
-        try {
-            $configuration = Config::loadFromXMLFile(
-                $fixture->getPsalmConfig()->unwrap()->getFile(),
-                $fixture->getPath()
-            );
-        } catch (Throwable $exception) {
-            echo $exception->getMessage();
-            exit(99);
-        }
+        $configuration = Config::loadFromXML(
+            $fixture->getPath(),
+            sprintf(
+                <<<'PSALM_CONFIG'
+<?xml version="1.0"?>
+<psalm errorLevel="1" phpVersion="%s">
+    <projectFiles>
+        <directory name="./" />
+    </projectFiles>
+    <plugins>
+        <pluginClass class="%s" />
+    </plugins>
+</psalm>
+PSALM_CONFIG,
+                $phpVersion,
+                $pluginClass
+            )
+        );
 
+        $configuration->collectPredefinedConstants();
+        $configuration->collectPredefinedFunctions();
+
+        $configuration->allow_includes = false;
+        $configuration->base_dir = $fixture->getPath();
+        $configuration->cache_directory = null;
+        $configuration->check_for_throws_docblock = true;
+        $configuration->ensure_array_int_offsets_exist = true;
+        $configuration->ensure_array_string_offsets_exist = true;
+        $configuration->ignore_internal_falsable_issues = true;
+        $configuration->ignore_internal_nullable_issues = true;
+        $configuration->level = 1;
+        $configuration->memoize_method_calls = false;
+        $configuration->remember_property_assignments_after_call = true;
+        $configuration->setIncludeCollector(new IncludeCollector());
+        $configuration->show_mixed_issues = true;
         $configuration->throw_exception = false;
         $configuration->use_docblock_types = true;
-        $configuration->level = 1;
-        $configuration->cache_directory = null;
-        $configuration->setIncludeCollector(new IncludeCollector());
+        $configuration->use_phpdoc_method_without_magic_or_parent = false;
+        $configuration->use_phpdoc_property_without_magic_or_parent = false;
+
+        foreach ($configuration->php_extensions as &$enabled) {
+            $enabled = true;
+        }
 
         $reportOptions = new ReportOptions();
         $reportOptions->use_color = false;
@@ -189,9 +186,21 @@ final class PluginTester
 
         $projectAnalyzer = new ProjectAnalyzer(
             $configuration,
-            new Providers(new FileProvider()),
+            new Providers(
+                $fixture
+            ),
             $reportOptions,
         );
+
+        $projectAnalyzer->setPhpVersion($phpVersion, 'cli');
+
+        $codebase = $projectAnalyzer->getCodebase();
+        $codebase->config->initializePlugins($projectAnalyzer);
+        $codebase->collect_references = true;
+
+        $configuration->visitPreloadedStubFiles($codebase);
+
+        $codebase->store_node_types = true;
 
         return new PluginTestResult(
             $pluginClass,
@@ -204,39 +213,21 @@ final class PluginTester
     /**
      * @return Generator<string,Fixture>
      */
-    public static function yieldFixtures(string $pluginClass, string $path): iterable
+    public static function yieldFixtures(string $path): Generator
     {
-        $fiber = new Fiber(
-            static function (string $pluginClass, string $path) {
-                /** @var SplFileInfo $fixtureDirectory */
-                foreach (
-                    new CallbackFilterIterator(
-                        new DirectoryIterator($path),
-                        static fn (
-                            SplFileInfo $current
-                        ): bool => $current->isDir() && ! $current->isDot()
-                    ) as $fixtureDirectory) {
-                    Fiber::suspend(
-                        new Fixture($pluginClass, $fixtureDirectory->getRealPath())
-                    );
-                }
-            }
-        );
-
-        $running = false;
-
-        do {
-            $running = $running || $fiber->isStarted();
-
-            $fixture = $running ? $fiber->resume($path) : $fiber->start($pluginClass, $path);
-
-            if (! $fixture instanceof Fixture) {
+        foreach (
+            new CallbackFilterIterator(
+                new DirectoryIterator($path),
+                static fn (
+                    SplFileInfo $current
+                ): bool => $current->isDir() && ! $current->isDot()
+            ) as $fixtureDirectory) {
+            if (! $fixtureDirectory instanceof SplFileInfo) {
                 continue;
             }
-
             yield from [
-                $fixture->getName() => [$fixture],
+                $fixtureDirectory->getBasename() => [new Fixture($fixtureDirectory->getRealPath())],
             ];
-        } while ($fiber->isSuspended());
+        }
     }
 }
