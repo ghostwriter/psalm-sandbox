@@ -155,7 +155,7 @@ PSALM_CONFIG,
         $configuration->collectPredefinedConstants();
         $configuration->collectPredefinedFunctions();
 
-        $configuration->allow_includes = false;
+        // $configuration->allow_includes = false;
         $configuration->base_dir = $fixture->getPath();
         $configuration->cache_directory = null;
         $configuration->check_for_throws_docblock = true;
