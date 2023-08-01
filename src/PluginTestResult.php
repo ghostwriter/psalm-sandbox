@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ghostwriter\PsalmPluginTester;
 
 use Ghostwriter\Json\Json;
-use Ghostwriter\PsalmPluginTester\Path\Directory\Fixture;
 use PHPUnit\Framework\Assert;
 use Psalm\Internal\Analyzer\IssueData;
 use Psalm\Internal\Analyzer\ProjectAnalyzer;
@@ -69,41 +68,40 @@ final class PluginTestResult
                 ),
             ];
 
-        $encode = $this->encode($this->errorOutput);
+        $actual = $this->encode($this->errorOutput);
 
         $root = $this->fixture->getPath();
 
-        Assert::assertSame(
-            $this->fixture->getProjectRootDirectory()
-                ->getExpectationsJsonFile()
-                ->mapOrElse(
-                    fn ($file) => $this->encode([
-                        'errors' => $file->getExpectations(),
-                    ]),
-                    static function () use ($root, $encode): string {
-                        file_put_contents($root . '/expectations.json', $encode . PHP_EOL);
+        $expectationsFile = $root . '/expectations.json';
+        if (file_exists($expectationsFile)) {
+            $expected = file_get_contents($expectationsFile);
+            if ($expected === false) {
+                Assert::fail(
+                    sprintf(
+                        'Could not read expectations file: %s',
+                        $expectationsFile
+                    )
+                );
+            }
+        } else {
+            $expected = $actual;
+            Assert::assertGreaterThan(
+                0,
+                file_put_contents($expectationsFile, $actual . PHP_EOL),
+                sprintf('Could not write expectations file: %s', $expectationsFile)
+            );
+        }
 
-                        return $encode;
-                    }
-                ),
-            $encode,
-            sprintf('Expected output does not match expectations file: %s/expectations.json', $root)
+        Assert::assertJsonStringEqualsJsonFile(
+            $expectationsFile,
+            $actual,
+            sprintf('Could not match contents of the expectations file: %s', $expectationsFile)
         );
     }
 
     public function getFixture(): Fixture
     {
         return $this->fixture;
-    }
-
-    public function getPlugin(): string
-    {
-        return $this->plugin;
-    }
-
-    public function getPluginClass(): string
-    {
-        return $this->pluginClass;
     }
 
     private function decode(string $data): array
