@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\PsalmPluginTester\Tests\Feature;
+namespace Ghostwriter\PsalmPluginTester\Tests\Unit;
 
 use Ghostwriter\PsalmPluginTester\Fixture;
 use PHPUnit\Framework\Assert;
