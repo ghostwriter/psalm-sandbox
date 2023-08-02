@@ -37,6 +37,6 @@
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-        <pluginClass class="Ghostwriter\PHPUnitPsalmPlugin\Plugin"/>
+        <pluginClass class="Ghostwriter\PHPUnitPsalmPlugin\PHPUnitPlugin"/>
     </plugins>
 </psalm>
