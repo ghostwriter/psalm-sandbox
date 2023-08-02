@@ -6,7 +6,6 @@ namespace Ghostwriter\PsalmPluginTester;
 
 final class Version
 {
-
     public const PHP_80 = '8.0';
 
     public const PHP_81 = '8.1';
