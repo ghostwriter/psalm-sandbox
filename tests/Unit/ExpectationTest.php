@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\PsalmPluginTester\Tests\Feature;
+namespace Ghostwriter\PsalmPluginTester\Tests\Unit;
 
+use Ghostwriter\Json\Json;
 use Ghostwriter\PsalmPluginTester\Expectation;
 use JsonSerializable;
 use PHPUnit\Framework\Assert;
@@ -88,6 +89,14 @@ final class ExpectationTest extends TestCase
     public function testSeverity(): void
     {
         Assert::assertSame($this->severity, $this->expectation->getSeverity());
+    }
+
+    public function testToString(): void
+    {
+        Assert::assertSame(
+            Json::encode($this->expectation->jsonSerialize()),
+            (string) $this->expectation
+        );
     }
 
     public function testType(): void
