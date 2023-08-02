@@ -78,6 +78,7 @@
     },
     "scripts": {
         "cache:clear": [
+            "find ./tests/Fixture -path './*/expectations.json' -delete",
             "rm -fr ./.cache"
         ],
         "check": [
