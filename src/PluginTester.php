@@ -33,6 +33,14 @@ final class PluginTester
     public function __construct(
         private readonly VersionParser $versionParser = new VersionParser(),
     ) {
+        set_time_limit(-1);
+        // 8GiB Memory Limit
+        ini_set('memory_limit', (string) (8 * 1024 * 1024 * 1024));
+        // show all errors
+        error_reporting(-1);
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+
         defined('PSALM_VERSION') || define('PSALM_VERSION', InstalledVersions::getPrettyVersion('vimeo/psalm'));
         defined('PHP_PARSER_VERSION') || define('PHP_PARSER_VERSION', InstalledVersions::getPrettyVersion('nikic/php-parser'));
 
@@ -107,39 +115,33 @@ final class PluginTester
         string $phpVersion = Version::PHP_CURRENT_VERSION
     ): PluginTestResult {
         $plugin = realpath((new ReflectionClass($pluginClass))->getFileName());
+
         if ($plugin === false) {
             Assert::fail(sprintf('Plugin class "%s" does not exist', $pluginClass));
         }
 
-        $vendorDirectory = self::findVendorDirectory(__DIR__);
-
-        if ($vendorDirectory === false) {
-            Assert::fail(sprintf('Could not find vendor directory for plugin "%s"', $pluginClass));
-        }
-
         RuntimeCaches::clearAll();
 
-        $config = sprintf(
-            <<<'PSALM_CONFIG'
-            <?xml version="1.0"?>
-            <psalm errorLevel="1" phpVersion="%s">
-                <projectFiles>
-                    <directory name="./" />
-                </projectFiles>
-                <plugins>
-                    <pluginClass class="%s" />
-                </plugins>
-            </psalm>
-            PSALM_CONFIG,
-            $phpVersion,
-            $pluginClass
+        $configuration = self::configureConfig(
+            Config::loadFromXML($fixture->getPath(), sprintf(
+                <<<'PSALM_CONFIG'
+                <?xml version="1.0"?>
+                <psalm errorLevel="1" phpVersion="%s">
+                    <projectFiles>
+                        <directory name="./" />
+                    </projectFiles>
+                    <plugins>
+                        <pluginClass class="%s" />
+                    </plugins>
+                </psalm>
+                PSALM_CONFIG,
+                $phpVersion,
+                $pluginClass
+            )),
+            $fixture
         );
 
-        $configuration = Config::loadFromXML($fixture->getPath(), $config);
-        self::configureConfig($configuration, $fixture);
-
-        $reportOptions = new ReportOptions();
-        self::configureReportOptions($reportOptions);
+        $reportOptions = self::configureReportOptions(new ReportOptions());
 
         $projectAnalyzer = new ProjectAnalyzer($configuration, new Providers($fixture), $reportOptions);
         self::configureProjectAnalyzer($projectAnalyzer, $phpVersion);
@@ -147,13 +149,6 @@ final class PluginTester
         $codebase = $projectAnalyzer->getCodebase();
 
 
-        set_time_limit(-1);
-        // 8GiB Memory Limit
-        ini_set('memory_limit', (string) (8 * 1024 * 1024 * 1024));
-        // show all errors
-        error_reporting(-1);
-        ini_set('display_errors', '1');
-        ini_set('display_startup_errors', '1');
 
         // $codebase = $projectAnalyzer->getCodebase();
         //        $codebase->config->initializePlugins($projectAnalyzer);
@@ -207,16 +202,17 @@ final class PluginTester
     private static function configureCodebase(
         Codebase $codebase
     ): void {
-        $codebase->enterServerMode();
+        // $codebase->enterServerMode();
         $codebase->collectLocations();
-        $codebase->reportUnusedVariables();
-        $codebase->reportUnusedCode();
+        // $codebase->reportUnusedVariables();
+        // $codebase->reportUnusedCode();
+        $codebase->store_node_types = true;
     }
 
     private static function configureConfig(
         Config $configuration,
         Fixture $fixture
-    ): void {
+    ): Config {
         $vendorDirectory = self::findVendorDirectory(__DIR__);
         $configuration->setComposerClassLoader(
             require $vendorDirectory . '/autoload.php'
@@ -253,9 +249,11 @@ final class PluginTester
 
 
         $configuration->find_unused_baseline_entry = true;
-        $configuration->find_unused_code = true;
-        $configuration->find_unused_variables = true;
+        // $configuration->find_unused_code = true;
+        // $configuration->find_unused_variables = true;
         $configuration->find_unused_psalm_suppress = true;
+
+        return $configuration;
     }
 
     private static function configureProjectAnalyzer(
@@ -275,13 +273,15 @@ final class PluginTester
 
     private static function configureReportOptions(
         ReportOptions $reportOptions
-    ): void {
+    ): ReportOptions {
         $reportOptions->in_ci = false;
         $reportOptions->use_color = false;
         $reportOptions->show_info = ! false;
         $reportOptions->format = Report::TYPE_JSON;
         $reportOptions->pretty = true;
         $reportOptions->output_path = './actual.json';
+
+        return $reportOptions;
     }
 
     private static function findVendorDirectory(string $path): string
