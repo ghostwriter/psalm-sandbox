@@ -8,33 +8,25 @@ use Ghostwriter\Json\Json;
 use PHPUnit\Framework\Assert;
 use Psalm\Internal\Analyzer\IssueData;
 use Psalm\Internal\Analyzer\ProjectAnalyzer;
-use Psalm\Plugin\PluginEntryPointInterface;
-use Psalm\Plugin\PluginFileExtensionsInterface;
-use Psalm\Plugin\PluginInterface;
 use Throwable;
 
 final class PluginTestResult
 {
-    private array $errorOutput;
+    private readonly array $errorOutput;
 
-    /**
-     * @param class-string<PluginEntryPointInterface|PluginFileExtensionsInterface|PluginInterface> $pluginClass
-     */
     public function __construct(
-        private readonly string $pluginClass,
-        private readonly string $plugin,
         private readonly Fixture $fixture,
         private readonly ProjectAnalyzer $projectAnalyzer,
     ) {
         $this->errorOutput =
             [
                 'errors' => array_map(
-                    static fn (IssueData $issuesData): array =>
+                    static fn (IssueData $issueData): array =>
                     [
-                        'file' => $issuesData->file_name,
-                        'message' => $issuesData->message,
-                        'severity' => $issuesData->severity,
-                        'type' => $issuesData->type,
+                        'file' => $issueData->file_name,
+                        'message' => $issueData->message,
+                        'severity' => $issueData->severity,
+                        'type' => $issueData->type,
                     ],
                     array_merge(
                         ...array_values(
@@ -80,21 +72,12 @@ final class PluginTestResult
         return $this->fixture;
     }
 
-    private function decode(string $data): array
-    {
-        try {
-            return Json::decode($data);
-        } catch (Throwable $e) {
-            Assert::fail($e->getMessage() . PHP_EOL . var_export($data));
-        }
-    }
-
     private function encode(array $data): string
     {
         try {
             return Json::encode($data, Json::PRETTY);
-        } catch (Throwable $e) {
-            Assert::fail($e->getMessage() . PHP_EOL . var_export($data));
+        } catch (Throwable $throwable) {
+            Assert::fail($throwable->getMessage() . PHP_EOL . var_export($data));
         }
     }
 }
