@@ -9,6 +9,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psalm\Internal\Provider\FakeFileProvider;
+use Psalm\Internal\Provider\FileProvider;
 
 #[CoversClass(Fixture::class)]
 final class FixtureTest extends TestCase
@@ -42,5 +43,13 @@ final class FixtureTest extends TestCase
     public function testFixturePath(): void
     {
         Assert::assertSame($this->fixturePath, $this->fixture->getPath());
+    }
+
+    public function testFixtureVendorDirectory(): void
+    {
+        Assert::assertSame(
+            dirname($this->fixturePath, 3) . '/vendor',
+            $this->fixture->getVendorDirectory()
+        );
     }
 }
