@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Ghostwriter\PsalmPluginTester\Tests\Unit;
 
+use CallbackFilterIterator;
+use FilesystemIterator;
 use Ghostwriter\PsalmPluginTester\Fixture;
 use Ghostwriter\PsalmPluginTester\PluginTester;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use SplFileInfo;
 
 #[CoversClass(Fixture::class)]
 #[CoversClass(PluginTester::class)]
@@ -21,6 +24,17 @@ final class PluginTesterTest extends TestCase
     protected function setUp(): void
     {
         $this->fixturePath = dirname(__FILE__, 2) . '/Fixture';
+    }
+
+    public function testYieldFixture(): void
+    {
+        foreach (PluginTester::yieldFixture(__DIR__) as $fixtures) {
+            Assert::assertIsArray($fixtures);
+
+            foreach ($fixtures as $fixture) {
+                Assert::assertInstanceOf(Fixture::class, $fixture);
+            }
+        }
     }
 
     public function testYieldsFixtureCount(): void
@@ -39,19 +53,21 @@ final class PluginTesterTest extends TestCase
         }
     }
 
-    public function testYieldsFixtures2(): void
-    {
-        foreach (PluginTester::yieldFixture(__DIR__) as $fixtures) {
-            Assert::assertIsArray($fixtures);
-
-            foreach ($fixtures as $fixture) {
-                Assert::assertInstanceOf(Fixture::class, $fixture);
-            }
-        }
-    }
-
     public function testYieldsFixturesCount(): void
     {
-        Assert::assertSame(5, iterator_count(PluginTester::yieldFixtures($this->fixturePath)));
+        Assert::assertSame(
+            self::countDirectories($this->fixturePath),
+            iterator_count(PluginTester::yieldFixtures($this->fixturePath))
+        );
+    }
+
+    private static function countDirectories(string $directory): int
+    {
+        return iterator_count(
+            new CallbackFilterIterator(
+                new FilesystemIterator($directory, FilesystemIterator::SKIP_DOTS),
+                static fn (SplFileInfo $current): bool => $current->isDir()
+            )
+        );
     }
 }
