@@ -16,14 +16,19 @@ final class FixtureTest extends TestCase
 {
     private Fixture $fixture;
 
-    private string $fixturePath;
+    private string $fixtureDirectory;
+
+    private string $vendorDirectory;
 
     protected function setUp(): void
     {
-        $this->fixturePath = dirname(__FILE__, 2) . '/Fixture/black-lives-matter';
+        $this->fixtureDirectory = dirname(__FILE__, 2) . '/Fixture/black-lives-matter';
+
+        $this->vendorDirectory = dirname($this->fixtureDirectory, 3) . '/vendor';
 
         $this->fixture = new Fixture(
-            $this->fixturePath,
+            $this->fixtureDirectory,
+            $this->vendorDirectory,
         );
     }
 
@@ -35,20 +40,23 @@ final class FixtureTest extends TestCase
         );
     }
 
-    public function testFixtureName(): void
+    public function testFixtureFileProvider(): void
     {
-        Assert::assertSame('black-lives-matter', $this->fixture->getName());
+        Assert::assertInstanceOf(
+            FileProvider::class,
+            $this->fixture
+        );
     }
 
-    public function testFixturePath(): void
+    public function testFixtureProjectDirectory(): void
     {
-        Assert::assertSame($this->fixturePath, $this->fixture->getPath());
+        Assert::assertSame($this->fixtureDirectory, $this->fixture->getProjectDirectory());
     }
 
     public function testFixtureVendorDirectory(): void
     {
         Assert::assertSame(
-            dirname($this->fixturePath, 3) . '/vendor',
+            $this->vendorDirectory,
             $this->fixture->getVendorDirectory()
         );
     }
