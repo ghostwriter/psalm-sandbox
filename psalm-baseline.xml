@@ -1,2 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d" />
+<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d">
+  <file src="src/Analyzer.php">
+    <ArgumentTypeCoercion>
+      <code>$pluginClass</code>
+    </ArgumentTypeCoercion>
+    <InvalidPropertyAssignmentValue>
+      <code>true</code>
+    </InvalidPropertyAssignmentValue>
+    <MixedArgument>
+      <code>$configurations</code>
+      <code>require $autoload</code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code>$configurations[$phpVersion][$sourceDirectory]</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment>
+      <code>$configurations[$phpVersion][$sourceDirectory]</code>
+    </MixedArrayAssignment>
+    <MixedInferredReturnType>
+      <code>Config</code>
+      <code>ReportOptions</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>$configurations[$phpVersion][$sourceDirectory]</code>
+      <code>$reportOptions</code>
+    </MixedReturnStatement>
+    <RedundantCondition>
+      <code>new VoidProgress()</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType>
+      <code>$debug</code>
+      <code>$debug</code>
+    </TypeDoesNotContainType>
+    <UnusedProperty>
+      <code>$fixture</code>
+      <code>$phpVersion</code>
+      <code>$pluginClass</code>
+    </UnusedProperty>
+  </file>
+  <file src="src/PluginTestResult.php">
+    <InvalidOperand>
+      <code>var_export($data)</code>
+    </InvalidOperand>
+    <MixedAssignment>
+      <code><![CDATA[$expectations['expected']]]></code>
+      <code>$expected</code>
+    </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>getFixture</code>
+    </PossiblyUnusedMethod>
+    <UnusedMethod>
+      <code>encode</code>
+    </UnusedMethod>
+    <UnusedProperty>
+      <code>$analyzer</code>
+      <code>$errorOutput</code>
+      <code>$phpVersion</code>
+      <code>$pluginClass</code>
+    </UnusedProperty>
+  </file>
+  <file src="src/PluginTester.php">
+    <ArgumentTypeCoercion>
+      <code>$operator</code>
+    </ArgumentTypeCoercion>
+    <MissingReturnType>
+      <code>isPackageVersion</code>
+    </MissingReturnType>
+    <PossiblyNullArgument>
+      <code>InstalledVersions::getPrettyVersion($package)</code>
+      <code>InstalledVersions::getPrettyVersion($package)</code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference>
+      <code>getBasename</code>
+    </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>isPackageVersion</code>
+      <code>packageSatisfiesVersionConstraint</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>PluginTestResult</code>
+    </PossiblyUnusedReturnValue>
+    <PropertyNotSetInConstructor>
+      <code>$suppressProgress</code>
+    </PropertyNotSetInConstructor>
+    <UnusedMethod>
+      <code>findVendorDirectory</code>
+    </UnusedMethod>
+    <UnusedProperty>
+      <code>$container</code>
+      <code>$suppressProgress</code>
+    </UnusedProperty>
+  </file>
+  <file src="src/Version.php">
+    <InvalidOperand>
+      <code>PHP_MAJOR_VERSION</code>
+      <code>PHP_MINOR_VERSION</code>
+    </InvalidOperand>
+  </file>
+  <file src="tests/Unit/PluginTest.php">
+    <InvalidReturnType>
+      <code><![CDATA[Generator<string, Fixture, mixed, void>]]></code>
+    </InvalidReturnType>
+    <PossiblyUnusedMethod>
+      <code>fixtureDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/Unit/PluginTesterTest.php">
+    <RedundantConditionGivenDocblockType>
+      <code>assertIsArray</code>
+      <code>assertIsArray</code>
+    </RedundantConditionGivenDocblockType>
+    <UnusedProperty>
+      <code>$pluginTester</code>
+    </UnusedProperty>
+  </file>
+</files>
