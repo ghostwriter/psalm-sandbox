@@ -13,15 +13,7 @@ use FilesystemIterator;
 use Generator;
 use Ghostwriter\Container\Container;
 use PHPUnit\Framework\Assert;
-use Psalm\Codebase;
-use Psalm\Config;
-use Psalm\Internal\Analyzer\ProjectAnalyzer;
-use Psalm\Internal\IncludeCollector;
-use Psalm\Internal\Provider\Providers;
 use Psalm\Internal\RuntimeCaches;
-use Psalm\Report;
-use Psalm\Report\ReportOptions;
-use ReflectionClass;
 use SplFileInfo;
 
 final class PluginTester
@@ -47,7 +39,7 @@ final class PluginTester
         $this->container = Container::getInstance();
     }
 
-    public function havePackageVersion(string $package, string $version, string $operator)
+    public function havePackageVersion(string $package, string $version, string $operator): bool
     {
         return Comparator::compare(
             $this->versionParser->normalize(
@@ -84,7 +76,7 @@ final class PluginTester
         }
     }
 
-    public function packageSatisfiesVersionConstraint(string $package, string $constraint)
+    public function packageSatisfiesVersionConstraint(string $package, string $constraint): bool
     {
         if (! InstalledVersions::isInstalled($package)) {
             // Assert::fail(sprintf("Package %s is not installed", $package));
@@ -114,61 +106,25 @@ final class PluginTester
         Fixture $fixture,
         string $phpVersion = Version::PHP_CURRENT_VERSION
     ): PluginTestResult {
-        $plugin = realpath((new ReflectionClass($pluginClass))->getFileName());
-
-        if ($plugin === false) {
-            Assert::fail(sprintf('Plugin class "%s" does not exist', $pluginClass));
-        }
-
         RuntimeCaches::clearAll();
 
-        $configuration = self::configureConfig(
-            Config::loadFromXML($fixture->getPath(), sprintf(
-                <<<'PSALM_CONFIG'
-                <?xml version="1.0"?>
-                <psalm errorLevel="1" phpVersion="%s">
-                    <projectFiles>
-                        <directory name="./" />
-                    </projectFiles>
-                    <plugins>
-                        <pluginClass class="%s" />
-                    </plugins>
-                </psalm>
-                PSALM_CONFIG,
-                $phpVersion,
-                $pluginClass
-            )),
-            $fixture
+        $analyzer = new Analyzer(
+            $fixture,
+            $pluginClass,
+            $phpVersion
         );
 
-        $reportOptions = self::configureReportOptions(new ReportOptions());
+        // ob_start();
 
-        $projectAnalyzer = new ProjectAnalyzer($configuration, new Providers($fixture), $reportOptions);
-        self::configureProjectAnalyzer($projectAnalyzer, $phpVersion);
+        // $output = ob_get_clean();
 
-        $codebase = $projectAnalyzer->getCodebase();
-
-
-
-        // $codebase = $projectAnalyzer->getCodebase();
-        //        $codebase->config->initializePlugins($projectAnalyzer);
-        //        $codebase->config->visitPreloadedStubFiles($codebase);
-        //        $codebase->config->visitStubFiles($codebase);
-        //        $codebase->config->visitComposerAutoloadFiles($projectAnalyzer);
-
-        //        $codebase->allow_backwards_incompatible_changes = true;
-        //        $projectAnalyzer->setPhpVersion($options['php-version']);
-        //        Config::getInstance()->addPluginPath($current_dir . $plugin_path);
-        gc_collect_cycles();
-        gc_disable();
-        $projectAnalyzer->checkDir($fixture->getPath());
-        // $projectAnalyzer->check($fixture->getPath());
-        gc_enable();
-        gc_collect_cycles();
+        $analyzer->check($fixture->getSourceDirectory());
 
         return new PluginTestResult(
             $fixture,
-            $projectAnalyzer,
+            $analyzer,
+            $pluginClass,
+            $phpVersion
         );
     }
 
@@ -181,9 +137,24 @@ final class PluginTester
             Assert::fail(sprintf('Fixture directory "%s" does not exist', $path));
         }
 
+        $levels = 0;
+        $vendorDirectory = realpath($path . '/vendor');
+        while ($vendorDirectory === false) {
+            $vendorDirectory = realpath(dirname($path, ++$levels) . '/vendor');
+        }
+
+        if ($vendorDirectory === '') {
+            Assert::fail('Could not find vendor directory');
+        }
+
         $fixtureDirectory = new SplFileInfo($path);
 
-        yield $fixtureDirectory->getBasename() => [new Fixture($fixtureDirectory->getRealPath())];
+        yield $fixtureDirectory->getBasename() => [
+            new Fixture(
+                $fixtureDirectory->getRealPath(),
+                $vendorDirectory
+            ),
+        ];
     }
 
     /**
@@ -191,97 +162,29 @@ final class PluginTester
      */
     public static function yieldFixtures(string $path): Generator
     {
+        $levels = 0;
+
+        $vendorDirectory = realpath($path . '/vendor');
+        while ($vendorDirectory === false) {
+            $vendorDirectory = realpath(dirname($path, ++$levels) . '/vendor');
+        }
+
+        if ($vendorDirectory === '') {
+            Assert::fail('Could not find vendor directory');
+        }
+
         foreach (new CallbackFilterIterator(
             new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS),
             static fn (SplFileInfo $current): bool => $current->isDir()
-        ) as $fixtureDirectory) {
-            yield $fixtureDirectory->getBasename() => [new Fixture($fixtureDirectory->getRealPath())];
+        ) as $fixtureDirectory
+        ) {
+            yield $fixtureDirectory->getBasename() => [
+                new Fixture(
+                    $fixtureDirectory->getRealPath(),
+                    $vendorDirectory
+                ),
+            ];
         }
-    }
-
-    private static function configureCodebase(
-        Codebase $codebase
-    ): void {
-        // $codebase->enterServerMode();
-        $codebase->collectLocations();
-        // $codebase->reportUnusedVariables();
-        // $codebase->reportUnusedCode();
-        $codebase->store_node_types = true;
-    }
-
-    private static function configureConfig(
-        Config $configuration,
-        Fixture $fixture
-    ): Config {
-        $vendorDirectory = self::findVendorDirectory(__DIR__);
-        $configuration->setComposerClassLoader(
-            require $vendorDirectory . '/autoload.php'
-        );
-
-        $configuration->setIncludeCollector(new IncludeCollector());
-        $configuration->collectPredefinedConstants();
-        $configuration->collectPredefinedFunctions();
-
-        $configuration->check_for_throws_docblock = true;
-        $configuration->ensure_array_int_offsets_exist = true;
-        $configuration->ensure_array_string_offsets_exist = true;
-        $configuration->infer_property_types_from_constructor = true;
-        $configuration->ignore_internal_falsable_issues = true;
-        $configuration->ignore_internal_nullable_issues = true;
-        $configuration->level = 1;
-        $configuration->memoize_method_calls = true;
-        $configuration->remember_property_assignments_after_call = true;
-        $configuration->show_mixed_issues = false;
-        $configuration->throw_exception = false;
-        $configuration->use_docblock_types = true;
-        $configuration->include_php_versions_in_error_baseline = true;
-        $configuration->use_phpdoc_method_without_magic_or_parent = false;
-        $configuration->use_phpdoc_property_without_magic_or_parent = false;
-
-        foreach ($configuration->php_extensions as &$enabled) {
-            $enabled = true;
-        }
-
-        // $configuration->allow_includes = false;
-        $configuration->base_dir = $fixture->getPath();
-        $configuration->cache_directory = null;
-        $configuration->global_cache_directory = null;
-
-
-        $configuration->find_unused_baseline_entry = true;
-        // $configuration->find_unused_code = true;
-        // $configuration->find_unused_variables = true;
-        $configuration->find_unused_psalm_suppress = true;
-
-        return $configuration;
-    }
-
-    private static function configureProjectAnalyzer(
-        ProjectAnalyzer $projectAnalyzer,
-        string $phpVersion = Version::PHP_CURRENT_VERSION
-    ): void {
-        $projectAnalyzer->setPhpVersion($phpVersion, 'tests');
-        $projectAnalyzer->trackTaintedInputs();
-        $projectAnalyzer->trackUnusedSuppressions();
-
-        $codebase = $projectAnalyzer->getCodebase();
-
-        self::configureCodebase($codebase);
-
-        $projectAnalyzer->show_issues = true;
-    }
-
-    private static function configureReportOptions(
-        ReportOptions $reportOptions
-    ): ReportOptions {
-        $reportOptions->in_ci = false;
-        $reportOptions->use_color = false;
-        $reportOptions->show_info = ! false;
-        $reportOptions->format = Report::TYPE_JSON;
-        $reportOptions->pretty = true;
-        $reportOptions->output_path = './actual.json';
-
-        return $reportOptions;
     }
 
     private static function findVendorDirectory(string $path): string
@@ -300,24 +203,5 @@ final class PluginTester
         }
 
         return $vendorDirectory;
-    }
-
-    private static function createReportOptions(): ReportOptions
-    {
-        static $reportOptions = null;
-
-        if ($reportOptions !== null) {
-            return $reportOptions;
-        }
-
-        $reportOptions = new ReportOptions();
-        $reportOptions->in_ci = false;
-        $reportOptions->use_color = false;
-        $reportOptions->show_info = true;
-        $reportOptions->format = Report::TYPE_JSON;
-        $reportOptions->pretty = true;
-        $reportOptions->output_path = './actual.json';
-
-        return $reportOptions;
     }
 }
