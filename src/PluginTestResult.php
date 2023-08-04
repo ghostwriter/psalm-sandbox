@@ -23,6 +23,11 @@ final class PluginTestResult
         $this->errorOutput =
             [
                 'errors' => array_map(
+                    /**
+                     * @return string[]
+                     *
+                     * @psalm-return array{file: string, message: string, severity: 'error'|'info', type: string}
+                     */
                     static fn (IssueData $issueData): array =>
                     [
                         'file' => $issueData->file_name,
@@ -38,7 +43,6 @@ final class PluginTestResult
                 ),
             ];
 
-        $expected = null;
         $actual = $this->errorOutput;
         $codebase = $analyzer->getCodebase();
         $expectations = [
