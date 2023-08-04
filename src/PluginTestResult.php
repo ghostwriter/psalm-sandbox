@@ -23,7 +23,7 @@ final class PluginTestResult
         $this->errorOutput =
             [
                 'errors' => array_map(
-                    static fn(IssueData $issueData): array =>
+                    static fn (IssueData $issueData): array =>
                     [
                         'file' => $issueData->file_name,
                         'message' => $issueData->message,
@@ -52,7 +52,7 @@ final class PluginTestResult
                     'phpVersion' => $phpVersion,
                 ],
             ],
-            'TypeInferenceSummary' => $codebase->analyzer->getTypeInferenceSummary($codebase)
+            'TypeInferenceSummary' => $codebase->analyzer->getTypeInferenceSummary($codebase),
         ];
 
         $root = $this->fixture->getSourceDirectory();
