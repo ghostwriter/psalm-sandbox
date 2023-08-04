@@ -22,7 +22,7 @@ final class FixtureTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixtureDirectory = dirname(__FILE__, 2) . '/Fixture/black-lives-matter';
+        $this->fixtureDirectory = dirname(__FILE__, 3) . '/fixtures/black-lives-matter';
 
         $this->vendorDirectory = dirname($this->fixtureDirectory, 3) . '/vendor';
 
@@ -48,9 +48,14 @@ final class FixtureTest extends TestCase
         );
     }
 
-    public function testFixtureProjectDirectory(): void
+    public function testFixtureName(): void
     {
-        Assert::assertSame($this->fixtureDirectory, $this->fixture->getProjectDirectory());
+        Assert::assertSame(basename($this->fixtureDirectory), $this->fixture->getName());
+    }
+
+    public function testFixtureSourceDirectory(): void
+    {
+        Assert::assertSame($this->fixtureDirectory, $this->fixture->getSourceDirectory());
     }
 
     public function testFixtureVendorDirectory(): void
