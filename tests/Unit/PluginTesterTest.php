@@ -23,7 +23,7 @@ final class PluginTesterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixturePath = dirname(__FILE__, 2) . '/Fixture';
+        $this->fixturePath = dirname(__FILE__, 3) . '/fixtures';
     }
 
     public function testYieldFixture(): void
