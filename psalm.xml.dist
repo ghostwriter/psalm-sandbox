@@ -24,7 +24,7 @@
         <ignoreFiles>
             <directory name=".github"/>
             <directory name="docs"/>
-            <directory name="tests/Fixture"/>
+            <directory name="fixtures"/>
             <directory name="vendor"/>
             <file name="ecs.php"/>
             <file name="rector.php"/>
@@ -37,6 +37,6 @@
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-        <pluginClass class="Ghostwriter\PHPUnitPsalmPlugin\PHPUnitPlugin"/>
+        <pluginClass class="Ghostwriter\PsalmPlugin\Plugin"/>
     </plugins>
 </psalm>
