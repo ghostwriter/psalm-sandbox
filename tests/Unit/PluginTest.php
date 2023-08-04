@@ -40,6 +40,9 @@ final class PluginTest extends TestCase
         Assert::assertTrue($this->done);
     }
 
+    /**
+     * @psalm-return Generator<string, Fixture, mixed, void>
+     */
     public static function fixtureDataProvider(): Generator
     {
         yield from PluginTester::yieldFixtures(
