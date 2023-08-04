@@ -50,12 +50,12 @@ final class PluginTester
         );
     }
 
-    public function isPackageNewerThan(string $package, string $version)
+    public function isPackageNewerThan(string $package, string $version): bool
     {
         return $this->havePackageVersion($package, '>', $version);
     }
 
-    public function isPackageOlderThan(string $package, string $version)
+    public function isPackageOlderThan(string $package, string $version): bool
     {
         return $this->havePackageVersion($package, '<', $version);
     }
@@ -63,6 +63,7 @@ final class PluginTester
     /**
      * $this->isPackageVersion("vendor/package", ">", "1.0.0", "to use new features").
      *
+     * @return void
      */
     public function isPackageVersion(string $package, string $operator, string $version, string $reason)
     {
@@ -129,7 +130,7 @@ final class PluginTester
     }
 
     /**
-     * @return Generator<string,Fixture>
+     * @psalm-return Generator<string, list{Fixture}, mixed, never>
      */
     public static function yieldFixture(string $path): Generator
     {
@@ -158,7 +159,7 @@ final class PluginTester
     }
 
     /**
-     * @return Generator<string,Fixture>
+     * @psalm-return Generator<string, list{Fixture}, mixed, never>
      */
     public static function yieldFixtures(string $path): Generator
     {
