@@ -32,7 +32,7 @@
          stopOnWarning="true"
          testdox="true"
          >
-    <coverage pathCoverage="true">
+    <coverage includeUncoveredFiles="true">
         <report>
             <html outputDirectory=".cache/phpunit/coverage-html"/>
             <clover outputFile=".cache/phpunit/clover.xml"/>
