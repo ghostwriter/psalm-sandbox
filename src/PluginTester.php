@@ -301,4 +301,23 @@ final class PluginTester
 
         return $vendorDirectory;
     }
+
+    private static function createReportOptions(): ReportOptions
+    {
+        static $reportOptions = null;
+
+        if ($reportOptions !== null) {
+            return $reportOptions;
+        }
+
+        $reportOptions = new ReportOptions();
+        $reportOptions->in_ci = false;
+        $reportOptions->use_color = false;
+        $reportOptions->show_info = true;
+        $reportOptions->format = Report::TYPE_JSON;
+        $reportOptions->pretty = true;
+        $reportOptions->output_path = './actual.json';
+
+        return $reportOptions;
+    }
 }
