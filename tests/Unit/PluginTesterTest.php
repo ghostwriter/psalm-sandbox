@@ -61,6 +61,9 @@ final class PluginTesterTest extends TestCase
         );
     }
 
+    /**
+     * @psalm-return int<0, max>
+     */
     private static function countDirectories(string $directory): int
     {
         return iterator_count(
