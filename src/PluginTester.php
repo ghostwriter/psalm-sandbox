@@ -63,7 +63,6 @@ final class PluginTester
     /**
      * $this->isPackageVersion("vendor/package", ">", "1.0.0", "to use new features").
      *
-     * @return void
      */
     public function isPackageVersion(string $package, string $operator, string $version, string $reason)
     {
