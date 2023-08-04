@@ -25,8 +25,8 @@ final class Analyzer extends ProjectAnalyzer
         private readonly string $phpVersion
     ) {
         $debug = false;
-        $config = self::makeConfig($fixture, $pluginClass, $phpVersion);
-        $providers = new Providers($fixture);
+        $config = self::makeConfig($this->fixture, $this->pluginClass, $this->phpVersion);
+        $providers = new Providers($this->fixture);
         $progress = $debug ? new DebugProgress() : new VoidProgress();
         $codebase = self::makeCodebase($config, $providers, $progress);
         parent::__construct(
@@ -39,7 +39,7 @@ final class Analyzer extends ProjectAnalyzer
             $codebase
         );
         $this->show_issues = true;
-        $this->setPhpVersion($phpVersion, 'tests');
+        $this->setPhpVersion($this->phpVersion, 'tests');
     }
 
     private static function makeCodebase(
