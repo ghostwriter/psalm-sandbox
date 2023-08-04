@@ -1,0 +1,30 @@
+{
+    "pluginClass": "Ghostwriter\\PsalmPlugin\\Plugin",
+    "php": "8.0",
+    "expected": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Class Vendor\\Package\\MyTestCase is never used",
+                "severity": "error",
+                "type": "UnusedClass"
+            }
+        ]
+    },
+    "actual": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Class Vendor\\Package\\MyTestCase is never used",
+                "severity": "error",
+                "type": "UnusedClass"
+            }
+        ]
+    },
+    "plugin": {
+        "Ghostwriter\\PsalmPlugin\\Plugin": {
+            "phpVersion": "8.0"
+        }
+    },
+    "TypeInferenceSummary": "Psalm was able to infer types for 100% of the codebase"
+}

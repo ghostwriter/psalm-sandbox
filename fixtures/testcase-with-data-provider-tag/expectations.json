@@ -1,0 +1,30 @@
+{
+    "pluginClass": "Ghostwriter\\PsalmPlugin\\Plugin",
+    "php": "8.0",
+    "expected": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Class Vendor\\Project\\FooTest is never used",
+                "severity": "error",
+                "type": "UnusedClass"
+            }
+        ]
+    },
+    "actual": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Class Vendor\\Project\\FooTest is never used",
+                "severity": "error",
+                "type": "UnusedClass"
+            }
+        ]
+    },
+    "plugin": {
+        "Ghostwriter\\PsalmPlugin\\Plugin": {
+            "phpVersion": "8.0"
+        }
+    },
+    "TypeInferenceSummary": "Psalm was unable to infer types in the codebase"
+}

@@ -1,0 +1,42 @@
+{
+    "pluginClass": "Ghostwriter\\PsalmPlugin\\Plugin",
+    "php": "8.0",
+    "expected": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Argument 1 of Vendor\\Package\\MyTestCase::expectException expects class-string<Throwable>, but Vendor\\Package\\MyTestCase::class provided",
+                "severity": "error",
+                "type": "InvalidArgument"
+            },
+            {
+                "file": "code.php",
+                "message": "Cannot find any calls to method Vendor\\Package\\MyTestCase::testSomething",
+                "severity": "error",
+                "type": "PossiblyUnusedMethod"
+            }
+        ]
+    },
+    "actual": {
+        "errors": [
+            {
+                "file": "code.php",
+                "message": "Argument 1 of Vendor\\Package\\MyTestCase::expectException expects class-string<Throwable>, but Vendor\\Package\\MyTestCase::class provided",
+                "severity": "error",
+                "type": "InvalidArgument"
+            },
+            {
+                "file": "code.php",
+                "message": "Cannot find any calls to method Vendor\\Package\\MyTestCase::testSomething",
+                "severity": "error",
+                "type": "PossiblyUnusedMethod"
+            }
+        ]
+    },
+    "plugin": {
+        "Ghostwriter\\PsalmPlugin\\Plugin": {
+            "phpVersion": "8.0"
+        }
+    },
+    "TypeInferenceSummary": "Psalm was able to infer types for 100% of the codebase"
+}
