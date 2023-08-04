@@ -8,6 +8,7 @@
     cacheDirectory=".cache/psalm"
     disableSuppressAll="true"
     errorBaseline="psalm-baseline.xml"
+    phpVersion="8.1"
     errorLevel="1"
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
