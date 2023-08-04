@@ -43,6 +43,11 @@ final class Expectation implements JsonSerializable, Stringable
         return $this->type;
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{file: string, message: string, severity: string, type: string}
+     */
     public function jsonSerialize(): array
     {
         return [
