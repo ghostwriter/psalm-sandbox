@@ -106,6 +106,7 @@
         "psalm:baseline": "psalm --no-diff --no-cache --set-baseline=psalm-baseline.xml",
         "psalm:dry-run": "psalm --alter --issues=all --dry-run",
         "psalm:missing": "psalm --alter --issues=MissingReturnType",
+        "psalm:fix": "vendor/bin/psalm --no-cache  --alter --issues=MissingReturnType,InvalidReturnType,MismatchingDocblockParamType,LessSpecificReturnType,MissingClosureReturnType,UnnecessaryVarAnnotation,UnusedVariable,MissingParamType --allow-backwards-incompatible-changes=false",
         "psalm:security": "psalm --taint-analysis",
         "psalm:shepherd": "psalm --shepherd --stats --no-diff --no-cache",
         "rector": "vendor/bin/rector process",
