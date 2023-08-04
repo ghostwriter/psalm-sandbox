@@ -9,11 +9,13 @@ use Psalm\Internal\Provider\FakeFileProvider;
 
 final class Fixture extends FakeFileProvider
 {
+    private readonly string $name;
+
     public function __construct(
-        private readonly string $projectDirectory,
+        private readonly string $sourceDirectory,
         private readonly string $vendorDirectory,
     ) {
-        foreach ($this->getFilesInDir($projectDirectory, ['php']) as $fixtureFile) {
+        foreach ($this->getFilesInDir($sourceDirectory, ['php']) as $fixtureFile) {
             $contents = file_get_contents($fixtureFile);
             if ($contents === false) {
                 Assert::fail('Could not read fixture file: ' . $fixtureFile);
@@ -21,11 +23,18 @@ final class Fixture extends FakeFileProvider
 
             $this->registerFile($fixtureFile, $contents);
         }
+
+        $this->name = basename($sourceDirectory);
     }
 
-    public function getProjectDirectory(): string
+    public function getName(): string
     {
-        return $this->projectDirectory;
+        return $this->name;
+    }
+
+    public function getSourceDirectory(): string
+    {
+        return $this->sourceDirectory;
     }
 
     public function getVendorDirectory(): string
