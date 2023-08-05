@@ -24,11 +24,7 @@ composer require ghostwriter/psalm-plugin-tester --dev
 
 ## Usage
 
-Fork or Clone [`ghostwriter/example-psalm-plugin`](https://github.com/ghostwriter/example-psalm-plugin) template repository.
-
-
 - Create a `tests/Fixture/` directory.
-
 - Create a PHPUnit test using the example below.
 
 ```php
@@ -36,14 +32,14 @@ Fork or Clone [`ghostwriter/example-psalm-plugin`](https://github.com/ghostwrite
 
 declare(strict_types=1);
 
-namespace Ghostwriter\ExamplePsalmPlugin\Tests;
+namespace Vendor\Package\Tests;
 
 use Generator;
-use Ghostwriter\PHPUnitPsalmPlugin\Plugin;
+use Vendor\Package\Plugin;
 use Ghostwriter\PsalmPluginTester\PluginTester;
 use PHPUnit\Framework\TestCase;
 
-final class PhpUnitPsalmPluginTest extends TestCase
+final class PluginTest extends TestCase
 {
     private PluginTester $pluginTester;
 
@@ -108,29 +104,56 @@ final class PhpUnitPsalmPluginTest extends TestCase
 > // No errors `expectation.json`
 >
 >    ```json
->    {
->        "errors": []
->    }
+> {
+>     "pluginClass": "Vendor\\Package\\Plugin",
+>     "php": "8.0",
+>     "expected": {
+>         "errors": []
+>     },
+>     "actual": {
+>         "errors": []
+>     },
+>     "plugin": {
+>         "Vendor\\Package\\Plugin": {
+>             "phpVersion": "8.0"
+>         }
+>     },
+>     "TypeInferenceSummary": "No files analyzed\nPsalm was unable to infer types in the codebase"
+> }
 >    ```
 
 > // Has Errors `expectation.json`
 >
 >    ```json
 >    {
->        "errors": [
->            {
->                "file": "code.php",
->                "message": "Providers must return iterable<array-key, array<array-key, mixed>>, possibly different array<array-key, mixed> provided",
->                "severity": "error",
->                "type": "MixedInferredReturnType"
->            },
->            {
->                "file": "car.php",
->                "message": "Cannot find any calls to method NS\\Car::drive",
->                "severity": "error",
->                "type": "PossiblyUnusedMethod"
+>        "pluginClass": "Vendor\\Package\\Plugin",
+>        "php": "8.0",
+>        "expected": {
+>            "errors": [
+>                {
+>                    "file": "code.php",
+>                    "message": "Class Vendor\\Package\\MyTestCase is never used",
+>                    "severity": "error",
+>                    "type": "UnusedClass"
+>                }
+>            ]
+>        },
+>        "actual": {
+>            "errors": [
+>                {
+>                    "file": "code.php",
+>                    "message": "Class Vendor\\Package\\MyTestCase is never used",
+>                    "severity": "error",
+>                    "type": "UnusedClass"
+>                }
+>            ]
+>        },
+>        "plugin": {
+>            "Vendor\\Package\\Plugin": {
+>                "phpVersion": "8.0"
 >            }
->        ]
+>        },
+>        "TypeInferenceSummary": "Psalm was able to infer types for 100% of the codebase"
 >    }
 >    ```
 >
