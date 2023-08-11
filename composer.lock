@@ -4267,152 +4267,32 @@
             "time": "2023-07-31T00:27:55+00:00"
         },
         {
-            "name": "ghostwriter/collection",
-            "version": "1.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghostwriter/collection.git",
-                "reference": "f4ead2f9a9fecb8674434a1ab8c6f222e2bf8e2b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/collection/zipball/f4ead2f9a9fecb8674434a1ab8c6f222e2bf8e2b",
-                "reference": "f4ead2f9a9fecb8674434a1ab8c6f222e2bf8e2b",
-                "shasum": ""
-            },
-            "require": {
-                "ghostwriter/option": "^1.5.1",
-                "php": ">=8.1 <8.4"
-            },
-            "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ghostwriter\\Collection\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nathanael Esayeas",
-                    "email": "nathanael.esayeas@protonmail.com",
-                    "homepage": "https://github.com/ghostwriter",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Provides a Collection implementation for PHP",
-            "homepage": "https://github.com/ghostwriter/collection",
-            "keywords": [
-                "collection",
-                "ghostwriter"
-            ],
-            "support": {
-                "docs": "https://github.com/ghostwriter/collection",
-                "forum": "https://github.com/ghostwriter/collection/discussions",
-                "issues": "https://github.com/ghostwriter/collection/issues",
-                "rss": "https://github.com/ghostwriter/collection/releases.atom",
-                "source": "https://github.com/ghostwriter/collection"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/ghostwriter",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-07-11T09:53:34+00:00"
-        },
-        {
-            "name": "ghostwriter/config",
-            "version": "0.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghostwriter/config.git",
-                "reference": "bcbe21a32abd8e2788c58e74a9bb82b676b4be5f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/config/zipball/bcbe21a32abd8e2788c58e74a9bb82b676b4be5f",
-                "reference": "bcbe21a32abd8e2788c58e74a9bb82b676b4be5f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1 <8.4"
-            },
-            "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ghostwriter\\Config\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nathanael Esayeas",
-                    "email": "nathanael.esayeas@protonmail.com",
-                    "homepage": "https://github.com/ghostwriter",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Provides an object that maps configuration keys to values.",
-            "homepage": "https://github.com/ghostwriter/config",
-            "keywords": [
-                "config",
-                "ghostwriter"
-            ],
-            "support": {
-                "docs": "https://github.com/ghostwriter/config",
-                "forum": "https://github.com/ghostwriter/config/discussions",
-                "issues": "https://github.com/ghostwriter/config/issues",
-                "rss": "https://github.com/ghostwriter/config/releases.atom",
-                "source": "https://github.com/ghostwriter/config"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/ghostwriter",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-07-11T10:18:30+00:00"
-        },
-        {
             "name": "ghostwriter/psalm-plugin",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/psalm-plugin.git",
-                "reference": "79502dd5d5bd1dfb6b87e6f84e34372a9e2e62d4"
+                "reference": "1669f4208d83ada70e1518d1b07f2249f91bac9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/psalm-plugin/zipball/79502dd5d5bd1dfb6b87e6f84e34372a9e2e62d4",
-                "reference": "79502dd5d5bd1dfb6b87e6f84e34372a9e2e62d4",
+                "url": "https://api.github.com/repos/ghostwriter/psalm-plugin/zipball/1669f4208d83ada70e1518d1b07f2249f91bac9a",
+                "reference": "1669f4208d83ada70e1518d1b07f2249f91bac9a",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
-                "ghostwriter/collection": "^1.3.2",
-                "ghostwriter/config": "^0.4.1",
-                "ghostwriter/container": "^1.6",
-                "ghostwriter/event-dispatcher": "^1.5",
-                "ghostwriter/json": "^1.1",
-                "ghostwriter/option": "^1.5.1",
-                "ghostwriter/result": "^1.3",
-                "php": ">=8.1"
+                "php": ">=8.1",
+                "phpunit/phpunit": "~9.6.0 || ~10.1.0 || ~10.2.0 || ~10.3.0",
+                "vimeo/psalm": "^5.0 || ~6.0.0"
+            },
+            "replace": {
+                "ghostwriter/example-psalm-plugin": "*",
+                "ghostwriter/phpunit-psalm-plugin": "*"
             },
             "require-dev": {
                 "ghostwriter/coding-standard": "dev-main",
-                "ghostwriter/psalm-plugin-tester": "^0.2.0"
+                "ghostwriter/psalm-plugin-tester": "~0.2"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -4440,9 +4320,11 @@
             "description": "Provides a plugin for Psalm",
             "homepage": "https://github.com/ghostwriter/psalm-plugin",
             "keywords": [
+                "dev",
                 "ghostwriter",
                 "psalm",
-                "psalm-plugin"
+                "psalm-plugin",
+                "static analysis"
             ],
             "support": {
                 "docs": "https://github.com/ghostwriter/psalm-plugin",
@@ -4457,67 +4339,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-04T20:47:32+00:00"
-        },
-        {
-            "name": "ghostwriter/result",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghostwriter/result.git",
-                "reference": "e922fe4cf5a5dc6b9e5a1f72bbfbe4ab7d630864"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/result/zipball/e922fe4cf5a5dc6b9e5a1f72bbfbe4ab7d630864",
-                "reference": "e922fe4cf5a5dc6b9e5a1f72bbfbe4ab7d630864",
-                "shasum": ""
-            },
-            "require": {
-                "ghostwriter/option": "^1.5.1",
-                "php": ">=8.1,<8.4"
-            },
-            "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ghostwriter\\Result\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nathanael Esayeas",
-                    "email": "nathanael.esayeas@protonmail.com",
-                    "homepage": "https://github.com/ghostwriter",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Provides a Result type implementation for PHP",
-            "homepage": "https://github.com/ghostwriter/result",
-            "keywords": [
-                "ghostwriter",
-                "result"
-            ],
-            "support": {
-                "docs": "https://github.com/ghostwriter/result",
-                "forum": "https://github.com/ghostwriter/result/discussions",
-                "issues": "https://github.com/ghostwriter/result/issues",
-                "rss": "https://github.com/ghostwriter/result/releases.atom",
-                "source": "https://github.com/ghostwriter/result"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/ghostwriter",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-07-06T01:18:31+00:00"
+            "time": "2023-08-11T01:56:58+00:00"
         },
         {
             "name": "phpstan/phpstan",
