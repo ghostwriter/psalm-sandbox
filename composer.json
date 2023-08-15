@@ -38,8 +38,8 @@
         "ghostwriter/container": "^1.6",
         "ghostwriter/event-dispatcher": "^1.5.0",
         "ghostwriter/json": "^1.1",
-        "phpunit/phpunit": "*",
-        "vimeo/psalm": "*"
+        "phpunit/phpunit": "^10.3",
+        "vimeo/psalm": "^5.14"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
