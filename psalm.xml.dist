@@ -27,8 +27,6 @@
             <directory name="docs"/>
             <directory name="fixtures"/>
             <directory name="vendor"/>
-            <file name="ecs.php"/>
-            <file name="rector.php"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
