@@ -6,7 +6,8 @@
     "keywords": [
         "ghostwriter",
         "psalm-plugin-tester",
-        "testing"
+        "testing",
+        "dev"
     ],
     "authors": [
         {
@@ -39,11 +40,11 @@
         "ghostwriter/event-dispatcher": "^1.5.0",
         "ghostwriter/json": "^1.1",
         "phpunit/phpunit": "^10.3",
-        "vimeo/psalm": "^5.14"
+        "vimeo/psalm": "^5.15"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/psalm-plugin": "^0.1.0"
+        "ghostwriter/psalm-plugin": "^0.1 || ^0.2 || ^1.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -58,16 +59,9 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "infection/extension-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        },
         "classmap-authoritative": true,
         "discard-changes": true,
         "optimize-autoloader": true,
-        "platform": {
-            "php": "8.1.999"
-        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
@@ -75,50 +69,37 @@
     },
     "scripts": {
         "cache:clear": [
-            "find ./tests/Fixture -path './*/expectations.json' -delete",
-            "rm -fr ./.cache"
+            "rm -fr .cache"
         ],
         "check": [
-            "@composer validate || true",
-            "@normalizer",
-            "@ecs",
-            "@test",
-            "@psalm:security",
-            "@rector:dry-run",
-            "@psalm:dry-run"
+            "@composer update",
+            "@cache:clear",
+            "@composer validate",
+            "@composer-normalize",
+            "@test"
         ],
-        "ecs": [
-            "@ecs:fix",
-            "@ecs:check"
-        ],
-        "ecs:check": "vendor/bin/ecs check --clear-cache || true",
-        "ecs:fix": "vendor/bin/ecs check --fix --clear-cache",
+        "composer-normalize": "vendor/ghostwriter/coding-standard/tools/composer-normalize --no-check-lock",
         "infection": [
             "@xdebug",
-            "vendor/bin/infection --verbose"
+            "vendor/ghostwriter/coding-standard/tools/infection --verbose"
         ],
-        "missing-returntypes": "psalm --alter --issues=MissingReturnType",
-        "normalizer": "composer normalize --no-check-lock",
-        "phpunit": "phpunit --do-not-cache-result --colors=always --testdox --stop-on-failure",
-        "psalm": "@psalm:shepherd",
-        "psalm:baseline": "psalm --no-diff --no-cache --set-baseline=psalm-baseline.xml",
-        "psalm:dry-run": "psalm --alter --issues=all --dry-run",
-        "psalm:fix": "vendor/bin/psalm --no-cache  --alter --issues=MissingReturnType,InvalidReturnType,MismatchingDocblockParamType,LessSpecificReturnType,MissingClosureReturnType,UnnecessaryVarAnnotation,UnusedVariable,MissingParamType --allow-backwards-incompatible-changes=false",
-        "psalm:missing": "psalm --alter --issues=MissingReturnType",
-        "psalm:security": "psalm --taint-analysis",
-        "psalm:shepherd": "psalm --shepherd --stats --no-diff --no-cache",
-        "rector": "vendor/bin/rector process",
-        "rector:dry-run": "vendor/bin/rector process --dry-run || true",
+        "phpbench": "vendor/ghostwriter/coding-standard/tools/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
+        "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --colors=always --do-not-cache-result",
+        "psalm": [
+            "@psalm:shepherd",
+            "@psalm:security",
+            "@psalm:dry-run"
+        ],
+        "psalm:baseline": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --no-diff --set-baseline=psalm-baseline.xml",
+        "psalm:dry-run": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --alter --allow-backwards-incompatible-changes=false --issues=all  --dry-run",
+        "psalm:fix": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache  --alter --allow-backwards-incompatible-changes=false --issues=MissingReturnType,InvalidReturnType,MismatchingDocblockParamType,LessSpecificReturnType,MissingClosureReturnType,UnnecessaryVarAnnotation,UnusedVariable,MissingParamType",
+        "psalm:missing": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --alter --allow-backwards-incompatible-changes=false --issues=MissingReturnType",
+        "psalm:security": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --no-diff --taint-analysis",
+        "psalm:shepherd": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --no-diff --shepherd --stats",
         "test": [
             "@xdebug",
             "@phpunit",
-            "@psalm",
-            "@infection"
-        ],
-        "test:coverage": [
-            "@cache:clear",
-            "@xdebug",
-            "@phpunit"
+            "@psalm"
         ],
         "xdebug": [
             "@putenv XDEBUG_MODE=coverage"
