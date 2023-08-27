@@ -7,6 +7,9 @@ namespace Ghostwriter\PsalmPluginTester;
 use PHPUnit\Framework\Assert;
 use Psalm\Internal\Provider\FakeFileProvider;
 
+use function basename;
+use function file_get_contents;
+
 final class Fixture extends FakeFileProvider
 {
     private readonly string $name;
