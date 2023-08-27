@@ -17,6 +17,11 @@ use Psalm\Report;
 use Psalm\Report\ReportOptions;
 use ReflectionClass;
 
+use function realpath;
+use function file_exists;
+use function sprintf;
+use function array_key_exists;
+
 final class Analyzer extends ProjectAnalyzer
 {
     public function __construct(
