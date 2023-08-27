@@ -2,24 +2,10 @@
     "pluginClass": "Ghostwriter\\PsalmPlugin\\Plugin",
     "php": "8.0",
     "expected": {
-        "errors": [
-            {
-                "file": "code.php",
-                "message": "Class Ghostwriter\\ExamplePsalmPlugin\\Tests\\Unit\\ObjectTest is never used",
-                "severity": "error",
-                "type": "UnusedClass"
-            }
-        ]
+        "errors": []
     },
     "actual": {
-        "errors": [
-            {
-                "file": "code.php",
-                "message": "Class Ghostwriter\\ExamplePsalmPlugin\\Tests\\Unit\\ObjectTest is never used",
-                "severity": "error",
-                "type": "UnusedClass"
-            }
-        ]
+        "errors": []
     },
     "plugin": {
         "Ghostwriter\\PsalmPlugin\\Plugin": {
