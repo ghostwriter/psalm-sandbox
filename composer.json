@@ -32,15 +32,15 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.1",
         "ext-simplexml": "*",
         "composer-runtime-api": ">=2.2.2",
         "composer/semver": "^3.3.2",
         "ghostwriter/container": "^1.6",
         "ghostwriter/event-dispatcher": "^1.5.0",
         "ghostwriter/json": "^1.1",
-        "phpunit/phpunit": "^10.3",
-        "vimeo/psalm": "^5.15"
+        "phpunit/phpunit": "^10.0 || ^10.1 || ^10.2 || ^10.3 | ^10.4 || ^10.11",
+        "vimeo/psalm": "^5.0 || ^6.0"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
@@ -65,7 +65,10 @@
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.1.999"
+        }
     },
     "scripts": {
         "cache:clear": [
