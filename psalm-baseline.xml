@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d">
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
   <file src="src/Analyzer.php">
     <ArgumentTypeCoercion>
       <code>$pluginClass</code>
@@ -101,17 +101,14 @@
     <InvalidReturnType>
       <code><![CDATA[Generator<string, Fixture, mixed, void>]]></code>
     </InvalidReturnType>
-    <PossiblyUnusedMethod>
-      <code>fixtureDataProvider</code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="tests/Unit/PluginTesterTest.php">
+    <PropertyNotSetInConstructor>
+      <code>$pluginTester</code>
+    </PropertyNotSetInConstructor>
     <RedundantConditionGivenDocblockType>
       <code>assertIsArray</code>
       <code>assertIsArray</code>
     </RedundantConditionGivenDocblockType>
-    <UnusedProperty>
-      <code>$pluginTester</code>
-    </UnusedProperty>
   </file>
 </files>
