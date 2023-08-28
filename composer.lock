@@ -3866,23 +3866,20 @@
         },
         {
             "name": "ghostwriter/psalm-plugin",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/psalm-plugin.git",
-                "reference": "1669f4208d83ada70e1518d1b07f2249f91bac9a"
+                "reference": "c1e0e0110f2e8ad5dd3f4f8decd698dcd4803f60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/psalm-plugin/zipball/1669f4208d83ada70e1518d1b07f2249f91bac9a",
-                "reference": "1669f4208d83ada70e1518d1b07f2249f91bac9a",
+                "url": "https://api.github.com/repos/ghostwriter/psalm-plugin/zipball/c1e0e0110f2e8ad5dd3f4f8decd698dcd4803f60",
+                "reference": "c1e0e0110f2e8ad5dd3f4f8decd698dcd4803f60",
                 "shasum": ""
             },
             "require": {
-                "ext-simplexml": "*",
-                "php": ">=8.1",
-                "phpunit/phpunit": "~9.6.0 || ~10.1.0 || ~10.2.0 || ~10.3.0",
-                "vimeo/psalm": "^5.0 || ~6.0.0"
+                "php": ">=8.1"
             },
             "replace": {
                 "ghostwriter/example-psalm-plugin": "*",
@@ -3890,7 +3887,9 @@
             },
             "require-dev": {
                 "ghostwriter/coding-standard": "dev-main",
-                "ghostwriter/psalm-plugin-tester": "~0.2"
+                "ghostwriter/psalm-plugin-tester": "^0.2 || ^0.3 || ^1.0",
+                "psr/container": "^1.1 || ^2.0",
+                "vimeo/psalm": "^5.0 || ^6.0"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -3937,7 +3936,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-11T01:56:58+00:00"
+            "time": "2023-08-27T13:19:25+00:00"
         }
     ],
     "aliases": [],
