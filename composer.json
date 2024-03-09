@@ -1,11 +1,11 @@
 {
-    "name": "ghostwriter/psalm-plugin-tester",
+    "name": "ghostwriter/psalm-sandbox",
     "description": "Provides a framework for testing Psalm plugins",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "psalm-plugin-tester",
+        "psalm-sandbox",
         "testing",
         "dev"
     ],
@@ -17,13 +17,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/psalm-plugin-tester",
+    "homepage": "https://github.com/ghostwriter/psalm-sandbox",
     "support": {
-        "issues": "https://github.com/ghostwriter/psalm-plugin-tester/issues",
-        "forum": "https://github.com/ghostwriter/psalm-plugin-tester/discussions",
-        "source": "https://github.com/ghostwriter/psalm-plugin-tester",
-        "docs": "https://github.com/ghostwriter/psalm-plugin-tester",
-        "rss": "https://github.com/ghostwriter/psalm-plugin-tester/releases.atom"
+        "issues": "https://github.com/ghostwriter/psalm-sandbox/issues",
+        "forum": "https://github.com/ghostwriter/psalm-sandbox/discussions",
+        "source": "https://github.com/ghostwriter/psalm-sandbox",
+        "docs": "https://github.com/ghostwriter/psalm-sandbox",
+        "rss": "https://github.com/ghostwriter/psalm-sandbox/releases.atom"
     },
     "funding": [
         {
@@ -50,12 +50,12 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\PsalmPluginTester\\": "src/"
+            "Ghostwriter\\PsalmSandbox\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\PsalmPluginTester\\Tests\\Unit\\": "tests/Unit"
+            "Ghostwriter\\PsalmSandboxTests\\": "tests/"
         }
     },
     "config": {
