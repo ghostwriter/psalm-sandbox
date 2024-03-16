@@ -1,16 +1,16 @@
-# psalm-plugin-tester
+# Psalm Sandbox
 
-[![Compliance](https://github.com/ghostwriter/psalm-plugin-tester/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/psalm-plugin-tester/actions/workflows/compliance.yml)
-[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-plugin-tester?color=8892bf)](https://www.php.net/supported-versions)
-[![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/psalm-plugin-tester/main)
-[![Code Coverage](https://codecov.io/gh/ghostwriter/psalm-plugin-tester/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/psalm-plugin-tester)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/psalm-plugin-tester/coverage.svg)](https://shepherd.dev/github/ghostwriter/psalm-plugin-tester)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/psalm-plugin-tester)](https://packagist.org/packages/ghostwriter/psalm-plugin-tester)
-[![Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-plugin-tester?color=blue)](https://packagist.org/packages/ghostwriter/psalm-plugin-tester)
+[![Compliance](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/compliance.yml)
+[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-sandbox?color=8892bf)](https://www.php.net/supported-versions)
+[![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/psalm-sandbox/main)
+[![Code Coverage](https://codecov.io/gh/ghostwriter/psalm-sandbox/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/psalm-sandbox)
+[![Type Coverage](https://shepherd.dev/github/ghostwriter/psalm-sandbox/coverage.svg)](https://shepherd.dev/github/ghostwriter/psalm-sandbox)
+[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/psalm-sandbox)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
+[![Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-sandbox?color=blue)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
 
 work in progress
 
-> **Warning**
+> [!WARNING]
 >
 > This project is not finished yet, work in progress.
 
@@ -19,144 +19,177 @@ work in progress
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/psalm-plugin-tester --dev
+composer require ghostwriter/psalm-sandbox --dev
 ```
 
 ## Usage
 
-- Create a `tests/Fixture/` directory.
-- Create a PHPUnit test using the example below.
+You can create a test for your plugin by extending the `AbstractPsalmSandboxTestCase` class.
+
+eg. `tests/Unit/MyPsalmPluginTest.php`
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-namespace Vendor\Package\Tests;
+namespace Vendor\PackageTests\Unit;
 
-use Generator;
-use Vendor\Package\Plugin;
-use Ghostwriter\PsalmPluginTester\PluginTester;
-use PHPUnit\Framework\TestCase;
+use Ghostwriter\PsalmSandbox\AbstractPsalmSandboxTestCase;
+use Psalm\Issue\CodeIssue;
+use Psalm\Issue\MissingReturnType;
+use Psalm\Plugin\PluginEntryPointInterface;
+use Vendor\Package\MyPsalmPlugin;
 
-final class PluginTest extends TestCase
+final class MyPsalmPluginTest extends AbstractPsalmSandboxTestCase
 {
-    private PluginTester $pluginTester;
+    /**
+     * @var class-string<PluginEntryPointInterface>
+     */
+    public const PLUGIN = MyPsalmPlugin::class;
 
-    protected function setUp(): void
+    /**
+     * @var array<class-string<CodeIssue>>
+     */
+    public const ISSUES = [MissingReturnType::class];
+}
+```
+
+You can then run your tests using PHPUnit.
+
+``` bash
+vendor/bin/phpunit
+```
+
+## Plugin Development
+
+### Example Directory Structure
+
+Your plugin should have the following directory structure:
+
+``` text
+composer.json
+MyPsalmPlugin.php
+src/
+│   {PsalmIssueType}/
+│   │   {FixIssue}.php
+│   │   {ReportIssue}.php
+│   │   {SuppressIssue}.php
+│   MissingReturnType/
+│   │   FixMissingReturnType.php
+│   │   ReportMissingReturnType.php
+│   │   SuppressMissingReturnType.php
+tests/
+│   Fixture/
+│   │   {PsalmIssueType}/
+│   │   │   fix-{PsalmIssueType}.php.inc
+│   │   │   report-{PsalmIssueType}.php.inc
+│   │   │   suppress-{PsalmIssueType}.php.inc
+│   │   MissingReturnType/
+│   │   │   fix-0001.php.inc
+│   │   │   fix-missing-returntype.php.inc
+│   │   │   report-0001.php.inc
+│   │   │   report-missing-returntype.php.inc
+│   │   │   suppress-0001.php.inc
+│   │   │   suppress-missing-returntype.php.inc
+│   Unit/
+│   │   MyPsalmPluginTest.php
+```
+
+### Example `Fix` Test
+
+When you run `vendor/bin/psalm --alter`, it will automatically fix the code for you.
+
+To create a `Fix` test, you need to create a file in the `tests/Fixture/{PsalmIssueType}` directory.
+
+The file name should be prefixed with `fix-` and any unique identifier, e.g. `fix-0001.php.inc`.
+
+The file MUST use `<!--  SEPARATOR -->` to separate the `before` and `after` code.
+
+The file should be structured as follows:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Vendor\PackageTests\Fixture\MissingReturnType;
+
+final class FixMissingReturnType
+{
+    public function fixMissingReturnType()
     {
-        $this->pluginTester = new PluginTester();
     }
+}
+?>
+<!--  SEPARATOR -->
+<?php
 
-    public static function fixtureDataProvider(): Generator
+declare(strict_types=1);
+
+namespace Vendor\PackageTests\Fixture\MissingReturnType;
+
+final class FixMissingReturnType
+{
+    public function fixMissingReturnType(): void
     {
-        yield from PluginTester::yieldFixtures(
-            // Replace path to "test/Fixture" directory.
-            dirname(__FILE__, 2) . '/Fixture'
-        );
     }
+}
+?>
+```
 
-    /** @dataProvider fixtureDataProvider */
-    public function testPlugin(Fixture $fixture): void
-    {
-        foreach ([Version::PHP_80, Version::PHP_81, Version::PHP_82] as $phpVersion) {
-            // Replace "Plugin::class" with the class name of the Plugin you want to test.
-            $this->pluginTester->testPlugin(Plugin::class, $fixture, $phpVersion);
-        }
-    }
+### Example `Report` Test
 
-    public static function fixtureWarningDataProvider(): Generator
-    {
-        yield from PluginTester::yieldFixtures(
-            // Replace "test/Fixture/Warnings" path.
-            dirname(__FILE__, 2) . '/Fixture/Warning'
-        );
-    }
+When you run `vendor/bin/psalm`, it will report the issue in your code.
 
-    /** @dataProvider fixtureWarningDataProvider */
-    public function testPluginWarning(Fixture $fixture): void
-    {
-        $this->pluginTester->testPlugin(Plugin::class, $fixture);
-    }
+To create a `Report` test, you need to create a file in the `tests/Fixture/{PsalmIssueType}` directory.
 
-    public static function fixtureErrorDataProvider(): Generator
-    {
-        yield from PluginTester::yieldFixtures(
-            // Replace "test/Fixture/Errors" path.
-            dirname(__FILE__, 2) . '/Fixture/Errors'
-        );
-    }
+The file name should be prefixed with `report-` and any unique identifier, e.g. `report-0001.php.inc`.
 
-    /** @dataProvider fixtureErrorDataProvider */
-    public function testPluginErrors(Fixture $fixture): void
+The file should be structured as follows:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Vendor\PackageTests\Fixture\MissingReturnType;
+
+final class ReportMissingReturnType
+{
+    public function reportMissingReturnType()
     {
-        $this->pluginTester->testPlugin(Plugin::class, $fixture);
     }
 }
 ```
 
-- You can manually create an `expectation.json` file in the `psalm-runs-without-any-errors` directory or **run phpunit to automatcally generate `expectation.json`, `psalm.xml`, and an `autoload.php` for you.**
+### Example `Suppress` Test
 
-> Manually
+You can suppress the issue in your code by adding the `@psalm-suppress` annotation, adding suppressions to your `psalm.xml` file, or using a plugin.
 
-- add your expectation in JSON format, 3 fields (file, type, message).
+To create a `Suppress` test, you need to create a file in the `tests/Fixture/{PsalmIssueType}` directory.
 
-> // No errors `expectation.json`
->
->    ```json
-> {
->     "pluginClass": "Vendor\\Package\\Plugin",
->     "php": "8.0",
->     "expected": {
->         "errors": []
->     },
->     "actual": {
->         "errors": []
->     },
->     "plugin": {
->         "Vendor\\Package\\Plugin": {
->             "phpVersion": "8.0"
->         }
->     },
->     "TypeInferenceSummary": "No files analyzed\nPsalm was unable to infer types in the codebase"
-> }
->    ```
+The file name should be prefixed with `suppress-` and any unique identifier, e.g. `suppress-0001.php.inc`.
 
-> // Has Errors `expectation.json`
->
->    ```json
->    {
->        "pluginClass": "Vendor\\Package\\Plugin",
->        "php": "8.0",
->        "expected": {
->            "errors": [
->                {
->                    "file": "code.php",
->                    "message": "Class Vendor\\Package\\MyTestCase is never used",
->                    "severity": "error",
->                    "type": "UnusedClass"
->                }
->            ]
->        },
->        "actual": {
->            "errors": [
->                {
->                    "file": "code.php",
->                    "message": "Class Vendor\\Package\\MyTestCase is never used",
->                    "severity": "error",
->                    "type": "UnusedClass"
->                }
->            ]
->        },
->        "plugin": {
->            "Vendor\\Package\\Plugin": {
->                "phpVersion": "8.0"
->            }
->        },
->        "TypeInferenceSummary": "Psalm was able to infer types for 100% of the codebase"
->    }
->    ```
->
+The file should be structured as follows:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Vendor\PackageTests\Fixture\MissingReturnType;
+
+final class SuppressMissingReturnType
+{
+    /**
+     * @psalm-suppress MissingReturnType
+     */
+    public function suppressMissingReturnType()
+    {
+    }
+}
+```
 
 ## Testing
 
@@ -189,7 +222,7 @@ Special thanks to [@orklah](https://github.com/orklah) for maintaining [`vimeo/p
 ## Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/psalm-plugin-tester/contributors)
+- [All Contributors](https://github.com/ghostwriter/psalm-sandbox/contributors)
 
 ## License
 
