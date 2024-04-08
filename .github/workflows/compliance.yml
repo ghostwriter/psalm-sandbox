@@ -2,20 +2,36 @@ name: Compliance
 
 on:
   pull_request:
-    branches:
-      - "**"
   push:
     branches:
+      # Default branch
       - "main"
+      # Release branches
+      ## 1.2.x - eg. Semantic Versioning
       - "[0-9]+.[0-9]+.x"
+      ## v1 - eg. GitHub Actions Versioning
       - "v[0-9]+"
+  # Scheduled workflow
   schedule:
-    - cron: "0 * * * *" # Runs hourly
-  workflow_dispatch: # Manually Trigger workflow
+    # Runs hourly
+    - cron: "0 * * * *"
+  # Manually Trigger workflow
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions:
+  actions: write #  permits an action to cancel a workflow run.
+  checks: write # permits an action to create a check run.
+  contents: write # allows the action to create a release.
+  discussions: write # permits an action to close or delete a discussion.
+  issues: write # permits an action to add a comment to an issue
+  packages: write # permits an action to upload and publish packages on GitHub Packages.
+  pages: write # permits an action to request a GitHub Pages build.
+  pull-requests: write # permits an action to add a label to a pull request.
 
 jobs:
   automation:
     uses: ghostwriter/compliance/.github/workflows/automation.yml@v1
     secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      INFECTION_DASHBOARD_API_KEY: ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
