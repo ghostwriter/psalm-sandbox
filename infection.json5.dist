@@ -1,0 +1,29 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "src",
+            "tests"
+        ],
+        "excludes": [
+            "tests/Fixture",
+            "vendor"
+        ]
+    },
+    "phpUnit": {
+        "customPath": "vendor/ghostwriter/coding-standard/tools/phpunit"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "timeout": 10,
+    "logs": {
+        "stryker": {
+            "report": "/.*?/"
+        },
+        "text": "php:\/\/stderr",
+        "github": true
+    },
+    "minMsi": 100,
+    "minCoveredMsi": 100
+}
