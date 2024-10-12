@@ -1,6 +1,6 @@
 # Psalm Sandbox
 
-[![Compliance](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/compliance.yml)
+[![Automation](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-sandbox?color=8892bf)](https://www.php.net/supported-versions)
 [![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/psalm-sandbox/main)
 [![Code Coverage](https://codecov.io/gh/ghostwriter/psalm-sandbox/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/psalm-sandbox)
@@ -26,7 +26,7 @@ composer require ghostwriter/psalm-sandbox --dev
 
 You can create a test for your plugin by extending the `AbstractPsalmSandboxTestCase` class.
 
-eg. `tests/Unit/MyPsalmPluginTest.php`
+eg. `tests/Unit/ExamplePluginTest.php`
 
 ```php
 <?php
@@ -39,14 +39,14 @@ use Ghostwriter\PsalmSandbox\AbstractPsalmSandboxTestCase;
 use Psalm\Issue\CodeIssue;
 use Psalm\Issue\MissingReturnType;
 use Psalm\Plugin\PluginEntryPointInterface;
-use Vendor\Package\MyPsalmPlugin;
+use Vendor\Package\ExamplePlugin;
 
-final class MyPsalmPluginTest extends AbstractPsalmSandboxTestCase
+final class ExamplePluginTest extends AbstractPsalmSandboxTestCase
 {
     /**
      * @var class-string<PluginEntryPointInterface>
      */
-    public const PLUGIN = MyPsalmPlugin::class;
+    public const PLUGINS = [ExamplePlugin::class];
 
     /**
      * @var array<class-string<CodeIssue>>
@@ -69,7 +69,7 @@ Your plugin should have the following directory structure:
 
 ``` text
 composer.json
-MyPsalmPlugin.php
+ExamplePlugin.php
 src/
 │   {PsalmIssueType}/
 │   │   {FixIssue}.php
@@ -93,7 +93,7 @@ tests/
 │   │   │   suppress-0001.php.inc
 │   │   │   suppress-missing-returntype.php.inc
 │   Unit/
-│   │   MyPsalmPluginTest.php
+│   │   ExamplePluginTest.php
 ```
 
 ### Example `Fix` Test
@@ -104,7 +104,7 @@ To create a `Fix` test, you need to create a file in the `tests/Fixture/{PsalmIs
 
 The file name should be prefixed with `fix-` and any unique identifier, e.g. `fix-0001.php.inc`.
 
-The file MUST use `<!--  SEPARATOR -->` to separate the `before` and `after` code.
+The file MUST use `--FIX--` to separate the `before` and `after` code.
 
 The file should be structured as follows:
 
@@ -122,7 +122,7 @@ final class FixMissingReturnType
     }
 }
 ?>
-<!--  SEPARATOR -->
+--FIX--
 <?php
 
 declare(strict_types=1);
