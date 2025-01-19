@@ -4,7 +4,6 @@
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-sandbox?color=8892bf)](https://www.php.net/supported-versions)
 [![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fwip%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/psalm-sandbox/main)
 [![Code Coverage](https://codecov.io/gh/ghostwriter/psalm-sandbox/branch/main/graph/badge.svg?token=UPDATE_TOKEN)](https://codecov.io/gh/ghostwriter/psalm-sandbox)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/psalm-sandbox/coverage.svg)](https://shepherd.dev/github/ghostwriter/psalm-sandbox)
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/psalm-sandbox)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-sandbox?color=blue)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
 
