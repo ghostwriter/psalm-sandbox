@@ -37,16 +37,10 @@
         "ext-simplexml": "*",
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "2.2.2",
-        "composer/semver": "^3.4.0"
+        "composer/semver": "^3.4.3"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/container": "^3.0.2",
-        "ghostwriter/event-dispatcher": "^4.0.0",
-        "ghostwriter/json": "^3.0.0",
-        "ghostwriter/psalm-plugin": "0.3.x-dev",
-        "phpunit/phpunit": "^10.5.17",
-        "vimeo/psalm": "^5.23.1 || ^6.0"
+        "ghostwriter/coding-standard": "dev-main"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
