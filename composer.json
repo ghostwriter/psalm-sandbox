@@ -53,7 +53,10 @@
     "autoload-dev": {
         "psr-4": {
             "Ghostwriter\\PsalmSandboxTests\\": "tests"
-        }
+        },
+        "files": [
+            "tests/bootstrap.php"
+        ]
     },
     "config": {
         "allow-plugins": {
