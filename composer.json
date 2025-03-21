@@ -37,7 +37,7 @@
         "ext-simplexml": "*",
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "^2.2.2",
-        "composer/semver": "^3.4.3"
+        "composer/semver": "~3.4.3"
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main"
