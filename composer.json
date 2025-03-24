@@ -78,10 +78,15 @@
     },
     "scripts": {
         "bench": "vendor/ghostwriter/coding-standard/tools/phpbench run --revs=10 --iterations=10 --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
+        "bin_composer": "vendor/ghostwriter/coding-standard/tools/composer",
+        "bin_infection": "vendor/bin/infection --ansi --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max",
+        "bin_phive": "vendor/ghostwriter/coding-standard/tools/phive",
+        "bin_phpunit": "vendor/bin/phpunit --do-not-cache-result --colors=always",
+        "bin_psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache",
         "cache:clear": "rm -rf ./.cache/*",
         "check": [
-            "@composer validate",
-            "@ecs",
+            "@cache:clear",
+            "@bin_composer validate",
             "@test"
         ],
         "composer-normalize": "vendor/ghostwriter/coding-standard/tools/composer-normalize --no-check-lock",
@@ -96,23 +101,45 @@
             "@psalm:security",
             "@psalm:dry-run"
         ],
+        "docker": [
+            "@docker:build",
+            "@docker:run"
+        ],
+        "docker:build": "docker buildx build --pull --tag workspace .",
+        "docker:run": "docker run -v $(PWD):/github/workspace -w=/github/workspace -e GITHUB_DEBUG=1 -e GITHUB_WORKSPACE=/github/workspace -e GITHUB_TOKEN=github-token -e SIGNING_SECRET_KEY=secret-key workspace",
         "ecs": "vendor/bin/ecs check --clear-cache --fix --no-interaction",
-        "infection": "vendor/ghostwriter/coding-standard/tools/infection --ansi --verbose --threads=max --min-msi=0 --min-covered-msi=0",
+        "git:submodule:update": "git submodule update --depth=1 --init --recursive --recommend-shallow --remote",
+        "infection": [
+            "@xdebug",
+            "@bin_infection"
+        ],
+        "phive": [
+            "@bin_phive update --force-accept-unsigned",
+            "@bin_phive purge"
+        ],
         "phpbench": "vendor/ghostwriter/coding-standard/tools/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
-        "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --do-not-cache-result --colors=always",
-        "phpunit:migrate": "@phpunit --migrate-configuration",
-        "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache",
-        "psalm:alter": "@psalm --no-diff --shepherd --stats --alter --allow-backwards-incompatible-changes=false",
-        "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
-        "psalm:dry-run": "@psalm:alter --issues=all --dry-run",
-        "psalm:fix": "@psalm:alter --issues=MissingReturnType",
-        "psalm:security": "@psalm --no-diff --taint-analysis",
+        "phpunit": [
+            "@xdebug",
+            "@bin_phpunit"
+        ],
+        "phpunit:migrate": [
+            "@xdebug",
+            "@bin_phpunit --migrate-configuration"
+        ],
+        "psalm": "@bin_psalm --show-info=true --no-diff --shepherd --stats",
+        "psalm:alter": "@bin_psalm --alter --allow-backwards-incompatible-changes=false --safe-types",
+        "psalm:baseline": "@bin_psalm --no-diff --set-baseline=psalm-baseline.xml",
+        "psalm:dry-run": "@bin_psalm --alter --issues=all --dry-run",
+        "psalm:fix": "@bin_psalm --alter --issues=UnnecessaryVarAnnotation",
+        "psalm:security": "@bin_psalm --no-diff --taint-analysis",
         "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
+        "psalm:update": "@bin_psalm --no-diff --update-baseline=psalm-baseline.xml",
         "rector": "vendor/bin/rector process --no-ansi --no-interaction --clear-cache",
         "test": [
             "@phpunit",
-            "@psalm:shepherd",
-            "@infection"
-        ]
+            "@infection",
+            "@psalm"
+        ],
+        "xdebug": "@putenv XDEBUG_MODE=coverage"
     }
 }
