@@ -44,7 +44,6 @@
         "mockery/mockery": "~1.6.12",
         "phpunit/phpunit": "~12.1.2"
     },
-    "replace": {},
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
