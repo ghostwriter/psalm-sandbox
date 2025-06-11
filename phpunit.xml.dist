@@ -9,6 +9,7 @@
     cacheDirectory=".cache/phpunit"
     cacheResult="false"
     colors="true"
+    displayDetailsOnAllIssues="true"
     displayDetailsOnIncompleteTests="true"
     displayDetailsOnSkippedTests="true"
     displayDetailsOnTestsThatTriggerDeprecations="true"
