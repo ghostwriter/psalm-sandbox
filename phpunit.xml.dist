@@ -11,6 +11,7 @@
     colors="true"
     displayDetailsOnAllIssues="true"
     displayDetailsOnIncompleteTests="true"
+    displayDetailsOnPhpunitDeprecations="true"
     displayDetailsOnSkippedTests="true"
     displayDetailsOnTestsThatTriggerDeprecations="true"
     displayDetailsOnTestsThatTriggerErrors="true"
