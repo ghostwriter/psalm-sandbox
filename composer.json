@@ -51,7 +51,7 @@
         "infection/infection": "~0.29.14",
         "mockery/mockery": "~1.6.12",
         "phpunit/phpunit": "~12.2.3",
-        "symfony/var-dumper": "~7.3.0",
+        "symfony/var-dumper": "~7.3.1",
         "vimeo/psalm": "~6.12.0"
     },
     "minimum-stability": "stable",
