@@ -38,7 +38,7 @@
         "#StopGenocide"
     ],
     "require": {
-        "php": "^8.4",
+        "php": "~8.4.0",
         "ext-dom": "*",
         "ext-simplexml": "*",
         "composer-plugin-api": "^2.6.0",
