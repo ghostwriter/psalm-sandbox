@@ -1918,12 +1918,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "cf21d47371d6f5bb53e1e4cbeeb33392777c5e1c"
+                "reference": "91f92cb2b8bbe25100ae7c7a25102086c501448a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/cf21d47371d6f5bb53e1e4cbeeb33392777c5e1c",
-                "reference": "cf21d47371d6f5bb53e1e4cbeeb33392777c5e1c",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/91f92cb2b8bbe25100ae7c7a25102086c501448a",
+                "reference": "91f92cb2b8bbe25100ae7c7a25102086c501448a",
                 "shasum": ""
             },
             "require": {
@@ -1959,7 +1959,7 @@
                 "ghostwriter/filesystem": "~0.1.1",
                 "ghostwriter/json": "~3.0.0",
                 "ghostwriter/shell": "~0.1.0",
-                "php": "^8.4"
+                "php": "~8.4.0"
             },
             "conflict": {
                 "pestphp/pest": "*",
@@ -2067,7 +2067,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-04T10:54:18+00:00"
+            "time": "2025-07-06T00:45:21+00:00"
         },
         {
             "name": "ghostwriter/container",
