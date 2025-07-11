@@ -50,7 +50,7 @@
         "ghostwriter/coding-standard": "dev-main",
         "infection/infection": "~0.30.2",
         "mockery/mockery": "~1.6.12",
-        "phpunit/phpunit": "~12.2.6",
+        "phpunit/phpunit": "~12.2.7",
         "symfony/var-dumper": "~7.3.1",
         "vimeo/psalm": "~6.12.1"
     },
