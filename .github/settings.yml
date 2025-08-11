@@ -3,7 +3,6 @@
   "description": "Provides a framework for testing Psalm plugins"
   "homepage": "https://github.com/ghostwriter/psalm-sandbox"
   "topics": "dev, ghostwriter, psalm-plugin, psalm-plugin-tester, psalm-sandbox, testing"
-  "private": false
   "has_issues": true
   "has_projects": false
   "has_wiki": false
