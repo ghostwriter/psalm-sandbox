@@ -14,6 +14,9 @@
   "delete_branch_on_merge": true
   "enable_automated_security_fixes": true
   "enable_vulnerability_alerts": true
+  "allow_auto_merge": true
+  "allow_update_branch": true
+  "web_commit_signoff_required": true
 "milestones":
   - "title": "0.2.2"
     "description": "Patch release – targeting 0.2.x branch (semantic version: 0.2.2)"
