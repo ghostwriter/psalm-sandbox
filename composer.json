@@ -91,8 +91,6 @@
             "@normalize",
             "@test"
         ],
-        "composer-require-checker": "vendor/ghostwriter/coding-standard/tools/composer-require-checker check",
-        "composer-unused": "vendor/ghostwriter/coding-standard/tools/composer-unused",
         "docker": [
             "@docker:build",
             "@docker:run"
@@ -105,7 +103,7 @@
             "vendor/ghostwriter/coding-standard/tools/phar/infection --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max"
         ],
         "normalize": "vendor/ghostwriter/coding-standard/tools/phar/composer-normalize --no-cache --diff --no-check-lock --no-scripts --no-plugins",
-        "phpbench": "vendor/ghostwriter/coding-standard/tools/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
+        "phpbench": "vendor/ghostwriter/coding-standard/tools/phar/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
         "phpunit": [
             "@xdebug",
             "vendor/ghostwriter/coding-standard/tools/phar/phpunit --do-not-cache-result --colors=always"
