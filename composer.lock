@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61683c6778ff85d12d7a802067374710",
+    "content-hash": "7194525b36038803b4b45518d40f639e",
     "packages": [
         {
             "name": "composer/semver",
@@ -767,12 +767,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "bbbd28d5b45f3fb25a76595c15e8f69e3ddcab03"
+                "reference": "5a3b19053dc74511910d5f81bb41e8422c6842c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/bbbd28d5b45f3fb25a76595c15e8f69e3ddcab03",
-                "reference": "bbbd28d5b45f3fb25a76595c15e8f69e3ddcab03",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/5a3b19053dc74511910d5f81bb41e8422c6842c8",
+                "reference": "5a3b19053dc74511910d5f81bb41e8422c6842c8",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-19T11:55:28+00:00"
+            "time": "2025-09-19T12:54:01+00:00"
         },
         {
             "name": "ghostwriter/config",
