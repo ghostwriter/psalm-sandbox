@@ -60,10 +60,9 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "": "tests/Fixture/",
             "Ghostwriter\\PsalmSandboxTests\\": "tests",
-            "Tests\\PHPT\\": "tests/PHPT/",
-            "Tests\\Unit\\": "tests/Unit/",
-            "\\": "tests/Fixture/"
+            "Tests\\": "tests/"
         },
         "files": [
             "tests/bootstrap.php"
