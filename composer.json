@@ -60,10 +60,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\PsalmSandboxTests\\": "tests"
+            "Ghostwriter\\PsalmSandboxTests\\": "tests",
+            "Tests\\PHPT\\": "tests/PHPT/",
+            "Tests\\Unit\\": "tests/Unit/",
+            "\\": "tests/Fixture/"
         },
         "files": [
             "tests/bootstrap.php"
+        ],
+        "exclude-from-classmap": [
+            "/tests/"
         ]
     },
     "config": {
