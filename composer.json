@@ -50,7 +50,7 @@
         "ghostwriter/coding-standard": "dev-main",
         "mockery/mockery": "^1.6.12",
         "phpunit/phpunit": "^12.4.1",
-        "symfony/var-dumper": "^7.3.4"
+        "symfony/var-dumper": "^7.3.5"
     },
     "prefer-stable": true,
     "autoload": {
