@@ -767,12 +767,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "3ae3e7ee0910cfee6f848a5e2328672f378adcb6"
+                "reference": "96bba7eac81e9a64c27b277e713b3a5a32bd268f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/3ae3e7ee0910cfee6f848a5e2328672f378adcb6",
-                "reference": "3ae3e7ee0910cfee6f848a5e2328672f378adcb6",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/96bba7eac81e9a64c27b277e713b3a5a32bd268f",
+                "reference": "96bba7eac81e9a64c27b277e713b3a5a32bd268f",
                 "shasum": ""
             },
             "require": {
@@ -804,7 +804,7 @@
                 "ext-zlib": "*",
                 "ghostwriter/case-converter": "^2.1.0",
                 "ghostwriter/clock": "^3.0.1",
-                "ghostwriter/config": "^1.0.0",
+                "ghostwriter/config": "^2.0.0",
                 "ghostwriter/container": "^5.0.1",
                 "ghostwriter/event-dispatcher": "^5.0.3",
                 "ghostwriter/filesystem": "^0.1.1",
@@ -928,27 +928,31 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-30T17:11:59+00:00"
+            "time": "2025-11-01T19:22:51+00:00"
         },
         {
             "name": "ghostwriter/config",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/config.git",
-                "reference": "f2e1aa3cfe936244deb3128e081997f93576b910"
+                "reference": "502d899651159db1178448eb7dec44320fe2aa15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/config/zipball/f2e1aa3cfe936244deb3128e081997f93576b910",
-                "reference": "f2e1aa3cfe936244deb3128e081997f93576b910",
+                "url": "https://api.github.com/repos/ghostwriter/config/zipball/502d899651159db1178448eb7dec44320fe2aa15",
+                "reference": "502d899651159db1178448eb7dec44320fe2aa15",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.4"
+                "php": "~8.4.0 || ~8.5.0"
             },
             "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.4.2",
+                "symfony/var-dumper": "^7.3.5"
             },
             "type": "library",
             "autoload": {
@@ -958,7 +962,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "BSD-4-Clause"
             ],
             "authors": [
                 {
@@ -986,7 +990,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-07T22:42:43+00:00"
+            "time": "2025-11-01T18:10:07+00:00"
         },
         {
             "name": "ghostwriter/container",
