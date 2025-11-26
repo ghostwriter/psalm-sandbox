@@ -41,7 +41,7 @@
         "php": "~8.4.0 || ~8.5.0",
         "ext-dom": "*",
         "ext-simplexml": "*",
-        "composer-plugin-api": "~2.6.0",
+        "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
         "composer/semver": "^3.4.4"
     },
@@ -99,5 +99,11 @@
         "test": ["@phpunit", "@infection"],
         "unused": "vendor/ghostwriter/coding-standard/tools/phar/composer-unused --no-interaction --ansi",
         "xdebug": "@putenv XDEBUG_MODE=coverage"
+    },
+    "extra": {
+        "thanks": {
+            "url": "https://github.com/ghostwriter/psalm-sandbox",
+            "name": "ghostwriter/psalm-sandbox"
+        }
     }
 }
