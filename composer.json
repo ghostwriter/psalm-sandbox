@@ -102,8 +102,8 @@
     },
     "extra": {
         "thanks": {
-            "url": "https://github.com/ghostwriter/psalm-sandbox",
-            "name": "ghostwriter/psalm-sandbox"
+            "name": "ghostwriter/psalm-sandbox",
+            "url": "https://github.com/ghostwriter/psalm-sandbox"
         }
     }
 }
