@@ -639,12 +639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "e6d22955e961fe3d953c5a6ead6f4b13f235c0a3"
+                "reference": "e55508fc3e92c62bac0a6b88a870f4cb09e8fd84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e6d22955e961fe3d953c5a6ead6f4b13f235c0a3",
-                "reference": "e6d22955e961fe3d953c5a6ead6f4b13f235c0a3",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e55508fc3e92c62bac0a6b88a870f4cb09e8fd84",
+                "reference": "e55508fc3e92c62bac0a6b88a870f4cb09e8fd84",
                 "shasum": ""
             },
             "require": {
@@ -702,9 +702,9 @@
                 "ghostwriter/config": "^2.0.1",
                 "ghostwriter/console": "^0.1.2",
                 "mockery/mockery": "^1.6.12",
-                "nikic/php-parser": "^5.6.2",
+                "nikic/php-parser": "^5.7.0",
                 "php": "~8.4.0 || ~8.5.0",
-                "phpunit/phpunit": "^12.5.0",
+                "phpunit/phpunit": "^12.5.1",
                 "symfony/process": "^8.0.0",
                 "symfony/var-dumper": "^8.0.0"
             },
@@ -820,7 +820,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-06T03:46:42+00:00"
+            "time": "2025-12-06T12:23:26+00:00"
         },
         {
             "name": "ghostwriter/config",
@@ -1386,16 +1386,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.6.2",
+            "version": "v5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "3a454ca033b9e06b63282ce19562e892747449bb"
+                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3a454ca033b9e06b63282ce19562e892747449bb",
-                "reference": "3a454ca033b9e06b63282ce19562e892747449bb",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dca41cd15c2ac9d055ad70dbfd011130757d1f82",
+                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82",
                 "shasum": ""
             },
             "require": {
@@ -1438,9 +1438,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.2"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.7.0"
             },
-            "time": "2025-10-21T19:32:17+00:00"
+            "time": "2025-12-06T11:56:16+00:00"
         },
         {
             "name": "phar-io/manifest",
