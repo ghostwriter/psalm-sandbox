@@ -13,5 +13,6 @@
 /composer.lock export-ignore
 /docs export-ignore
 /infection.json5.dist export-ignore
+/phive.xml export-ignore
 /phpunit.xml.dist export-ignore
 /tests export-ignore
