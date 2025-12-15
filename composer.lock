@@ -639,12 +639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "e3e4bea616ee2ee1ad8d48a5d439690beab7e852"
+                "reference": "bfdc1a84815ef7a7550d9f89e08d291347d1f9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e3e4bea616ee2ee1ad8d48a5d439690beab7e852",
-                "reference": "e3e4bea616ee2ee1ad8d48a5d439690beab7e852",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/bfdc1a84815ef7a7550d9f89e08d291347d1f9be",
+                "reference": "bfdc1a84815ef7a7550d9f89e08d291347d1f9be",
                 "shasum": ""
             },
             "require": {
@@ -697,7 +697,7 @@
                 "ext-zend-opcache": "*",
                 "ext-zip": "*",
                 "ext-zlib": "*",
-                "ghostwriter/config": "^2.0.1",
+                "ghostwriter/config": "^2.0.2",
                 "ghostwriter/console": "^0.1.2",
                 "mockery/mockery": "^1.6.12",
                 "nikic/php-parser": "^5.7.0",
@@ -818,20 +818,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-11T18:21:10+00:00"
+            "time": "2025-12-14T23:42:07+00:00"
         },
         {
             "name": "ghostwriter/config",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/config.git",
-                "reference": "97b0423aaed59c848a163ab10db5b0697a6d76d2"
+                "reference": "27a8517b8b344e9744262357c4cc6246ba9b73f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/config/zipball/97b0423aaed59c848a163ab10db5b0697a6d76d2",
-                "reference": "97b0423aaed59c848a163ab10db5b0697a6d76d2",
+                "url": "https://api.github.com/repos/ghostwriter/config/zipball/27a8517b8b344e9744262357c4cc6246ba9b73f4",
+                "reference": "27a8517b8b344e9744262357c4cc6246ba9b73f4",
                 "shasum": ""
             },
             "require": {
@@ -842,11 +842,15 @@
                 "ghostwriter/coding-standard": "dev-main",
                 "ghostwriter/container": "^6.0.1",
                 "mockery/mockery": "^1.6.12",
-                "phpunit/phpunit": "^12.4.3",
-                "symfony/var-dumper": "^7.3.5"
+                "phpunit/phpunit": "^12.5.3",
+                "symfony/var-dumper": "^8.0.0"
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/config",
+                    "name": "ghostwriter/config"
+                },
                 "ghostwriter": {
                     "container": {
                         "definition": "Ghostwriter\\Config\\Container\\ConfigurationDefinition"
@@ -888,7 +892,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-19T09:00:09+00:00"
+            "time": "2025-12-14T23:37:43+00:00"
         },
         {
             "name": "ghostwriter/console",
