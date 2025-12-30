@@ -228,16 +228,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.9.2",
+            "version": "2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "8d5358f147c63a3a681b002076deff8c90e0b19d"
+                "reference": "fb3bee27676fd852a8a11ebbb1de19b4dada5aba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/8d5358f147c63a3a681b002076deff8c90e0b19d",
-                "reference": "8d5358f147c63a3a681b002076deff8c90e0b19d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/fb3bee27676fd852a8a11ebbb1de19b4dada5aba",
+                "reference": "fb3bee27676fd852a8a11ebbb1de19b4dada5aba",
                 "shasum": ""
             },
             "require": {
@@ -325,7 +325,7 @@
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
                 "security": "https://github.com/composer/composer/security/policy",
-                "source": "https://github.com/composer/composer/tree/2.9.2"
+                "source": "https://github.com/composer/composer/tree/2.9.3"
             },
             "funding": [
                 {
@@ -337,7 +337,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-19T20:57:25+00:00"
+            "time": "2025-12-30T12:40:17+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -639,18 +639,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "f74518581c7da70e84e6aa3eb4d52b79db84b226"
+                "reference": "8d296eef1470aa4c4833b371aa6f88ab804547e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/f74518581c7da70e84e6aa3eb4d52b79db84b226",
-                "reference": "f74518581c7da70e84e6aa3eb4d52b79db84b226",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/8d296eef1470aa4c4833b371aa6f88ab804547e9",
+                "reference": "8d296eef1470aa4c4833b371aa6f88ab804547e9",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "~2.9.0",
                 "composer-runtime-api": "~2.2.2",
-                "composer/composer": "^2.9.2",
+                "composer/composer": "^2.9.3",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -818,7 +818,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-29T11:57:39+00:00"
+            "time": "2025-12-30T14:16:43+00:00"
         },
         {
             "name": "ghostwriter/config",
