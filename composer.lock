@@ -639,12 +639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "0dc1abd5fda3db8a68519604c991f498932048e0"
+                "reference": "8a8b481ec29907535f5e0691b78958d63a54f213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/0dc1abd5fda3db8a68519604c991f498932048e0",
-                "reference": "0dc1abd5fda3db8a68519604c991f498932048e0",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/8a8b481ec29907535f5e0691b78958d63a54f213",
+                "reference": "8a8b481ec29907535f5e0691b78958d63a54f213",
                 "shasum": ""
             },
             "require": {
@@ -699,6 +699,7 @@
                 "ext-zlib": "*",
                 "ghostwriter/config": "^2.0.2",
                 "ghostwriter/console": "^0.1.2",
+                "ghostwriter/github-cli": "^0.1.0 || @dev",
                 "mockery/mockery": "^1.6.12",
                 "nikic/php-parser": "^5.7.0",
                 "php": "~8.4.0 || ~8.5.0",
@@ -818,7 +819,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-01T01:56:11+00:00"
+            "time": "2026-01-01T15:31:45+00:00"
         },
         {
             "name": "ghostwriter/config",
@@ -1043,6 +1044,155 @@
                 }
             ],
             "time": "2025-11-18T05:56:22+00:00"
+        },
+        {
+            "name": "ghostwriter/github-cli",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/github-cli.git",
+                "reference": "59ca9f1450c3da4f9956225978f2464ae860a3e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/github-cli/zipball/59ca9f1450c3da4f9956225978f2464ae860a3e8",
+                "reference": "59ca9f1450c3da4f9956225978f2464ae860a3e8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ghostwriter/container": "^6.0.1",
+                "ghostwriter/shell": "^0.1.1",
+                "php": "~8.4.0 || ~8.5.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.5.4",
+                "symfony/var-dumper": "^8.0.3"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/ghostwriter/github-cli",
+                    "name": "ghostwriter/github-cli"
+                },
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\GitHubCli\\Container\\GitHubCliDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\GitHubCli\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-4-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP wrapper for GitHub CLI (gh)",
+            "homepage": "https://github.com/ghostwriter/github-cli",
+            "keywords": [
+                "gh",
+                "ghostwriter",
+                "github",
+                "github-cli"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/github-cli/issues",
+                "rss": "https://github.com/ghostwriter/github-cli/releases.atom",
+                "security": "https://github.com/ghostwriter/github-cli/security/advisories/new",
+                "source": "https://github.com/ghostwriter/github-cli"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-01T05:15:43+00:00"
+        },
+        {
+            "name": "ghostwriter/shell",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghostwriter/shell.git",
+                "reference": "c50dccf80a93d257557de76cf25e6f2be7fbc3b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghostwriter/shell/zipball/c50dccf80a93d257557de76cf25e6f2be7fbc3b9",
+                "reference": "c50dccf80a93d257557de76cf25e6f2be7fbc3b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.4.0 || ~8.5.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "ghostwriter/coding-standard": "dev-main",
+                "ghostwriter/container": "^6.0.1",
+                "mockery/mockery": "^1.6.12",
+                "phpunit/phpunit": "^12.4.4",
+                "symfony/var-dumper": "^7.3.5"
+            },
+            "type": "library",
+            "extra": {
+                "ghostwriter": {
+                    "container": {
+                        "definition": "Ghostwriter\\Shell\\Container\\ShellDefinition"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghostwriter\\Shell\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-4-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nathanael Esayeas",
+                    "email": "nathanael.esayeas@protonmail.com",
+                    "homepage": "https://github.com/ghostwriter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Execute commands and external programs",
+            "homepage": "https://github.com/ghostwriter/shell",
+            "keywords": [
+                "ghostwriter",
+                "process",
+                "shell"
+            ],
+            "support": {
+                "issues": "https://github.com/ghostwriter/shell/issues",
+                "rss": "https://github.com/ghostwriter/shell/releases.atom",
+                "security": "https://github.com/ghostwriter/shell/security/advisories/new",
+                "source": "https://github.com/ghostwriter/shell"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/ghostwriter",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-11-25T19:01:49+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
