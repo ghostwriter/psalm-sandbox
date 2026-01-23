@@ -1,7 +1,7 @@
 {
     "name": "ghostwriter/psalm-sandbox",
     "description": "Provides a framework for testing Psalm plugins",
-    "license": "BSD-4-Clause",
+    "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
