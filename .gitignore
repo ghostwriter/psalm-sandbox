@@ -8,12 +8,15 @@
 .direnv/
 .dotenv/
 .env
+.vercel
 .idea/
 .phpactor.json
 .phpunit.cache/
 .phpunit.result.cache
 .vscode/
 build/
+build_local/
+build_production/
 infection.json5
 node_modules/
 phpunit.xml

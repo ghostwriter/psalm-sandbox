@@ -1,7 +1,7 @@
 {
     "name": "ghostwriter/psalm-sandbox",
     "description": "Provides a framework for testing Psalm plugins",
-    "license": "BSD-4-Clause",
+    "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
@@ -41,7 +41,7 @@
         "php": "~8.4.0 || ~8.5.0",
         "ext-dom": "*",
         "ext-simplexml": "*",
-        "composer-plugin-api": "~2.6.0",
+        "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
         "composer/semver": "^3.4.4"
     },
@@ -49,8 +49,8 @@
         "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
         "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^12.4.2",
-        "symfony/var-dumper": "^7.3.5"
+        "phpunit/phpunit": "^12.5.7",
+        "symfony/var-dumper": "^8.0.4"
     },
     "prefer-stable": true,
     "autoload": {
@@ -88,16 +88,22 @@
     },
     "scripts": {
         "cache:clear": "rm -rf ./.cache/*",
-        "check": ["@cache:clear", "vendor/ghostwriter/coding-standard/tools/phar/composer validate", "@test"],
+        "check": ["@cache:clear", "tools/phar/composer validate", "@test"],
         "docker": ["@docker:build", "@docker:run"],
         "docker:build": "docker buildx build --pull --tag workspace .",
         "docker:run": "docker run -v $(PWD):/github/workspace -w=/github/workspace -e GITHUB_DEBUG=1 -e GITHUB_WORKSPACE=/github/workspace -e GITHUB_TOKEN=github-token -e SIGNING_SECRET_KEY=secret-key workspace",
         "git:submodule:update": "git submodule update --depth=1 --init --recursive --recommend-shallow --remote",
-        "infection": ["@xdebug", "vendor/ghostwriter/coding-standard/tools/phar/infection --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max"],
-        "phpbench": "vendor/ghostwriter/coding-standard/tools/phar/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds ./tests/Benchmark",
+        "infection": ["@xdebug", "tools/phar/infection --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max"],
+        "phpbench": "tools/phar/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds ./tests/Benchmark",
         "phpunit": ["@xdebug", "vendor/bin/phpunit --do-not-cache-result --colors=always"],
         "test": ["@phpunit", "@infection"],
-        "unused": "vendor/ghostwriter/coding-standard/tools/phar/composer-unused --no-interaction --ansi",
+        "unused": "tools/phar/composer-unused --no-interaction --ansi",
         "xdebug": "@putenv XDEBUG_MODE=coverage"
+    },
+    "extra": {
+        "thanks": {
+            "name": "ghostwriter/psalm-sandbox",
+            "url": "https://github.com/ghostwriter/psalm-sandbox"
+        }
     }
 }
