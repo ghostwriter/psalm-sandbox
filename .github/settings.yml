@@ -16,7 +16,7 @@
   "description": "Provides a framework for testing Psalm plugins"
   "topics": "dev, ghostwriter, psalm-plugin, psalm-plugin-tester, psalm-sandbox, testing"
   "homepage": "https://github.com/ghostwriter/psalm-sandbox"
-  "default_branch": "0.2.x"
+  "default_branch": "0.1.x"
   "allow_auto_merge": true
   "allow_forking": true
   "allow_merge_commit": true

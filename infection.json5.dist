@@ -1,5 +1,5 @@
 {
-    "$schema": "https://raw.githubusercontent.com/infection/infection/0.31.9/resources/schema.json",
+    "$schema": "https://raw.githubusercontent.com/infection/infection/0.32.0/resources/schema.json",
     "source": {
         "directories": [
             "src"
@@ -8,9 +8,6 @@
             "tests",
             "vendor"
         ]
-    },
-    "phpUnit": {
-        "customPath": "vendor/ghostwriter/coding-standard/tools/phar/phpunit"
     },
     "mutators": {
         "@default": true
