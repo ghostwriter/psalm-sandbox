@@ -1,26 +1,19 @@
 {
-    "$schema": "vendor/infection/infection/resources/schema.json",
+    "$schema": "https://raw.githubusercontent.com/infection/infection/0.32.0/resources/schema.json",
     "source": {
         "directories": [
-            "src",
-            "tests"
+            "src"
         ],
         "excludes": [
-            "tests/Fixture",
+            "tests",
             "vendor"
         ]
-    },
-    "phpUnit": {
-        "customPath": "vendor/ghostwriter/coding-standard/tools/phpunit"
     },
     "mutators": {
         "@default": true
     },
     "timeout": 10,
     "logs": {
-        "stryker": {
-            "report": "/.*?/"
-        },
         "text": "php:\/\/stderr",
         "github": true
     },
