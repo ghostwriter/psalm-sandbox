@@ -31,24 +31,27 @@
             "url": "https://github.com/sponsors/ghostwriter"
         }
     ],
+    "_comment": [
+        "#BlackLivesMatter",
+        "#FreePalestine",
+        "#StandWithUkraine",
+        "#StopGenocide"
+    ],
     "require": {
-        "php": ">=8.3",
+        "php": "~8.4.0 || ~8.5.0",
         "ext-dom": "*",
         "ext-simplexml": "*",
-        "composer-plugin-api": "^2.6.0",
-        "composer-runtime-api": "2.2.2",
-        "composer/semver": "^3.4.0"
+        "composer-plugin-api": "~2.9.0",
+        "composer-runtime-api": "~2.2.2",
+        "composer/semver": "^3.4.4"
     },
     "require-dev": {
+        "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/container": "^3.0.2",
-        "ghostwriter/event-dispatcher": "^4.0.0",
-        "ghostwriter/json": "^3.0.0",
-        "ghostwriter/psalm-plugin": "0.3.x-dev",
-        "phpunit/phpunit": "^10.5.17",
-        "vimeo/psalm": "^5.23.1 || ^6.0"
+        "mockery/mockery": "^1.6.12",
+        "phpunit/phpunit": "^12.5.7",
+        "symfony/var-dumper": "^8.0.4"
     },
-    "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
@@ -57,16 +60,26 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\PsalmSandboxTests\\": "tests"
-        }
+            "": "tests/Fixture/",
+            "Ghostwriter\\PsalmSandboxTests\\": "tests",
+            "Tests\\": "tests/"
+        },
+        "files": [
+            "tests/bootstrap.php"
+        ],
+        "exclude-from-classmap": ["/tests/"]
     },
     "config": {
         "allow-plugins": {
             "ghostwriter/coding-standard": true
         },
+        "bump-after-update": false,
         "classmap-authoritative": false,
         "discard-changes": true,
         "optimize-autoloader": true,
+        "platform": {
+            "php": "8.4.999"
+        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
@@ -74,42 +87,23 @@
         "use-parent-dir": false
     },
     "scripts": {
-        "bench": "vendor/ghostwriter/coding-standard/tools/phpbench run --revs=10 --iterations=10 --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
         "cache:clear": "rm -rf ./.cache/*",
-        "check": [
-            "@composer validate",
-            "@ecs",
-            "@test"
-        ],
-        "composer-normalize": "vendor/ghostwriter/coding-standard/tools/composer-normalize --no-check-lock",
-        "composer-require-checker": "vendor/ghostwriter/coding-standard/tools/composer-require-checker check",
-        "composer-unused": "vendor/ghostwriter/coding-standard/tools/composer-unused",
-        "dev": [
-            "@cache:clear",
-            "@composer update --no-plugins --no-scripts --no-progress --no-interaction --prefer-stable --with-dependencies",
-            "@composer-normalize",
-            "@psalm:baseline",
-            "@check",
-            "@psalm:security",
-            "@psalm:dry-run"
-        ],
-        "ecs": "vendor/bin/ecs check --clear-cache --fix --no-interaction",
-        "infection": "vendor/ghostwriter/coding-standard/tools/infection --ansi --verbose --threads=max --min-msi=0 --min-covered-msi=0",
-        "phpbench": "vendor/ghostwriter/coding-standard/tools/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
-        "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --do-not-cache-result --colors=always",
-        "phpunit:migrate": "@phpunit --migrate-configuration",
-        "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache",
-        "psalm:alter": "@psalm --no-diff --shepherd --stats --alter --allow-backwards-incompatible-changes=false",
-        "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
-        "psalm:dry-run": "@psalm:alter --issues=all --dry-run",
-        "psalm:fix": "@psalm:alter --issues=MissingReturnType",
-        "psalm:security": "@psalm --no-diff --taint-analysis",
-        "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
-        "rector": "vendor/bin/rector process --no-ansi --no-interaction --clear-cache",
-        "test": [
-            "@phpunit",
-            "@psalm:shepherd",
-            "@infection"
-        ]
+        "check": ["@cache:clear", "tools/phar/composer validate", "@test"],
+        "docker": ["@docker:build", "@docker:run"],
+        "docker:build": "docker buildx build --pull --tag workspace .",
+        "docker:run": "docker run -v $(PWD):/github/workspace -w=/github/workspace -e GITHUB_DEBUG=1 -e GITHUB_WORKSPACE=/github/workspace -e GITHUB_TOKEN=github-token -e SIGNING_SECRET_KEY=secret-key workspace",
+        "git:submodule:update": "git submodule update --depth=1 --init --recursive --recommend-shallow --remote",
+        "infection": ["@xdebug", "tools/phar/infection --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max"],
+        "phpbench": "tools/phar/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds ./tests/Benchmark",
+        "phpunit": ["@xdebug", "vendor/bin/phpunit --do-not-cache-result --colors=always"],
+        "test": ["@phpunit", "@infection"],
+        "unused": "tools/phar/composer-unused --no-interaction --ansi",
+        "xdebug": "@putenv XDEBUG_MODE=coverage"
+    },
+    "extra": {
+        "thanks": {
+            "name": "ghostwriter/psalm-sandbox",
+            "url": "https://github.com/ghostwriter/psalm-sandbox"
+        }
     }
 }
