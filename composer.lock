@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee39fb982fda159e192d385af71d53ec",
+    "content-hash": "f01c6594f594d8a287184b3fe2f0fbb7",
     "packages": [
         {
             "name": "composer/semver",
@@ -639,12 +639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "146c887470187c16bef0c46bfde0ad6d1aaf4a54"
+                "reference": "7f1cf5a6e73bdbb5b090a5e854e7e0389b5177b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/146c887470187c16bef0c46bfde0ad6d1aaf4a54",
-                "reference": "146c887470187c16bef0c46bfde0ad6d1aaf4a54",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/7f1cf5a6e73bdbb5b090a5e854e7e0389b5177b8",
+                "reference": "7f1cf5a6e73bdbb5b090a5e854e7e0389b5177b8",
                 "shasum": ""
             },
             "require": {
@@ -703,7 +703,7 @@
                 "mockery/mockery": "^1.6.12",
                 "nikic/php-parser": "^5.7.0",
                 "php": "~8.4.0 || ~8.5.0",
-                "phpunit/phpunit": "^12.5.7",
+                "phpunit/phpunit": "^12.5.8",
                 "symfony/process": "^8.0.4",
                 "symfony/var-dumper": "^8.0.4"
             },
@@ -819,7 +819,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-26T20:03:17+00:00"
+            "time": "2026-01-27T07:03:02+00:00"
         },
         {
             "name": "ghostwriter/config",
@@ -2052,16 +2052,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.5.7",
+            "version": "12.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "79dee3d2685b80518e94b9ea741b3f822b213a5e"
+                "reference": "37ddb96c14bfee10304825edbb7e66d341ec6889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/79dee3d2685b80518e94b9ea741b3f822b213a5e",
-                "reference": "79dee3d2685b80518e94b9ea741b3f822b213a5e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/37ddb96c14bfee10304825edbb7e66d341ec6889",
+                "reference": "37ddb96c14bfee10304825edbb7e66d341ec6889",
                 "shasum": ""
             },
             "require": {
@@ -2129,7 +2129,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.7"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.8"
             },
             "funding": [
                 {
@@ -2153,7 +2153,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-24T16:12:53+00:00"
+            "time": "2026-01-27T06:12:29+00:00"
         },
         {
             "name": "psr/container",
