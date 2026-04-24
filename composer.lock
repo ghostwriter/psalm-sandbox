@@ -91,12 +91,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "6a09278a0426cc999440c53571a4deff8843c0eb"
+                "reference": "f9daf6fd3264f7f09a739ceecb2fd5a6c297bafa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/6a09278a0426cc999440c53571a4deff8843c0eb",
-                "reference": "6a09278a0426cc999440c53571a4deff8843c0eb",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/f9daf6fd3264f7f09a739ceecb2fd5a6c297bafa",
+                "reference": "f9daf6fd3264f7f09a739ceecb2fd5a6c297bafa",
                 "shasum": ""
             },
             "require": {
@@ -210,7 +210,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-24T04:24:47+00:00"
+            "time": "2026-04-24T13:55:22+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -584,16 +584,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "14.1.5",
+            "version": "14.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "30d90b04afef4bb22bd1658c25315a50b804ca9b"
+                "reference": "4991e47adce8e31e554aee8fdaabfc3b1d60707d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/30d90b04afef4bb22bd1658c25315a50b804ca9b",
-                "reference": "30d90b04afef4bb22bd1658c25315a50b804ca9b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/4991e47adce8e31e554aee8fdaabfc3b1d60707d",
+                "reference": "4991e47adce8e31e554aee8fdaabfc3b1d60707d",
                 "shasum": ""
             },
             "require": {
@@ -650,7 +650,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.1.5"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.1.6"
             },
             "funding": [
                 {
@@ -670,7 +670,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-24T12:28:06+00:00"
+            "time": "2026-04-24T13:10:08+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
