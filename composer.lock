@@ -87,16 +87,16 @@
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.4.1",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "447b4925256361de9848707efba9dafbec24ebca"
+                "reference": "8147b85144f2c178522558cdaa39343c4e495745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/447b4925256361de9848707efba9dafbec24ebca",
-                "reference": "447b4925256361de9848707efba9dafbec24ebca",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/8147b85144f2c178522558cdaa39343c4e495745",
+                "reference": "8147b85144f2c178522558cdaa39343c4e495745",
                 "shasum": ""
             },
             "require": {
@@ -144,7 +144,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.4.1"
+                "source": "https://github.com/boundwize/structarmed/tree/0.4.4"
             },
             "funding": [
                 {
@@ -152,7 +152,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-11T23:39:10+00:00"
+            "time": "2026-05-12T05:52:29+00:00"
         },
         {
             "name": "ghostwriter/coding-standard",
