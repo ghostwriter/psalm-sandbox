@@ -29,12 +29,6 @@
 "repository":
   "name": "psalm-sandbox"
   "description": "Provides a framework for testing Psalm plugins"
-  "topics":
-    - "ghostwriter"
-    - "psalm-sandbox"
-    - "php"
-    - "testing"
-    - "dev"
   "homepage": "https://github.com/ghostwriter/psalm-sandbox"
   "default_branch": "0.1.x"
   "allow_auto_merge": true
