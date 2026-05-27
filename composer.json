@@ -44,7 +44,7 @@
         "ext-xdebug": "*",
         "boundwize/structarmed": "^0.7.12",
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/testify": "^0.1.1",
+        "ghostwriter/testify": "^0.1.2",
         "mockery/mockery": "^1.6.12",
         "phpunit/phpunit": "^13.1.12",
         "symfony/var-dumper": "^8.0.8"
