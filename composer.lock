@@ -315,16 +315,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "33f2332341fecf8f3aaa266cd5862354a94d2c3a"
+                "reference": "ca8d6f740a7cd548808ae69f7b5fa4550caeb871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/33f2332341fecf8f3aaa266cd5862354a94d2c3a",
-                "reference": "33f2332341fecf8f3aaa266cd5862354a94d2c3a",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/ca8d6f740a7cd548808ae69f7b5fa4550caeb871",
+                "reference": "ca8d6f740a7cd548808ae69f7b5fa4550caeb871",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.7.12",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -370,10 +369,7 @@
                 "ext-zend-opcache": "*",
                 "ext-zip": "*",
                 "ext-zlib": "*",
-                "mockery/mockery": "^1.6.12",
-                "php": "~8.4.0 || ~8.5.0",
-                "phpunit/phpunit": "^13.1.12",
-                "symfony/var-dumper": "^8.0.8"
+                "php": "~8.4.0 || ~8.5.0"
             },
             "conflict": {
                 "pestphp/pest": "*"
@@ -435,7 +431,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-26T18:12:02+00:00"
+            "time": "2026-05-27T19:35:28+00:00"
         },
         {
             "name": "ghostwriter/config",
