@@ -594,16 +594,16 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "7.0.1",
+            "version": "7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "8e49e51d5558cb6482eac4da7170d75a765ee418"
+                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/8e49e51d5558cb6482eac4da7170d75a765ee418",
-                "reference": "8e49e51d5558cb6482eac4da7170d75a765ee418",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/a5474864d2a54074fef019646bf7ca060eb3638b",
+                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b",
                 "shasum": ""
             },
             "require": {
@@ -614,10 +614,12 @@
                 "psr/container-implementation": "*"
             },
             "require-dev": {
+                "boundwize/structarmed": "^0.7.12",
                 "ext-xdebug": "*",
                 "ghostwriter/coding-standard": "dev-main",
+                "ghostwriter/testify": "^0.1.1",
                 "mockery/mockery": "^1.6.12",
-                "phpunit/phpunit": "^13.1.7",
+                "phpunit/phpunit": "^13.1.12",
                 "symfony/var-dumper": "^8.0.8"
             },
             "type": "library",
@@ -669,7 +671,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-22T17:22:16+00:00"
+            "time": "2026-05-27T01:57:36+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
