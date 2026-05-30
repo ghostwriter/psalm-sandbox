@@ -1,9 +1,10 @@
 # Psalm Sandbox
 
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/psalm-sandbox&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 [![Automation](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/psalm-sandbox/actions/workflows/automation.yml)
-[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-sandbox?color=8892bf)](https://www.php.net/supported-versions)
-[![Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-sandbox?color=blue)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
+[![PHP Version](https://badgen.net/packagist/php/ghostwriter/psalm-sandbox?color=777BB4)](https://www.php.net/supported-versions)
+[![Packagist Downloads](https://badgen.net/packagist/dt/ghostwriter/psalm-sandbox?color=F28D1A)](https://packagist.org/packages/ghostwriter/psalm-sandbox)
+[![PayPal](https://img.shields.io/badge/paypal-@codepoet-0079C1?logo=paypal&logoColor=002991)](https://paypal.me/codepoet)
+[![Sponsors via GitHub](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/psalm-sandbox&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 
 work in progress
 
