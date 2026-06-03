@@ -52,7 +52,7 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "boundwize/structarmed": "^0.10.1",
+        "boundwize/structarmed": "^0.11.0",
         "ghostwriter/coding-standard": "dev-main",
         "ghostwriter/phpunit-assertions": "^0.1.0",
         "ghostwriter/testify": "^0.1.2",
