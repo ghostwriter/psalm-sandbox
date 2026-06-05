@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99160e1a12be347da887cb63fb59465b",
+    "content-hash": "57baee0dcccafbccb26f4b45ef212e47",
     "packages": [
         {
             "name": "composer/semver",
@@ -87,16 +87,16 @@
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.12.0",
+            "version": "0.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8"
+                "reference": "163d33656d20a19d41e51decb25129923a750f87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8",
-                "reference": "e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/163d33656d20a19d41e51decb25129923a750f87",
+                "reference": "163d33656d20a19d41e51decb25129923a750f87",
                 "shasum": ""
             },
             "require": {
@@ -145,11 +145,12 @@
                 "psr1",
                 "psr12",
                 "psr15",
-                "psr4"
+                "psr4",
+                "static analysis"
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.12.0"
+                "source": "https://github.com/boundwize/structarmed/tree/0.12.1"
             },
             "funding": [
                 {
@@ -157,7 +158,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-05T02:51:34+00:00"
+            "time": "2026-06-05T19:03:15+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
