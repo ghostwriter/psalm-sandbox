@@ -299,12 +299,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "7a732d4a532a9a538da9bead771094b63f90cdbb"
+                "reference": "19d1b6f238c14d0971d5b6176a276b76c84cbecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/7a732d4a532a9a538da9bead771094b63f90cdbb",
-                "reference": "7a732d4a532a9a538da9bead771094b63f90cdbb",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/19d1b6f238c14d0971d5b6176a276b76c84cbecd",
+                "reference": "19d1b6f238c14d0971d5b6176a276b76c84cbecd",
                 "shasum": ""
             },
             "require": {
@@ -358,6 +358,12 @@
             "conflict": {
                 "pestphp/pest": "*"
             },
+            "require-dev": {
+                "boundwize/structarmed": "^0.16.25",
+                "ghostwriter/phpunit-assertions": "^0.1.1",
+                "mockery/mockery": "^1.6.15",
+                "phpunit/phpunit": "^13.3.1"
+            },
             "default-branch": true,
             "type": "library",
             "extra": {
@@ -408,7 +414,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2026-08-26T08:42:07+00:00"
+            "time": "2026-08-27T06:22:55+00:00"
         },
         {
             "name": "ghostwriter/phpunit-assertions",
