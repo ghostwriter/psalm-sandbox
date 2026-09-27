@@ -48,7 +48,7 @@
         "ext-simplexml": "*",
         "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
-        "composer/semver": "^3.4.4"
+        "composer/semver": "^3.5.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
